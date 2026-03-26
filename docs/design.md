@@ -1,14 +1,14 @@
-Routers:
+Routes:
 - /
 - /arak
 - /kapcsolat
 - /kepek
 - /blog
 - /blog/[header]
-- /imprint
-- /cookies
-- /privacy
-- /questions
+- /impresszium
+- /sutik
+- /adatvedelem
+- /kerdesek
 - /login
 - /login/2fa (protected)
 - /forgotpassword
