@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import Header from "./_components/header";
+import Header from "./_components/header/header";
 import { cn } from "@/lib/utils";
+import Footer from "./_components/footer/footer";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <Header/>
         {children}
+        <Footer/>
       </body>
     </html>
   );
