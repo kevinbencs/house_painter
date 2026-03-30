@@ -135,3 +135,16 @@
     cursor: pointer;
   }
 }
+
+input[name='hamburger-menu']:checked + div{
+  --tw-translate-y: calc(var(--spacing) * 0) /* 0rem = 0px */;
+  translate: var(--tw-translate-x) var(--tw-translate-y);
+  
+}
+
+input[name='hamburger-menu']:checked+ div section button{
+  --tw-translate-y: calc(var(--spacing) * 0) /* 0rem = 0px */;
+  translate: var(--tw-translate-x) var(--tw-translate-y);
+  
+}
+

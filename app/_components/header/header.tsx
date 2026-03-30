@@ -58,7 +58,7 @@ const Header = (props: { mainPos: number }) => {
 
 
   return (
-    <header className={` bg-gray-900 text-white sticky top-0 z-20  ${topbarDuration} ${scrollClass}`}>
+    <header className={` bg-gray-900 text-white sticky top-0 z-20  ${topbarDuration} lg:${scrollClass}`}>
       <div className='justify-between pt-3 pb-3  pr-5 pl-5 '>
         <Menu />
       </div>
