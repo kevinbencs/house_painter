@@ -143,8 +143,7 @@ input[name='hamburger-menu']:checked + div{
 }
 
 input[name='hamburger-menu']:checked+ div section button{
-  --tw-translate-y: calc(var(--spacing) * 0) /* 0rem = 0px */;
-  translate: var(--tw-translate-x) var(--tw-translate-y);
+  top:0
   
 }
 
