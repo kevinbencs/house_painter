@@ -142,7 +142,7 @@ input[name='hamburger-menu']:checked + div{
   
 }
 
-input[name='hamburger-menu']:checked+ div section button{
+input[name='hamburger-menu']:checked+ div section a{
   top:0
   
 }
