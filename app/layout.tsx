@@ -5,8 +5,9 @@ import { cn } from "@/lib/utils";
 import Footer from "./_components/footer/footer";
 import HeaderContainer from "./_components/header/headerContainer";
 import TopBar from "./_components/header/topbar";
+import { LoggedContainer } from "./_components/loggedContext/loggedContainer";
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,9 +35,11 @@ export default function RootLayout({
       className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
     >
       <body className="min-h-full flex flex-col">
-        <TopBar/>
-        <HeaderContainer>{children}</HeaderContainer>
-        <Footer/>
+        <TopBar />
+        <LoggedContainer>
+          <HeaderContainer>{children}</HeaderContainer>
+        </LoggedContainer>
+        <Footer />
       </body>
     </html>
   );
