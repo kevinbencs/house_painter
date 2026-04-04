@@ -55,12 +55,15 @@ export const closeMongoConnection = async () => {
 
         await mongooseInstance.connection.close();
         console.log('MongoDB connection closed');
-        
+
         if (process.env.NODE_ENV === 'development') {
             global.mongooseConnection = undefined;
         }
 
+        return mongooseInstance;
+
     } catch (error) {
         console.error('Failed to close MongoDB connection:', error);
+        throw new Error('MongoDB connection failed');
     }
 }
