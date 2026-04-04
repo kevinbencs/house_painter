@@ -8,7 +8,7 @@ import { useLogged } from "../loggedContext/isLoggedContext"
 
 const Menu = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
-    const { IsLogged } = useLogged()
+    const { IsLogged, Timer } = useLogged()
 
     useEffect(() => {
         if (isOpen) {
@@ -42,7 +42,7 @@ const Menu = () => {
                             {IsLogged &&
                                 <>
                                     <Link className="text-white ease-in-out -top-full relative duration-300 lg:static delay-800 p-px pl-[11px] text-sm font-medium mt-1 mb-1 pr-[11px] hover:underline" href="/dashboard">Dashboard</Link>
-                                    <div className=" ease-in-out -top-full relative duration-300 lg:static delay-100">Time</div>
+                                    <div className=" ease-in-out -top-full relative duration-300 lg:static delay-100">{Math.floor(Timer/60)}:{String(Timer%60).padStart(2, '0')}</div>
                                 </>
                             }
 
