@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
 
-export async function Get(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
     return NextResponse.json({"kee":"dwe"})
 } 
