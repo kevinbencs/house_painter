@@ -1,4 +1,4 @@
-import NewPassword from "@/app/_components/forgetpassword/newPassword"
+import NewPassword from "@/app/_components/newpassword/newPassword"
 
 
 const Page = () => {

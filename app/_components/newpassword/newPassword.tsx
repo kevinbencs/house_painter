@@ -1,6 +1,6 @@
 "use client"
 
-import { changePassword} from "@/action/forgotpassword"
+import { changePassword} from "@/action/newpassword"
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -19,7 +19,7 @@ const NewPassword = () => {
     return (
         <Card className="w-full max-w-sm">
             <CardHeader>
-                <CardTitle>Jleszó megváltoztatása</CardTitle>
+                <CardTitle>Jelszó megváltoztatása</CardTitle>
                 <CardDescription>
                     Add meg az új jelszót
                 </CardDescription>

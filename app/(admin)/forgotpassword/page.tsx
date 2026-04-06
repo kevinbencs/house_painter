@@ -1,4 +1,4 @@
-import EmailForm from "@/app/_components/forgetpassword/emailForm"
+import EmailForm from "@/app/_components/newpassword/emailForm"
 
 
 const page = () => {
