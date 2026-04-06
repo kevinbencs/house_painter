@@ -1,8 +1,9 @@
 "use server"
 
+
 type ActionState = { message: string } | { error: string } | null
 
-export const loginAction = async (_prevState: ActionState, formData: FormData) => {
+export const sendEmail = async (_prevState: ActionState, formData: FormData) => {
     try {
         return {message: "success"}
     } catch (error) {
@@ -11,7 +12,7 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
     }
 }
 
-export const loginTwoFAAction = async (_prevState: ActionState, formData: FormData) => {
+export const changePassword = async (_prevState: ActionState, formData: FormData) => {
     try {
         return {message: "success"}
     } catch (error) {
