@@ -16,6 +16,9 @@ const UserSchema = new mongoose.Schema({
         unique: true,
         lowercase: true,
         trim: true,
+    },
+    twofa: {
+        type: String
     }
 }, {timestamps: true})
 

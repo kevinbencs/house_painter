@@ -4,7 +4,7 @@ export const logout = async () => {
     try {
         return {message: "Success"}
     } catch (error) {
-        console.log(error);
+        console.error(error);
 
         return {error: "Failed logout"}
     }
