@@ -16,7 +16,7 @@ import Img from "./renderComponents/img";
 
 
 const Blog = (props: {
-    params: { category: string, year: string, month: string, day: string, title: string }, res: {
+    params: { year: string, month: string, day: string, title: string }, res: {
         error: string,
         failed: undefined,
         data: undefined,
@@ -122,7 +122,7 @@ const Blog = (props: {
                 </div>
 
 
-                <ImgOptgroup reset={Reset1}  setError={setError} setImageCopyMessage={setImageCopyMessage} isPending={isPending} imageCopyMessage={imageCopyMessage} setSuccess={setSuccess} />
+               {/* <ImgOptgroup reset={Reset1}  setError={setError} setImageCopyMessage={setImageCopyMessage} isPending={isPending} imageCopyMessage={imageCopyMessage} setSuccess={setSuccess} />*/}
                 
                 <div>
                     <Themes themes={themes} setThemes={setThemes} />
@@ -130,11 +130,11 @@ const Blog = (props: {
 
                 <input type='text' value={detail} onChange={(e) => setDetail(e.target.value)} className='focus-within:outline-none border-b-2 input-bordered block w-full mt-10 mb-10 bg-transparent pl-2 dark:text-white' placeholder='Detail' />
 
-                <section className='flex gap-2 mb-10 flex-wrap'>
+                {/*<section className='flex gap-2 mb-10 flex-wrap'>
                     {bold_italic.map((item: string) => <Bold_italic text={item} TextEnterRef={TextEnterRef} key={uuid()} />)}
                     {link_anchor.map((item: string) => <Link_Anchor text={item} TextEnterRef={TextEnterRef} key={uuid()} />)}
                     {list_embedded.map(item => <List_embedded TextEnterRef={TextEnterRef} text={item.text} textElem={item.textElem} key={uuid()} />)}
-                </section>
+                </section>*/}
 
                 <p contentEditable="true" className={`mt-10 focus-within:outline-none border p-3 rounded min-h-24 dark:text-white ${paragPlaceholder}`} /*onInput={handleParagraphChange}*/ tabIndex={0} ref={TextEnterRef}></p>
                 
