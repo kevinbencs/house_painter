@@ -2,7 +2,11 @@
 
 import { useRef, useState, ChangeEvent, useEffect, Dispatch, SetStateAction } from 'react';
 import ImgItem from './imgItem';
-import useSWR from 'swr';
+import {
+    useQuery,
+} from '@tanstack/react-query'
+
+
 
 interface imageUrl {
     url: string,
@@ -11,7 +15,7 @@ interface imageUrl {
     _id: string
 }
 
-const fetcher = async (url: string): Promise<{success: imageUrl[]}> => {
+const fetcher = async (url: string): Promise<{ success: imageUrl[] }> => {
     const res = await fetch(url);
 
     if (!res.ok) {
@@ -27,13 +31,21 @@ const fetcher = async (url: string): Promise<{success: imageUrl[]}> => {
 
 type Dispatcher<T> = Dispatch<SetStateAction<T>>
 
-const ImgOptgroup = (props: {  imageCopyMessage: string, setImageCopyMessage: Dispatcher<string>, setError: Dispatch<SetStateAction<string | undefined>>, setSuccess: Dispatch<SetStateAction<string | undefined>>, isPending: boolean, reset: boolean }) => {
+const ImgOptgroup = (props: { imageCopyMessage: string, setImageCopyMessage: Dispatcher<string>, setError: Dispatch<SetStateAction<string | undefined>>, setSuccess: Dispatch<SetStateAction<string | undefined>>, isPending: boolean, reset: boolean }) => {
     const [optInput, setOptInput] = useState<string>('');
     const [optClass, setOptClass] = useState<string>('h-0')
     const [imageId, setImageId] = useState<string>('');
 
     const optRef = useRef<null | HTMLInputElement>(null);
-    const {data, error, isLoading} = useSWR<{success: imageUrl[]}, Error>('/api/img',fetcher)
+    //const {data, error, isLoading} = useSWR<{success: imageUrl[]}, Error>('/api/img',fetcher)
+
+    const { isLoading, error, data } = useQuery({
+        queryKey: ['repoData'],
+        queryFn: () =>
+            fetch('https://api.github.com/repos/TanStack/query').then((res) =>
+                res.json(),
+            ),
+    })
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setOptInput(e.target.value)
@@ -65,20 +77,20 @@ const ImgOptgroup = (props: {  imageCopyMessage: string, setImageCopyMessage: Di
         }
     }
 
-    if(error) props.setError(error.message)
+    //if(error) props.setError(error.message)
 
     return (
         <div className='lg:w-[calc(60%+20px)] w-full'>
 
             <label className='relative w-full mb-4 block'>
                 <input ref={optRef} type="text" name='search_image' onFocus={() => setOptClass('h-52')} onBlur={() => setOptClass('h-0')} className='dark:text-white focus-within:outline-none input-bordered border-b-2 block w-full bg-transparent pl-2' placeholder='Image' value={optInput} onChange={handleChange} disabled={props.isPending} />
-                <ul className={`${optClass} overflow-y-scroll absolute sidebar z-10  w-[100%] dark:bg-neutral bg-base-200 duration-100 `} onFocus={() => setOptClass('h-52')} onBlur={() => { setOptClass('h-0'); }}>
+                {/*<ul className={`${optClass} overflow-y-scroll absolute sidebar z-10  w-[100%] dark:bg-neutral bg-base-200 duration-100 `} onFocus={() => setOptClass('h-52')} onBlur={() => { setOptClass('h-0'); }}>
                     {error && <div className='text-red-700'>{error.message}</div>}
                     {isLoading && <div>...Loading</div>}
                     
                     {(data && data.success) && data.success.filter(handleFilter).map((item) => <ImgItem setImageId={setImageId} key={item._id} item={item} setOptClass={setOptClass} setOptInput={setOptInput} optRef={optRef} />
                     )}
-                </ul>
+                </ul>*/}
             </label>
             <div>
                 <div className='text-end text-xs mb-1'>

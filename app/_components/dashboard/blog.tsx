@@ -13,7 +13,14 @@ import List_embedded from "./renderComponents/listEmbedded";
 import Themes from "./renderComponents/themes";
 import ImgOptgroup from "./renderComponents/imgOptGroup";
 import Img from "./renderComponents/img";
+import { writeBlog } from "@/action/writeBlog";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from '@tanstack/react-query'
 
+const queryClient = new QueryClient()
 
 const Blog = (props: {
     params: { year: string, month: string, day: string, title: string }, res: {
@@ -61,6 +68,8 @@ const Blog = (props: {
     const [failed, setFailed] = useState<undefined | z.ZodIssue[]>([])
 
     const TextEnterRef = useRef<null | HTMLParagraphElement>(null);
+
+    const [state, action, isPending] = useActionState(writeBlog,null)
 
 
     const bold_italic: string[] = ['bold', 'italic'];
@@ -121,8 +130,9 @@ const Blog = (props: {
                     <Img id={coverImageId} />
                 </div>
 
-
-               {/* <ImgOptgroup reset={Reset1}  setError={setError} setImageCopyMessage={setImageCopyMessage} isPending={isPending} imageCopyMessage={imageCopyMessage} setSuccess={setSuccess} />*/}
+                 <QueryClientProvider client={queryClient}>
+                    <ImgOptgroup reset={Reset1}  setError={setError} setImageCopyMessage={setImageCopyMessage} isPending={isPending} imageCopyMessage={imageCopyMessage} setSuccess={setSuccess} />
+                 </QueryClientProvider>
                 
                 <div>
                     <Themes themes={themes} setThemes={setThemes} />

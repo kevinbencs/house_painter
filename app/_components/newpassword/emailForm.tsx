@@ -1,6 +1,6 @@
 "use client"
 
-import { sendEmail } from "@/action/forgotpassword"
+import { sendEmail } from "@/action/newpassword"
 import { Button } from "@/components/ui/button"
 import {
     Card,
