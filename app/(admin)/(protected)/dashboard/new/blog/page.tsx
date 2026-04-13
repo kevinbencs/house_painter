@@ -16,15 +16,15 @@ const Page = () => {
       title: "",
       text: "",
       cover_img_id: "",
-      keyword: [''],
+      keyword: [],
       id: "",
       detail: "",
     }
   }
 
   return (
-    <div>
-      <Blog {params}  {res} />
+    <div className="w-full">
+      <Blog params={params}  res={res} />
     </div>
   )
 }

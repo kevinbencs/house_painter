@@ -1,7 +1,7 @@
 "use client"
 
 import { useActionState, useState, useEffect, useRef } from "react"
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import * as z from 'zod';
 import { v4 as uuid } from "uuid";
 
@@ -114,9 +114,9 @@ const Blog = (props: {
 
     return (
         <>
-            <form action="" className='mb-20 mt-10' >
-                <input type="text" name='title' className='focus-within:outline-none border-b-2 input-bordered block w-full mb-8 bg-transparent pl-2 dark:text-white' placeholder='Article title' value={titleInput} onChange={(e) => setTitleInput(e.target.value)} />
-                <input type="text" name='cover_image_id' className='focus-within:outline-none border-b-2 input-bordered block w-full mb-8 bg-transparent pl-2 dark:text-white' placeholder='Cover image id' value={coverImageId} onChange={(e) => setCoverImageId(e.target.value)} />
+            <form action="" className='mb-20 mt-10' onSubmit={(e) => e.preventDefault()}>
+                <input type="text" name='title' className='focus-within:outline-none border-b-2 input-bordered block w-full mb-8 bg-transparent pl-2 dark:text-white' placeholder='Blog címe' value={titleInput} onChange={(e) => setTitleInput(e.target.value)} />
+                <input type="text" name='cover_image_id' className='focus-within:outline-none border-b-2 input-bordered block w-full mb-8 bg-transparent pl-2 dark:text-white' placeholder='Cover kép id' value={coverImageId} onChange={(e) => setCoverImageId(e.target.value)} />
                 <div className='max-w-96 mb-10'>
                     <Img id={coverImageId} />
                 </div>
@@ -128,7 +128,7 @@ const Blog = (props: {
                     <Themes themes={themes} setThemes={setThemes} />
                 </div>
 
-                <input type='text' value={detail} onChange={(e) => setDetail(e.target.value)} className='focus-within:outline-none border-b-2 input-bordered block w-full mt-10 mb-10 bg-transparent pl-2 dark:text-white' placeholder='Detail' />
+                <input type='text' value={detail} onChange={(e) => setDetail(e.target.value)} className='focus-within:outline-none border-b-2 input-bordered block w-full mt-10 mb-10 bg-transparent pl-2 dark:text-white' placeholder='Leírás' />
 
                 {/*<section className='flex gap-2 mb-10 flex-wrap'>
                     {bold_italic.map((item: string) => <Bold_italic text={item} TextEnterRef={TextEnterRef} key={uuid()} />)}
