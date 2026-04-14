@@ -2,7 +2,7 @@
 
 import { RefObject } from "react";
 
-const Link_Anchor = (props: { TextEnterRef: RefObject<HTMLParagraphElement>, text: string }) => {
+const Link_Anchor = (props: { TextEnterRef: RefObject<HTMLParagraphElement | null>, text: string }) => {
     const handleClick = () => {
         if (props.TextEnterRef.current) {
             props.TextEnterRef.current.focus();

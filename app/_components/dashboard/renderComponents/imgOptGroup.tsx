@@ -39,10 +39,10 @@ const ImgOptgroup = (props: { imageCopyMessage: string, setImageCopyMessage: Dis
     const optRef = useRef<null | HTMLInputElement>(null);
     //const {data, error, isLoading} = useSWR<{success: imageUrl[]}, Error>('/api/img',fetcher)
 
-    const { isLoading, error, data } = useQuery({
+    const { isLoading, error, data } = useQuery<{success: imageUrl[]}>({
         queryKey: ['repoData'],
         queryFn: () =>
-            fetch('https://api.github.com/repos/TanStack/query').then((res) =>
+            fetch('/api/img').then((res) =>
                 res.json(),
             ),
     })
@@ -77,20 +77,20 @@ const ImgOptgroup = (props: { imageCopyMessage: string, setImageCopyMessage: Dis
         }
     }
 
-    //if(error) props.setError(error.message)
+    if(error instanceof Error ) props.setError(error.message)
 
     return (
         <div className='lg:w-[calc(60%+20px)] w-full'>
 
             <label className='relative w-full mb-4 block'>
                 <input ref={optRef} type="text" name='search_image' onFocus={() => setOptClass('h-52')} onBlur={() => setOptClass('h-0')} className='dark:text-white focus-within:outline-none input-bordered border-b-2 block w-full bg-transparent pl-2' placeholder='Image' value={optInput} onChange={handleChange} disabled={props.isPending} />
-                {/*<ul className={`${optClass} overflow-y-scroll absolute sidebar z-10  w-[100%] dark:bg-neutral bg-base-200 duration-100 `} onFocus={() => setOptClass('h-52')} onBlur={() => { setOptClass('h-0'); }}>
-                    {error && <div className='text-red-700'>{error.message}</div>}
+                <ul className={`${optClass} overflow-y-scroll absolute sidebar z-10  w-full dark:bg-neutral bg-base-200 duration-100 `} onFocus={() => setOptClass('h-52')} onBlur={() => { setOptClass('h-0'); }}>
+                    {error instanceof Error && <div className='text-red-700'>{error.message}</div>}
                     {isLoading && <div>...Loading</div>}
                     
                     {(data && data.success) && data.success.filter(handleFilter).map((item) => <ImgItem setImageId={setImageId} key={item._id} item={item} setOptClass={setOptClass} setOptInput={setOptInput} optRef={optRef} />
                     )}
-                </ul>*/}
+                </ul>
             </label>
             <div>
                 <div className='text-end text-xs mb-1'>

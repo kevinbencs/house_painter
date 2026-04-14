@@ -1,7 +1,7 @@
 'use client'
 import {RefObject} from 'react'
 
-const List_embedded = (props:{TextEnterRef:RefObject<HTMLParagraphElement>, text: string, textElem: string}) => {
+const List_embedded = (props:{TextEnterRef:RefObject<HTMLParagraphElement | null>, text: string, textElem: string}) => {
     const handleClick = () => {
         if (props.TextEnterRef.current) {
             props.TextEnterRef.current.focus();
