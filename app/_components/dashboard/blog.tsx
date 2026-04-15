@@ -51,7 +51,6 @@ const Blog = (props: {
     const [lastText, setLastText] = useState<string[]>([])
 
     const [themes, setThemes] = useState<string[]>([]);
-    const [Reset1, setReset] = useState<boolean>(false);
 
     const [imageCopyMessage, setImageCopyMessage] = useState<string>('Click to copy');
 
@@ -131,7 +130,7 @@ const Blog = (props: {
                 </div>
 
                  <QueryClientProvider client={queryClient}>
-                    <ImgOptgroup reset={Reset1}  setError={setError} setImageCopyMessage={setImageCopyMessage} isPending={isPending} imageCopyMessage={imageCopyMessage} setSuccess={setSuccess} />
+                    <ImgOptgroup setError={setError} setImageCopyMessage={setImageCopyMessage} isPending={isPending} imageCopyMessage={imageCopyMessage} setSuccess={setSuccess} />
                  </QueryClientProvider>
                 
                 <div>

@@ -7,36 +7,22 @@ import {
 } from '@tanstack/react-query'
 
 
-
 interface imageUrl {
     newUrl: string,
     detail: string,
     _id: string
 }
 
-const fetcher = async (url: string): Promise<{ success: imageUrl[] }> => {
-    const res = await fetch(url);
 
-    if (!res.ok) {
-        const error = new Error('An error occurred while fetching the data.')
-        error.cause = await res.json().then((res: { error: string }) => res.error)
-        console.error(error.cause)
-
-        throw error
-    }
-
-    return res.json()
-}
 
 type Dispatcher<T> = Dispatch<SetStateAction<T>>
 
-const ImgOptgroup = (props: { imageCopyMessage: string, setImageCopyMessage: Dispatcher<string>, setError: Dispatch<SetStateAction<string | undefined>>, setSuccess: Dispatch<SetStateAction<string | undefined>>, isPending: boolean, reset: boolean }) => {
+const ImgOptgroup = (props: { imageCopyMessage: string, setImageCopyMessage: Dispatcher<string>, setError: Dispatch<SetStateAction<string | undefined>>, setSuccess: Dispatch<SetStateAction<string | undefined>>, isPending: boolean }) => {
     const [optInput, setOptInput] = useState<string>('');
     const [optClass, setOptClass] = useState<string>('h-0')
     const [imageId, setImageId] = useState<string>('');
 
     const optRef = useRef<null | HTMLInputElement>(null);
-    //const {data, error, isLoading} = useSWR<{success: imageUrl[]}, Error>('/api/img',fetcher)
 
     const { isLoading, error, data } = useQuery<{success: imageUrl[]}>({
         queryKey: ['repoData'],
@@ -52,11 +38,6 @@ const ImgOptgroup = (props: { imageCopyMessage: string, setImageCopyMessage: Dis
         props.setSuccess('');
         props.setImageCopyMessage('Click to copy.');
     };
-
-    useEffect(() => {
-        setOptInput('');
-        setImageId('')
-    }, [props.reset])
 
 
     const handleFilter = (arrayItem: imageUrl) => {
