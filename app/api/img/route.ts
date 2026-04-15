@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 
 interface imageUrl {
-    url: string,
-    alt: string,
+    newUrl: string,
     detail: string,
     _id: string
 }

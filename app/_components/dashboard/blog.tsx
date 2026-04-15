@@ -1,6 +1,6 @@
 "use client"
 
-import { useActionState, useState, useEffect, useRef } from "react"
+import { useActionState, useState, useEffect, useRef, ReactNode } from "react"
 import { useRouter } from "next/navigation";
 import * as z from 'zod';
 import { v4 as uuid } from "uuid";
@@ -17,7 +17,6 @@ import { writeBlog } from "@/action/writeBlog";
 import {
   QueryClient,
   QueryClientProvider,
-  useQuery,
 } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()
@@ -44,7 +43,7 @@ const Blog = (props: {
         failed: undefined,
     }
 }) => {
-    const [text, setText] = useState<(string /*| JSX.Element*/)[]>(['']);
+    const [text, setText] = useState<(string | ReactNode)[]>(['']);
     const [coverImageId, setCoverImageId] = useState<string>('');
     const [detail, setDetail] = useState<string>('');
     const router = useRouter();
@@ -99,17 +98,18 @@ const Blog = (props: {
 
     useEffect(() => {
         const Text = paragraphInput.split('\n').filter(item => item !== '');
-        const Text2: (string /*| JSX.Element*/)[] = [];
+        const Text2: (string | ReactNode)[] = [];
         setTextError('');
         for (let i = 0; i < Text.length; i++) {
             if (Text[i] !== lastText[i]) {
-                //Text2[i] = chooseTypeOfTextItem(Text[i], setTextError)
+                Text2[i] = chooseTypeOfTextItem(Text[i], setTextError)
 
             }
             else {
                 Text2[i] = text[i];
             }
         }
+        
         setText(Text2);
         setLastText(paragraphInput.split('\n').filter(item => item !== ''))
     }, [paragraphInput])
@@ -146,7 +146,7 @@ const Blog = (props: {
                     {list_embedded.map(item => <List_embedded TextEnterRef={TextEnterRef} text={item.text} textElem={item.textElem} key={uuid()} />)}
                 </section>
 
-                <p contentEditable="true" className={`mt-10 focus-within:outline-none border p-3 rounded min-h-24 dark:text-white ${paragPlaceholder}`} /*onInput={handleParagraphChange}*/ tabIndex={0} ref={TextEnterRef}></p>
+                <p contentEditable="true" className={`mt-10 focus-within:outline-none border p-3 rounded min-h-24 dark:text-white ${paragPlaceholder}`} onInput={handleParagraphChange} tabIndex={0} ref={TextEnterRef}></p>
                 
                 <div className='text-end'>
                     <input type="submit" value='Mentés' className='bg-slate-600 text-white cursor-pointer hover:bg-slate-400 rounded p-2 mt-10' />

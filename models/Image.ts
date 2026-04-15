@@ -8,6 +8,10 @@ const ImageSchema = new mongoose.Schema({
     newUrl: {
         type: String,
         require: true
+    },
+    detail: {
+        type: String,
+        require: true
     }
 }, {timestamps: true})
 

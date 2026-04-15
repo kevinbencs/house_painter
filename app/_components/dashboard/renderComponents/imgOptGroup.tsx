@@ -9,8 +9,7 @@ import {
 
 
 interface imageUrl {
-    url: string,
-    alt: string,
+    newUrl: string,
     detail: string,
     _id: string
 }
@@ -83,8 +82,8 @@ const ImgOptgroup = (props: { imageCopyMessage: string, setImageCopyMessage: Dis
         <div className='lg:w-[calc(60%+20px)] w-full'>
 
             <label className='relative w-full mb-4 block'>
-                <input ref={optRef} type="text" name='search_image' onFocus={() => setOptClass('h-52')} onBlur={() => setOptClass('h-0')} className='dark:text-white focus-within:outline-none input-bordered border-b-2 block w-full bg-transparent pl-2' placeholder='Image' value={optInput} onChange={handleChange} disabled={props.isPending} />
-                <ul className={`${optClass} overflow-y-scroll absolute sidebar z-10  w-full dark:bg-neutral bg-base-200 duration-100 `} onFocus={() => setOptClass('h-52')} onBlur={() => { setOptClass('h-0'); }}>
+                <input ref={optRef} type="text" name='search_image' onFocus={() => setOptClass('h-52')} onBlur={() => setOptClass('h-0')} className=' focus-within:outline-none input-bordered border-b-2 block w-full bg-transparent pl-2' placeholder='Image' value={optInput} onChange={handleChange} disabled={props.isPending} />
+                <ul className={`${optClass} overflow-y-scroll absolute sidebar z-10  w-full bg-gray-500 duration-100 `} onFocus={() => setOptClass('h-52')} onBlur={() => { setOptClass('h-0'); }}>
                     {error instanceof Error && <div className='text-red-700'>{error.message}</div>}
                     {isLoading && <div>...Loading</div>}
                     
