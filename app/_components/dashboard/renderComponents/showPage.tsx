@@ -1,12 +1,12 @@
 'use client'
 
 import { v4 as uuid } from "uuid";
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, ReactNode, SetStateAction } from 'react';
 import Link from 'next/link';
 import Img from "./img";
 
 export function chooseTypeOfTextItem(s: string, setTextError: Dispatch<SetStateAction<string>>) {
-    let TextArray: (string | JSX.Element) = '';
+    let TextArray: (string | ReactNode) = '';
     if (s.indexOf('<Image') === 0) { TextArray = createImg(s, setTextError) }
     else if (s.indexOf('<ul>') === 0) { TextArray = createList(s, setTextError) }
     else if (s.indexOf('<title>') === 0) { TextArray = createTitlte(s, setTextError) }
@@ -27,12 +27,12 @@ const createParagh = (s: string, setTextError: Dispatch<SetStateAction<string>>)
 
 
 const jsxInText = (s: string, setTextError: Dispatch<SetStateAction<string>>) => {
-    const textArray: (string | JSX.Element)[] = [];
+    const textArray: (string | ReactNode)[] = [];
 
     let index1: number = 0
-    let index2: number | JSX.Element = s.indexOf('<')
+    let index2: number | ReactNode = s.indexOf('<')
     let error: string = '';
-    let result: number | JSX.Element = <></>;
+    let result: number | ReactNode = <></>;
 
 
     while (index2 > -1) {
@@ -106,10 +106,10 @@ const createLink = (s: string, setTextError: Dispatch<SetStateAction<string>>) =
     }
 
     const text = s.slice(indexHrefEnd + 2, indexTextEnd);
-    const textArray: (string | JSX.Element)[] = [];
+    const textArray: (string | ReactNode)[] = [];
     let index1: number = 0
     let index3: number = text.indexOf('<');
-    let result: JSX.Element | number = <></>;
+    let result: ReactNode | number = <></>;
 
     while (index3 > -1) {
         if (text.indexOf('<italic') === index3 && index3 > -1) {
@@ -160,10 +160,10 @@ const createAnchor = (s: string, setTextError: Dispatch<SetStateAction<string>>)
     }
 
     const text = s.slice(indexHrefEnd + 2, indexTextEnd);
-    const textArray: (string | JSX.Element)[] = [];
+    const textArray: (string | ReactNode)[] = [];
     let index1: number = 0
     let index3: number = text.indexOf('<');
-    let result: JSX.Element | number = <></>;
+    let result: ReactNode | number = <></>;
 
     while (index3 > -1) {
         if (text.indexOf('<italic') === index3 && index3 > -1) {
@@ -214,10 +214,10 @@ const createStrong = (s: string, setTextError: Dispatch<SetStateAction<string>>,
     }
 
     const text = s.slice(indexHrefEnd + 1, indexTextEnd);
-    const textArray: (string | JSX.Element)[] = [];
+    const textArray: (string | ReactNode)[] = [];
     let index1: number = 0
     let index3: number = text.indexOf('<');
-    let result: number | JSX.Element = <></>;
+    let result: number | ReactNode = <></>;
 
     while (index3 > -1) {
         if (text.indexOf('<italic') === index3 && index3 > -1) {
@@ -275,10 +275,10 @@ const createEm = (s: string, setTextError: Dispatch<SetStateAction<string>>, isL
     }
     const text = s.slice(indexHrefEnd + 1, indexTextEnd);
 
-    const textArray: (string | JSX.Element)[] = [];
+    const textArray: (string | ReactNode)[] = [];
     let index1: number = 0
     let index3: number = text.indexOf('<');
-    let result: number | JSX.Element = <></>;
+    let result: number | ReactNode = <></>;
 
     while (index3 > -1) {
         if (text.indexOf('<bold') === index3 && index3 > -1) {
