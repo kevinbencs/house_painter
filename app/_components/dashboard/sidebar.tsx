@@ -30,7 +30,7 @@ const Sidebar = () => {
   const pathname = usePathname()
   return (
     <div >
-      <section className="flex sticky h-[700px] flex-col items-start justify-between bg-gray-900 p-10 text-gray-400 rounded pb-4 text-sm min-w-[251px]">
+      <section className="flex sticky top-0 h-[700px] flex-col items-start justify-between bg-gray-900 p-10 text-gray-400 rounded pb-4 text-sm min-w-[251px]">
         {Links.map((item) => <Link className={`hover:text-gray-200  flex items-center gap-2 w-full p-2 rounded-xs ${pathname === item.url ? 'text-white' : ''}`} key={uuidv4()} href={item.url}>{item.img} {item.text}</Link>)}
         <LogoutButton />
       </section>
