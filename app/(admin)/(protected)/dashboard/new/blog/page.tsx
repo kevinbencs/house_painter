@@ -1,4 +1,5 @@
-import Blog from "@/app/_components/dashboard/blog"
+import DynamicPagesForm from "@/app/_components/dashboard/dynamicPagesForm"
+import { writeBlog } from "@/action/writeBlog";
 
 
 const Page = () => {
@@ -24,7 +25,7 @@ const Page = () => {
 
   return (
     <div className="w-full">
-      <Blog params={params}  res={res} />
+      <DynamicPagesForm params={params}  res={res} serverAction={writeBlog}/>
     </div>
   )
 }
