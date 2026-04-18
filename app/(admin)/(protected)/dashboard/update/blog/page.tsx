@@ -19,7 +19,7 @@ const Page = () => {
 
   
   return (
-    <div><UpdatePagesList lists={l} page="blog"/> </div>
+    <div className="w-full"><UpdatePagesList lists={l} page="blog"/> </div>
   )
 }
 

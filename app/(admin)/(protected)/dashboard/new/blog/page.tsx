@@ -1,5 +1,5 @@
 import DynamicPagesForm from "@/app/_components/dashboard/dynamicPagesForm"
-import { writeBlog } from "@/action/writeBlog";
+import { addBlog } from "@/action/addBlog";
 
 
 const Page = () => {
@@ -25,7 +25,7 @@ const Page = () => {
 
   return (
     <div className="w-full">
-      <DynamicPagesForm params={params}  res={res} serverAction={writeBlog}/>
+      <DynamicPagesForm params={params}  res={res} serverAction={addBlog}/>
     </div>
   )
 }

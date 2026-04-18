@@ -1,6 +1,6 @@
 "use server"
 
-export const writeService= async () => {
+export const addPlace = async () => {
     try {
         return {message: ""}
     } catch (error) {
