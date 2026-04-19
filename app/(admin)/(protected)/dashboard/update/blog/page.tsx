@@ -12,9 +12,9 @@ const Page = () => {
   const l = [{
     id:'w',
     title: "fa",
-    year:"ad",
-    month: "safd",
-    day: "asd"
+    year:"2026",
+    month: "02",
+    day: "03"
   }]
 
   

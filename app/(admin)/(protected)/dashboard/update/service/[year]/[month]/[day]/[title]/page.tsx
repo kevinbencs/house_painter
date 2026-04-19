@@ -1,5 +1,5 @@
 import DynamicPagesForm from "@/app/_components/dashboard/dynamicPagesForm"
-import { writeService } from "@/action/writeService"
+import { addService } from "@/action/addService"
 
 const page = ({ params }: { params: { year: string, month: string, day: string, title: string } }) => {
 
@@ -19,7 +19,7 @@ const page = ({ params }: { params: { year: string, month: string, day: string, 
 
   return (
     <div className="w-full">
-      <DynamicPagesForm params={params} res={res} serverAction={writeService} />
+      <DynamicPagesForm params={params} res={res} serverAction={addService} />
     </div>
   )
 }
