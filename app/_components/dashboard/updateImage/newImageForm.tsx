@@ -17,12 +17,14 @@ import { Label } from "@/components/ui/label"
 
 const NewImageForm = () => {
     const [state, action, isPending] = useActionState(addImage, null)
+
+
     return (
         <div className="flex justify-center w-full">
             <form action={action}>
 
-                <Card size="sm" className="mx-auto w-full max-w-sm">
-                    <CardHeader>
+                <Card size="sm" className="mx-auto w-full max-w-sm ">
+                    <CardHeader className="mb-5">
                         <CardTitle>Kép kiválasztása</CardTitle>
                         <CardDescription>
                             Válassz ki egy képet
@@ -31,8 +33,19 @@ const NewImageForm = () => {
                         {state?.message && <div className="mb-2 mt-2 text-green-600">{state?.message}</div>}
                     </CardHeader>
                     <CardContent>
-                        <Label htmlFor="picture" className="mb-2">Kép</Label>
-                        <Input id="picture" type="file" disabled={isPending}/>
+                        <div className="mb-5">
+                            <Label htmlFor="picture" className="mb-2">Kép</Label>
+                            <Input id="picture" type="file" disabled={isPending} required/>
+                        </div>
+                        <div className="mb-5">
+                            <Label htmlFor="picture-url" className="mb-2">Kép url-je</Label>
+                            <Input id="picture-url" type="text" disabled={isPending} required/>
+                        </div>
+                        <div>
+                            <Label htmlFor="picture-alt" className="mb-2">Kép leírása</Label>
+                            <Input id="picture-alt" type="text" disabled={isPending} required />
+                        </div>
+
                     </CardContent>
                     <CardFooter>
                         <Button variant="outline" size="sm" className="w-full" disabled={isPending}>

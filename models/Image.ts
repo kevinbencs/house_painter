@@ -12,6 +12,15 @@ const ImageSchema = new mongoose.Schema({
     detail: {
         type: String,
         require: true
+    },
+    order: {
+        type: Number,
+        require: true
+    },
+    show: {
+        type: Boolean,
+        required: true,
+        default: true
     }
 }, {timestamps: true})
 
