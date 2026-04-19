@@ -1,7 +1,11 @@
+import NewImageForm from "@/app/_components/dashboard/updateImage/newImageForm"
+
 
 const Page = () => {
   return (
-    <div>Page</div>
+    <>
+      <NewImageForm/>
+    </>
   )
 }
 
