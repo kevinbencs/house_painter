@@ -2,7 +2,7 @@
 import DynamicPagesForm from "@/app/_components/dashboard/dynamicPagesForm"
 import { addPlace } from "@/action/addPlace"
 
-const page = ({ params }: { params: { year: string, month: string, day: string, title: string } }) => {
+const page = async ({ params }: { params: Promise<{ year: string, month: string, day: string, title: string }> }) => {
 
 
   const res = {
@@ -20,7 +20,7 @@ const page = ({ params }: { params: { year: string, month: string, day: string, 
 
   return (
     <div className="w-full">
-      <DynamicPagesForm params={params} res={res} serverAction={addPlace} />
+      <DynamicPagesForm params={await params} res={res} serverAction={addPlace} />
     </div>
   )
 }

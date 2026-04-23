@@ -2,18 +2,14 @@ import ImagePage from '@/app/_components/image/imageContent'
 import Pagination from '@/app/_components/image/pagination'
 
 
-const Page = async ({ params }: { params: Promise<{ page: string }> }) => {
-
-  const { page } = await params
-
-  
+const Page = async () => { 
 
   return (
     <>
       <section>
         <ImagePage img={[]} />
       </section>
-      <Pagination pageNumber={20} currentPage={Number(page)} />
+      <Pagination pageNumber={20} currentPage={1} />
     </>
   )
 }
