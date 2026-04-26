@@ -5,9 +5,14 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/images/:path*',
-        destination: `https://${process.env.BLOB_READ_WRITE_TOKEN}.public.blob.vercel-storage.com/:path*`,
+        destination: `https://BLOB_ID.public.blob.vercel-storage.com/:path*`,
       },
     ];
+  },
+   experimental: {
+    serverActions: {
+      bodySizeLimit: '3mb',
+    },
   },
 };
 

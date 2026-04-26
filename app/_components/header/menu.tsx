@@ -3,6 +3,8 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { useLogged } from "../loggedContext/isLoggedContext"
+import Image from "next/image"
+
 
 
 
@@ -24,12 +26,14 @@ const Menu = () => {
 
     return (
         <div className="flex justify-between lg:justify-around items-center">
-            <Link href="/">Image</Link>
+            <Link href="/">
+                <Image src="/logo.png" alt="Budapest szobafestő logó" width={102} height={102}/>
+            </Link>
             <div >
                 <label htmlFor="hamburger-menu" className="lg:hidden text-center text-black p-2 rounded bg-gray-50">Menu</label>
 
                 <input type="checkbox" name="hamburger-menu" className="fixed -right-64 lg:hidden" id="hamburger-menu" onChange={() => setIsOpen(!isOpen)} />
-                <div className='fixed z-50 duration-100 inset-0 lg:translate-y-0 -translate-y-full  lg:static'>
+                <div className='fixed z-50 duration-100 inset-0 lg:translate-y-0 -translate-y-[100vh]  lg:static'>
                     <div className="h-screen w-full bg-black p-2 z-20 lg:z-0 lg:h-auto lg:bg-gray-900 lg:static lg:w-auto">
                         <label htmlFor="hamburger-menu" className="text-black lg:hidden p-2 rounded bg-gray-50">X</label>
                         <section className=" h-full justify-around  flex flex-col lg:static lg:flex-row lg:justify-between lg:gap-4 items-center">

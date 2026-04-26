@@ -1,7 +1,7 @@
 "use client"
 
 import { useActionState } from "react"
-import { addImage } from "@/action/addImage"
+import { AddImage } from "@/action/addImage"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import {
@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label"
 
 
 const NewImageForm = () => {
-    const [state, action, isPending] = useActionState(addImage, null)
+    const [state, action, isPending] = useActionState(AddImage, null)
 
 
     return (
@@ -35,15 +35,15 @@ const NewImageForm = () => {
                     <CardContent>
                         <div className="mb-5">
                             <Label htmlFor="picture" className="mb-2">Kép</Label>
-                            <Input id="picture" type="file" accept="image/*" disabled={isPending} required/>
+                            <Input id="picture" name="image" type="file" accept="image/*" disabled={isPending} required/>
                         </div>
                         <div className="mb-5">
                             <Label htmlFor="picture-url" className="mb-2">Kép url-je</Label>
-                            <Input id="picture-url" type="text" disabled={isPending} required/>
+                            <Input id="picture-url" name="image-url" type="text" disabled={isPending} required/>
                         </div>
                         <div>
                             <Label htmlFor="picture-alt" className="mb-2">Kép leírása</Label>
-                            <Input id="picture-alt" type="text" disabled={isPending} required />
+                            <Input id="picture-alt" name="image-alt" type="text" disabled={isPending} required />
                         </div>
 
                     </CardContent>
