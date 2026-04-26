@@ -7,14 +7,11 @@ const ImageSchema = new mongoose.Schema({
     },
     newUrl: {
         type: String,
-        require: true
+        require: true,
+        unique: true,
     },
     detail: {
         type: String,
-        require: true
-    },
-    order: {
-        type: Number,
         require: true
     },
     show: {

@@ -16,17 +16,23 @@ export const AddImage = async (_prevState: ActionState, formData: FormData) => {
         const alt = formData.get('image-alt') as String;
         const url = formData.get('image-url') as String;
 
-        /*const img = await new Image({
-
-        })*/
-
-
         const blob = await put(file.name, file, {
             access: 'public',
-            token: process.env.BLOB_READ_WRITE_TOKEN
+            token: process.env.BLOB_READ_WRITE_TOKEN,
+            addRandomSuffix: true,
         });
 
-        console.log(blob.pathname)
+        const index = blob.pathname.lastIndexOf(".")
+
+        const typeOfImage = blob.pathname.slice(index, blob.pathname.length)
+
+        const img = await new Image({
+            newUrl: url+typeOfImage,
+            blobUrl: blob.pathname,
+            detail: alt
+        })
+
+        await img.save()
 
         return {message: "Kép feltöltve"}
     } catch (error) {
