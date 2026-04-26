@@ -35,7 +35,7 @@ const NewImageForm = () => {
                     <CardContent>
                         <div className="mb-5">
                             <Label htmlFor="picture" className="mb-2">Kép</Label>
-                            <Input id="picture" type="file" disabled={isPending} required/>
+                            <Input id="picture" type="file" accept="image/*" disabled={isPending} required/>
                         </div>
                         <div className="mb-5">
                             <Label htmlFor="picture-url" className="mb-2">Kép url-je</Label>

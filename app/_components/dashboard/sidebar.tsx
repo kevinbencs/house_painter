@@ -28,7 +28,7 @@ const Links = [
   { url: "/dashboard/new/service", text: 'Új szolgáltatás írása', img: <FaPaintRoller /> },
   { url: "/dashboard/update/service", text: 'Szolgáltatások', img: <LuPaintBucket /> },
   { url: "/dashboard/new/place", text: 'Új hely hozzáadása', img: <FaMap /> },
-  { url: "/dashboard/update/service", text: 'Helyek', img: <FaCity /> },
+  { url: "/dashboard/update/place", text: 'Helyek', img: <FaCity /> },
 ]
 
 const Sidebar = () => {
