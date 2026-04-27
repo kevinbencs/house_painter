@@ -1,9 +1,20 @@
+import ImageUpdaetPage from "@/app/_components/dashboard/updateImage/imageUpdaetPage";
+import Image from "@/models/Image"
 
+interface Img {
+  _id: string,
+  newUrl: string,
+  detail: string,
+  show: boolean
+}
 
+const Page = async () => {
+  const imgs: Img[] = await Image.find({}, '_id newUrl detail');
 
-const Page = () => {
   return (
-   <section></section>
+   <section>
+     <ImageUpdaetPage  img={imgs} />
+   </section>
   )
 }
 
