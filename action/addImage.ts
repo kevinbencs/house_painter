@@ -2,6 +2,7 @@
 
 import { put } from "@vercel/blob";
 import Image from "@/models/Image";
+import { handleMongooseError } from "@/lib/mongo";
 
 type ActionState = null | {error: string} | {message: string} | undefined
 
@@ -34,9 +35,11 @@ export const AddImage = async (_prevState: ActionState, formData: FormData) => {
 
         await img.save()
 
+
         return {message: "Kép feltöltve"}
     } catch (error) {
-        console.error(error)
-        return {error: "Server error"}
+
+        const Error = await handleMongooseError(error)
+        return {error: Error}
     }
 }

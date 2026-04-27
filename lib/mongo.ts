@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Error as MongooseError } from "mongoose";
 
 declare global {
     var mongooseConnection: mongoose.Mongoose | undefined;
@@ -66,4 +66,25 @@ export const closeMongoConnection = async () => {
         console.error('Failed to close MongoDB connection:', error);
         throw new Error('MongoDB connection failed');
     }
+}
+
+
+
+export const handleMongooseError = async (error: any) => {
+    if (error.code === 11000) {
+        const field = Object.keys(error.keyValue)[0];
+        const value = error.keyValue[field];
+        console.error(`"${value}" already exists for field "${field}"`)
+        return (`"${value}" already exists for field "${field}"`)
+    }
+
+    if (error instanceof MongooseError.ValidationError) {
+        const messages = Object.values(error.errors).map((e) => e.message);
+        console.error(`Validation failed: ${messages.join(", ")}`)
+        return (`Validation failed: ${messages.join(", ")}`);
+    }
+
+    console.error(error)
+
+    return ('Server error')
 }
