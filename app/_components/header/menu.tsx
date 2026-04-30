@@ -27,10 +27,10 @@ const Menu = () => {
     return (
         <div className="flex justify-between lg:justify-around items-center">
             <Link href="/">
-                <Image src="/logo.png" alt="Budapest szobafestő logó" width={102} height={102}/>
+                <Image src="/logo.png" alt="Budapest szobafestő logó" width={102} height={102} loading="eager"/>
             </Link>
             <div >
-                <label htmlFor="hamburger-menu" className="lg:hidden text-center text-black p-2 rounded bg-gray-50">Menu</label>
+                <label htmlFor="hamburger-menu" className="lg:hidden text-center text-black p-2 rounded bg-gray-50">Menu </label>
 
                 <input type="checkbox" name="hamburger-menu" className="fixed -right-64 lg:hidden" id="hamburger-menu" onChange={() => setIsOpen(!isOpen)} />
                 <div className='fixed z-50 duration-100 inset-0 lg:translate-y-0 -translate-y-[100vh]  lg:static'>
