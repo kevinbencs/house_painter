@@ -29,7 +29,7 @@ const FormElement = () => {
                         {state?.message && <div className="mb-2 mt-2 text-green-600">{state?.message}</div>}
                         <div className="flex flex-col gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="category">Kategoria</Label>
+                                <Label htmlFor="category">Kategória</Label>
                                 <Input
                                     id="category"
                                     name="category"
