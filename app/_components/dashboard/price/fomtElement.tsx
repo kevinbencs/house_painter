@@ -19,12 +19,13 @@ const FormElement = () => {
 
     return (
         <div className='flex justify-center'>
-            <Card className="w-full max-w-sm">
-                <CardHeader>
-                    <CardTitle>Új ár hozzáadása</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <form action={action}   >
+            <form action={action}  className="w-full max-w-sm" >
+                <Card className="w-full max-w-sm">
+                    <CardHeader>
+                        <CardTitle>Új ár hozzáadása</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+
                         {state?.error && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
                         {state?.message && <div className="mb-2 mt-2 text-green-600">{state?.message}</div>}
                         <div className="flex flex-col gap-6">
@@ -52,15 +53,16 @@ const FormElement = () => {
                                 <Input id="price" name="price" type="number" required disabled={isPending} />
                             </div>
                         </div>
-                    </form>
-                </CardContent>
-                <CardFooter className="flex-col gap-2">
-                    <Button type="submit" className="w-full" disabled={isPending}>
-                        Mentés
-                    </Button>
 
-                </CardFooter>
-            </Card>
+                    </CardContent>
+                    <CardFooter className="flex-col gap-2">
+                        <Button type="submit" className="w-full" disabled={isPending}>
+                            Mentés
+                        </Button>
+
+                    </CardFooter>
+                </Card>
+            </form>
         </div>
     )
 }

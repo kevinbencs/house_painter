@@ -1,4 +1,4 @@
-/*export async function setupGracefulShutdown() {
+export async function setupGracefulShutdown() {
     if (process.env.NEXT_RUNTIME === 'nodejs') {
         const {closeMongoConnection} = await import ('./lib/mongo')
         const shutdownSignals = ['SIGINT', 'SIGTERM', 'SIGQUIT'];
@@ -26,4 +26,4 @@ export const register = async () => {
     } catch (error) {
         console.log('Failed to connect to MongoDB during server lifecycle', error)
     }
-}*/
+}

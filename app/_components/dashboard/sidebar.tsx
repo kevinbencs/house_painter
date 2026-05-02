@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import LogoutButton from "./logoutButton"
-import { v4 as uuidv4 } from "uuid"
 import { usePathname } from "next/navigation"
 import { FaBloggerB, FaCity, FaPencil } from "react-icons/fa6";
 import { FaWallet } from "react-icons/fa6";
@@ -36,7 +35,7 @@ const Sidebar = () => {
   return (
     <div >
       <section className="flex sticky top-0 h-[800px] flex-col items-start justify-between bg-gray-900 p-10 text-gray-400 rounded pb-4 text-sm min-w-[251px]">
-        {Links.map((item) => <Link className={`hover:text-gray-200  flex items-center gap-2 w-full p-2 rounded-xs ${pathname === item.url ? 'text-white' : ''}`} key={uuidv4()} href={item.url}>{item.img} {item.text}</Link>)}
+        {Links.map((item) => <Link className={`hover:text-gray-200  flex items-center gap-2 w-full p-2 rounded-xs ${pathname === item.url ? 'text-white' : ''}`} key={item.url} href={item.url}>{item.img} {item.text}</Link>)}
         <LogoutButton />
       </section>
     </div>
