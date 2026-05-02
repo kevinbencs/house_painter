@@ -5,7 +5,14 @@ export const getPriceData = async () => {
     'use cache'
     cacheLife('hours')
 
-    return Price.find({}, { _id: 1, name: 1, price: 1, category: 1 }).sort({ category: 1 });
+    const docs = await Price.find({}, { _id: 1, name: 1, price: 1, category: 1 })
+        .sort({ category: 1 })
+        .lean()
+
+    return docs.map(doc => ({
+        ...doc,
+        _id: String(doc._id),
+    }))
 
 }
 
@@ -14,13 +21,10 @@ export const getCategory = async () => {
     'use cache'
     cacheLife('hours')
 
-    return Price.aggregate(
-        [
-            {
-                $group: {
-                    _id: "$category",
-                }
-            }
-        ]
-    )
+    const docs = await Price.aggregate([
+        { $group: { _id: "$category" } }
+    ])
+
+
+    return docs.map(doc => ({ _id: String(doc._id) }))
 }
