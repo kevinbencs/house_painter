@@ -3,7 +3,8 @@ export interface ElementOfPrice {
   name: string,
   category: string,
   price: string,
-  categories: string[]
+  categories: string[],
+  unitOfMea: string
 }
 
 export interface MongoData {
@@ -11,6 +12,7 @@ export interface MongoData {
   name: string,
   category: string,
   price: number,
+  unitOfMea: string
 }
 
 

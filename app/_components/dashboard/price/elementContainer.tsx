@@ -11,12 +11,13 @@ const formatChange = (value: string) => {
     return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 }
 
-const ElementContainer = (props: { name: string, category: string, price: string, categories: string[], _id: string, isPending: boolean }) => {
+const ElementContainer = (props: { name: string, category: string, price: string, categories: string[], _id: string, isPending: boolean, unitOfMea: string }) => {
     const [catInput, setCatInput] = useState<string>(props.category)
     const [name, setName] = useState(props.name);
     const [price, setPrice] = useState(formatChange(props.price))
     const [optClass, setOptClass] = useState<string>('h-0')
     const catRef = useRef<null | HTMLInputElement>(null);
+    const [unitOfMea, setUnitOfMea] = useState(props.unitOfMea)
 
 
 
@@ -32,6 +33,7 @@ const ElementContainer = (props: { name: string, category: string, price: string
             </div>
 
             <Input type="text" name={`price-${props._id}`} id={`price-${props._id}`} value={price} onChange={e => { setPrice(formatChange( e.target.value)) }} required disabled={props.isPending}/>
+            <Input type="text" name={`unitOfMea-${props._id}`} id={`unitOfMea-${props._id}`} value={unitOfMea} onChange={e => setUnitOfMea(e.target.value)} required disabled={props.isPending}/>
 
         </li>
 

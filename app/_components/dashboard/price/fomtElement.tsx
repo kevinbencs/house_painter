@@ -52,6 +52,12 @@ const FormElement = () => {
                                 </div>
                                 <Input id="price" name="price" type="number" required disabled={isPending} />
                             </div>
+                            <div className="grid gap-2">
+                                <div className="flex items-center">
+                                    <Label htmlFor="unitOfMea">Mértékegység</Label>
+                                </div>
+                                <Input id="unitOfMea" name="unitOfMea" type="number" required disabled={isPending} />
+                            </div>
                         </div>
 
                     </CardContent>

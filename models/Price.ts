@@ -13,6 +13,10 @@ const PriceSchema = new mongoose.Schema({
     price: {
         type: Number,
         require: true
+    },
+    unitOfMea: {
+        type: String,
+        require: false
     }
 }, {timestamps: true})
 

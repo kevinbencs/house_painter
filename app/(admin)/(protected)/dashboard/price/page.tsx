@@ -17,7 +17,8 @@ const Page = async () => {
     name: item.name,
     price: String(item.price),
     category: item.category,
-    categories: catArr
+    categories: catArr,
+    unitOfMea: item.unitOfMea
   }))
 
   const data: ElementOfPrice[][] = [];
