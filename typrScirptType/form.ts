@@ -1,0 +1,1 @@
+export type ActionState = null | { message: string } | { error: string } | undefined;

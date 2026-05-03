@@ -22,7 +22,7 @@ export const updatePrice = async (_prevSate: ActionState, formData: FormData) =>
             obj["name"] = arr[i + 1] as string;
             obj["category"] = arr[i + 2] as string;
             obj["price"] = String(arr[i + 3]).replace(/\s/g, '')
-            obj["unitOfMea"] = String(arr[i+5])
+            obj["unitOfMea"] = String(arr[i+4])
 
             newArr.push(obj);
         }
@@ -36,6 +36,7 @@ export const updatePrice = async (_prevSate: ActionState, formData: FormData) =>
 
         updateTag('price-data');
         updateTag('price-cat')
+        
         return { message: "Mentve" }
 
     } catch (error) {

@@ -18,7 +18,6 @@ import { Label } from "@/components/ui/label"
 import { updateImage } from "@/action/updateImage";
 import { Checkbox } from "@/components/ui/checkbox"
 import { deleteImage } from "@/action/deleteImage";
-import { error } from "console";
 
 
 interface Img {
@@ -61,7 +60,7 @@ const ImageUpdaetPage = (props: { img: Img[] }) => {
             const res = await deleteImage(lightBox._id)
 
             if (res.error) {
-                console.log(error);
+                console.log(res.error);
                 setErr("Hiba: " + res.error)
                 setTimeout(() => {
                     setErr('')
