@@ -1,20 +1,18 @@
-import ImageUpdaetPage from "@/app/_components/dashboard/updateImage/imageUpdaetPage";
-import Image from "@/models/Image"
+import ImageUpdatePage from "@/app/_components/dashboard/updateImage/imageUpdatePage";
+import { getAllImg } from "@/lib/data";
+import { Suspense } from "react";
 
-interface Img {
-  _id: string,
-  newUrl: string,
-  detail: string,
-  show: boolean
-}
 
 const Page = async () => {
-  const imgs: Img[] = await Image.find({}, '_id newUrl detail');
+  const imgs = await getAllImg()
 
   return (
-   <section>
-     <ImageUpdaetPage  img={imgs} />
-   </section>
+    <section>
+      <Suspense fallback={<div>Betöltés...</div>}>
+        <ImageUpdatePage img={imgs} />
+      </Suspense>
+
+    </section>
   )
 }
 

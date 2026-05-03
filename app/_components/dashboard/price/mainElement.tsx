@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import Section from "./section"
 import { useActionState } from "react"
 import { updatePrice } from "@/action/updatePrice"
-import { ElementOfPrice } from "@/typrScirptType/price"
+import { ElementOfPrice } from "@/typeScriptType/price"
 
 
 const MainElement = (props: {data: ElementOfPrice[][]}) => {

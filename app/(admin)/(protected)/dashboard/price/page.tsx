@@ -1,6 +1,6 @@
 import MainElement from '@/app/_components/dashboard/price/mainElement'
 import { getCategory, getPriceData } from '@/lib/data'
-import { Categories, ElementOfPrice, MongoData } from '@/typrScirptType/price'
+import { Categories, ElementOfPrice, MongoData } from '@/typeScriptType/price'
 
 
 

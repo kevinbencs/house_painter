@@ -1,7 +1,7 @@
 "use client"
 
 import ElementContainer from "./elementContainer"
-import { ElementOfPrice } from "@/typrScirptType/price"
+import { ElementOfPrice } from "@/typeScriptType/price"
 
 
 

@@ -27,7 +27,7 @@ interface Img {
     show: boolean
 }
 
-const ImageUpdaetPage = (props: { img: Img[] }) => {
+const ImageUpdatePage = (props: { img: Img[] }) => {
     const [lightBox, setLightBox] = useState<Img>({ newUrl: "", detail: '', _id: "", show: true })
     const [state, action, isPending] = useActionState(updateImage, null)
     const [err, setErr] = useState<string>('')
@@ -86,6 +86,7 @@ const ImageUpdaetPage = (props: { img: Img[] }) => {
         }
 
     }
+   
 
     return (
         <>
@@ -96,7 +97,7 @@ const ImageUpdaetPage = (props: { img: Img[] }) => {
                 <div className="fixed top-0 pt-2 bg-white text-green-600 text-2xl text-center">{mess}</div>
             }
             <section>
-                {props.img.map((item) => <Image alt={item.detail} src={item.newUrl} onClick={() => clickOnImage(item.newUrl, item.detail, item._id, item.show)} />)}
+                {props.img.map((item) => <Image className="w-auto h-auto" key={'imageId'+item._id} width={200} height={100} alt={item.detail} src={'/api/images/'+item.newUrl} onClick={() => clickOnImage(item.newUrl, item.detail, item._id, item.show)} />)}
             </section>
             {lightBox._id !== "" &&
                 <div className="fixed w-full h-screen top-0 left-0 z-20">
@@ -157,4 +158,4 @@ const ImageUpdaetPage = (props: { img: Img[] }) => {
     )
 }
 
-export default ImageUpdaetPage
+export default ImageUpdatePage
