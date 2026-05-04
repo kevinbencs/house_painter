@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, MouseEventHandler } from "react";
+import { useState, useRef} from "react";
 import { Input } from "@/components/ui/input";
 import Element from "./element";
 import { FaTrash } from "react-icons/fa6";
