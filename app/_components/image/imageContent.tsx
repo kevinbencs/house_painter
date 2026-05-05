@@ -1,42 +1,44 @@
 "use client"
 
+import { Img } from "@/typeScriptType/img";
 import Image from "next/image"
-import { useState } from "react"
-import { IoCloseSharp } from "react-icons/io5";
+import { MouseEvent, useState } from "react"
+import { FaWindowClose } from "react-icons/fa";
+import { IconContext } from "react-icons";
 
-interface Img {
-    url: string,
-    id: string,
-    alt: string
-}
+
 
 const ImagePage = (props: { img: Img[] }) => {
-    const [lightBox, setLightBox] = useState<Img>({ url: "", alt: '', id: "" })
+    const [lightBox, setLightBox] = useState<Img>({ newUrl: "", detail: '', _id: "", show: true })
 
-    const clickOnImage = async (url: string, alt: string, id: string) => {
-        setLightBox({ url, alt, id });
+    const clickOnImage = async (newUrl: string, detail: string, _id: string, show: boolean) => {
+        setLightBox({ newUrl, detail, _id, show });
         document.body.style.overflow = "hidden"
     }
 
 
-    const closeLightBox = async () => {
-        setLightBox({ url: "", alt: "", id: ""});
+    const closeLightBox = async (e: MouseEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        setLightBox({ newUrl: "", detail: "", _id: "", show: true });
         document.body.style.overflow = ""
     }
 
 
     return (
         <>
-            <section>
-                {props.img.map((item) => <Image alt={item.alt} src={item.url} onClick={() => clickOnImage(item.url, item.alt, item.id)} />)}
+            <section className="flex gap-4 flex-wrap mb-20">
+                {props.img.filter(item => item.show === true).map((item) => <Image loading="eager" className="w-auto h-auto cursor-pointer" width={200} height={100} key={"img-key-" + item._id} alt={item.detail} src={'/api/images/' + item.newUrl} onClick={(e) => { e.preventDefault(); clickOnImage(item.newUrl, item.detail, item._id, item.show) }} />)}
             </section>
-            {lightBox.id !== "" &&
-                <div className="fixed w-full h-screen top-0 left-0 z-20">
-                    <div className="fixed top-0 right-0 m-2 p-4" onClick={closeLightBox}><IoCloseSharp /></div>
-                    <div className="flex justify-center items-center">
-                       <Image src={lightBox.url} alt={lightBox.alt} /> 
+            {lightBox._id !== "" &&
+                <div className="fixed w-full h-screen top-0 left-0 z-20 bg-gray-400/75 " onClick={closeLightBox}>
+                    <IconContext.Provider value={{ size: "2em" }}>
+                        <div className="fixed top-5 right-5 m-2 p-4 cursor-pointer" onClick={closeLightBox}><FaWindowClose /></div>
+                    </IconContext.Provider>
+
+                    <div className="flex justify-center items-center h-screen">
+                        <Image src={'/api/images/' + lightBox.newUrl} alt={lightBox.detail} width={1000} height={100} className="w-auto h-auto" />
                     </div>
-                    
+
                 </div>
             }
 

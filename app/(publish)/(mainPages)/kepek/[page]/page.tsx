@@ -1,20 +1,18 @@
-import ImagePage from '@/app/_components/image/imageContent'
-import Pagination from '@/app/_components/image/pagination'
-
+import Main from '@/app/_components/image/main'
+import { Suspense } from 'react'
 
 const Page = async ({ params }: { params: Promise<{ page: string }> }) => {
 
-  const { page } = await params
-
-  
 
   return (
-    <>
-      <section>
-        <ImagePage img={[]} />
-      </section>
-      <Pagination pageNumber={20} currentPage={Number(page)} />
-    </>
+    <section className='mb-40'>
+      <h1 className='text-3xl mb-10'>Képek</h1>
+      <Suspense fallback={<div>...Betöltés</div>}>
+        <Main params={params} />
+      </Suspense>
+    </section>
+
+
   )
 }
 

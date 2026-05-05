@@ -49,3 +49,28 @@ export const getAllImg = async () => {
         _id: String(img._id)
     }))
 }
+
+
+export const getNumbOfImag = async () => {
+    'use cache'
+    cacheLife('hours')
+    cacheTag('img-numb')
+
+    const numb = await Image.estimatedDocumentCount();
+
+    return Math.ceil(numb/20);
+}
+
+
+export const getTwentyImg = async (page: number) => {
+    'use cache'
+    cacheLife('hours')
+    cacheTag('img-data')
+
+    const imgs: Img[] = await Image.find({}, {_id: 1, show: 1, newUrl:1, detail: 1}).skip((page-1)*20).limit(20).lean();
+
+    return imgs.map(img => ({
+        ...img,
+        _id: String(img._id)
+    }))
+}

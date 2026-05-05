@@ -1,15 +1,25 @@
 import ImagePage from '@/app/_components/image/imageContent'
 import Pagination from '@/app/_components/image/pagination'
+import { getNumbOfImag, getTwentyImg } from '@/lib/data'
+import { cacheLife, cacheTag } from 'next/cache'
 
 
 const Page = async () => { 
+  'use cache'
+  cacheTag('img-page')
+  cacheLife('hours')
+  const pageNumb = await getNumbOfImag()
+
+  const Img = await getTwentyImg(1)
 
   return (
     <>
-      <section>
-        <ImagePage img={[]} />
+      <section className='mb-40'>
+        <h1 className='text-3xl mb-10'>Képek</h1>
+        <ImagePage img={Img} />
+        <Pagination pageNumber={pageNumb} currentPage={1} />
       </section>
-      <Pagination pageNumber={20} currentPage={1} />
+      
     </>
   )
 }
