@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        require: "Name is require",
-        max: 25,
-    },
+const AdminSchema = new mongoose.Schema({
     password: {
         type: String,
         required: "Your password is required",
@@ -22,4 +17,4 @@ const UserSchema = new mongoose.Schema({
     }
 }, {timestamps: true})
 
-export default mongoose.models.User || mongoose.model('User', UserSchema);
+export default mongoose.models.Admin || mongoose.model('Admin', AdminSchema);
