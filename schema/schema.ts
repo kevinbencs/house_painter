@@ -2,8 +2,8 @@ import * as z from "zod"
 
 
 export const loginSchema = z.object({
-    email: z.email({message: "Email is required"}),
-    password: z.string({message: 'Password is required'})
+    email: z.email({message: "Email-t kötelező megadni"}),
+    password: z.string({message: 'Jeszót kötelezó megadni'})
 })
 
 export const newPasswordSchema = z.object({
@@ -19,3 +19,12 @@ export const newPasswordSchema = z.object({
 }).refine((data) => {
     return data.password === data.passwordConfirm
 }, {message: "A két jelszónak meg kell egyeznie."})
+
+
+export const blogServPlaceSchema = z.object({
+    heading: z.string({message: 'Címet kötelező megadni'}),
+    text:  z.string({message: 'Szöveget kötelező megadni'}),
+    keywords:  z.array(z.string({message: "Kulcsszavakat kötelező megadni"})),
+    detail: z.string({message: "A leírás megadása kötelező"}),
+    image: z.string({message: "Egy kép id-jének megadása kötelező"})
+})
