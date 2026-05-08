@@ -3,11 +3,11 @@ import mongoose from "mongoose";
 const AdminSchema = new mongoose.Schema({
     password: {
         type: String,
-        required: "Your password is required",
+        require: true,
     },
     email: {
         type: String,
-        require: "Email is require",
+        require: true,
         unique: true,
         lowercase: true,
         trim: true,

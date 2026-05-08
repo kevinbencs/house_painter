@@ -16,7 +16,7 @@ const ImageSchema = new mongoose.Schema({
     },
     show: {
         type: Boolean,
-        required: true,
+        require: true,
         default: true
     }
 }, {timestamps: true})
