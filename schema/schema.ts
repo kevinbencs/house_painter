@@ -28,3 +28,5 @@ export const blogServPlaceSchema = z.object({
     detail: z.string({message: "A leírás megadása kötelező"}),
     image: z.string({message: "Egy kép id-jének megadása kötelező"})
 })
+
+export const deleteSchema = z.string({message: "_id megadása kötelező"})
