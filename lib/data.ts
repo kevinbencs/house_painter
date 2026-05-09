@@ -38,9 +38,6 @@ export const getCategory = async () => {
 }
 
 export const getAllImg = async () => {
-    'use cache'
-    cacheLife('hours')
-    cacheTag('img-data')
 
     const imgs: Img[] = await Image.find({}, {_id: 1, show: 1, newUrl:1, detail: 1}).lean();
 

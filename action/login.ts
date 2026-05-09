@@ -1,6 +1,7 @@
 "use server"
 
 import Admin from "@/models/Admin";
+import { loginSchema } from "@/schema/schema";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { cookies } from "next/headers";
@@ -11,6 +12,16 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
     try {
         const email = formData.get("email");
         const password= formData.get("password") as string;
+
+        const res = loginSchema.safeParse({
+            email,
+            password
+        });
+
+        if(res.error){
+            console.log(res.error.issues);
+            return {failed: res.error.issues.map((item) => item.message)}
+        }
 
         const admin = await Admin.findOne({
             email

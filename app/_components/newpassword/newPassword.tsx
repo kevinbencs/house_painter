@@ -33,13 +33,13 @@ const NewPassword = () => {
                             <div className="flex items-center">
                                 <Label htmlFor="password">Jelszó</Label>
                             </div>
-                            <Input id="password" type="password" required disabled={isPending} />
+                            <Input id="password" name="password" type="password" required disabled={isPending} />
                         </div>
                         <div className="grid gap-2">
                             <div className="flex items-center">
                                 <Label htmlFor="password_confirm">Jelszó megerősítése</Label>
                             </div>
-                            <Input id="password_confirm" type="password" required disabled={isPending} />
+                            <Input id="password_confirm" type="password" name="passwordConfirm" required disabled={isPending} />
                         </div>
                     </div>
                 </form>
