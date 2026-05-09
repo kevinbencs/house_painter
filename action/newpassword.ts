@@ -16,9 +16,11 @@ export const sendEmail = async (_prevState: ActionState, formData: FormData) => 
     }
 }
 
-export const changePassword = async (_prevState: ActionState, formData: FormData, url: string | undefined) => {
+export const changePassword = async (_prevState: ActionState, formData: FormData) => {
     try {
         const auth = await checkAuth()
+
+        const url = formData.get("url") as string | undefined
 
         if (auth === "error") {
             if (!url) return { error: "Kérlek jelentkezz be." };
