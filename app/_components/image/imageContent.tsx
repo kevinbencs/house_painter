@@ -32,7 +32,7 @@ const ImagePage = (props: { img: Img[] }) => {
             {lightBox._id !== "" &&
                 <div className="fixed w-full h-screen top-0 left-0 z-20 bg-gray-400/75 " onClick={closeLightBox}>
                     <IconContext.Provider value={{ size: "2em" }}>
-                        <div className="fixed top-5 right-5 m-2 p-4 cursor-pointer" onClick={closeLightBox}><FaWindowClose /></div>
+                        <div className="fixed top-5 right-5 m-2 p-4 cursor-pointer" ><FaWindowClose /></div>
                     </IconContext.Provider>
 
                     <div className="flex justify-center items-center h-screen">

@@ -2,13 +2,10 @@
 
 import Image from "next/image"
 import { ChangeEvent, useActionState, useState } from "react"
-import { IoCloseSharp } from "react-icons/io5";
 import { Button } from "@/components/ui/button";
 import {
     Card,
-    CardAction,
     CardContent,
-    CardDescription,
     CardFooter,
     CardHeader,
     CardTitle,
@@ -18,6 +15,8 @@ import { Label } from "@/components/ui/label"
 import { updateImage } from "@/action/updateImage";
 import { Checkbox } from "@/components/ui/checkbox"
 import { deleteImage } from "@/action/deleteImage";
+import { IconContext } from "react-icons";
+import { FaWindowClose } from "react-icons/fa";
 
 
 interface Img {
@@ -30,7 +29,7 @@ interface Img {
 const ImageUpdatePage = (props: { img: Img[] }) => {
     const [lightBox, setLightBox] = useState<Img>({ newUrl: "", detail: '', _id: "", show: true })
     const [state, action, isPending] = useActionState(updateImage, null)
-    const [err, setErr] = useState<string>('')
+
     const [mess, setMess] = useState<string>('')
 
     const clickOnImage = async (newUrl: string, detail: string, _id: string, show: boolean) => {
@@ -46,12 +45,7 @@ const ImageUpdatePage = (props: { img: Img[] }) => {
 
     const inputChangeHandle = async (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        if (name === 'show') {
-            setLightBox({ ...lightBox, show: !lightBox.show });
-        }
-        else {
-            setLightBox({ ...lightBox, [name]: value });
-        }
+        setLightBox({ ...lightBox, [name]: value });
     }
 
 
@@ -61,10 +55,13 @@ const ImageUpdatePage = (props: { img: Img[] }) => {
 
             if (res.error) {
                 console.log(res.error);
-                setErr("Hiba: " + res.error)
-                setTimeout(() => {
-                    setErr('')
-                }, 5000)
+                alert("Hiba: " + res.error);
+
+            }
+
+            if (res.failed) {
+                console.log(res.failed);
+                alert("Hiba: " + res.failed.join('; \n'))
             }
 
             if (res.message) {
@@ -79,33 +76,31 @@ const ImageUpdatePage = (props: { img: Img[] }) => {
 
         } catch (error) {
             console.log(error);
-            setErr("Hiba: próbáld újra")
-            setTimeout(() => {
-                setErr('')
-            }, 5000)
+            alert("Hiba: próbáld újra")
         }
 
     }
-   
+
 
     return (
         <>
-            {err !== "" &&
-                <div className="fixed top-0 pt-2 bg-white text-red-700 text-2xl text-center">{err}</div>
-            }
+
             {mess !== "" &&
                 <div className="fixed top-0 pt-2 bg-white text-green-600 text-2xl text-center">{mess}</div>
             }
             <section>
-                {props.img.map((item) => <Image className="w-auto h-auto" key={'imageId'+item._id} width={200} height={100} alt={item.detail} src={'/api/images/'+item.newUrl} onClick={() => clickOnImage(item.newUrl, item.detail, item._id, item.show)} />)}
+                {props.img.map((item) => <Image className="w-auto h-auto" key={'imageId' + item._id} width={200} height={100} alt={item.detail} src={'/api/images/' + item.newUrl} onClick={() => clickOnImage(item.newUrl, item.detail, item._id, item.show)} />)}
             </section>
             {lightBox._id !== "" &&
-                <div className="fixed w-full h-screen top-0 left-0 z-20">
-                    <div className="fixed top-0 right-0 m-2 p-4" onClick={closeLightBox}><IoCloseSharp /></div>
-                    <div className="flex justify-center items-center">
-                        <Image src={lightBox.newUrl} alt={lightBox.detail} />
+                <div className="fixed w-full h-screen top-0 left-0 z-20 bg-gray-400/75 " >
+                    <IconContext.Provider value={{ size: "2em" }}>
+                        <div className="fixed top-5 right-5 m-2 p-4 cursor-pointer" onClick={closeLightBox}><FaWindowClose /></div>
+                    </IconContext.Provider>
+
+                    <div className="flex justify-center gap-12 items-center" >
+                        <Image src={'/api/images/' + lightBox.newUrl} alt={lightBox.detail} width={1000} height={100} className="w-auto h-auto" />
                         <div>
-                            <Button className="text-red-700" onClick={deleteImg}>Törlés</Button>
+                            <Button className="text-red-700 mb-6" onClick={deleteImg}>Törlés</Button>
                             <div>
                                 <form action={action}>
                                     <Card className="w-full max-w-sm">
@@ -127,13 +122,13 @@ const ImageUpdatePage = (props: { img: Img[] }) => {
                                                 </div>
 
                                                 <div>
-                                                    <Label htmlFor="picture-visibility" className="mb-2">Kép leírása</Label>
-                                                    <Checkbox id="picture-visibility" name="show" disabled={isPending} required checked={lightBox.show} onChange={() => setLightBox({ ...lightBox, show: !lightBox.show })} />
+                                                    <Label htmlFor="picture-visibility" className="mb-2">Megjelenjen a kép?</Label>
+                                                    <Checkbox id="picture-visibility" name="show" disabled={isPending} required checked={lightBox.show} onCheckedChange={(e) => setLightBox({ ...lightBox, show: Boolean(e) })} />
                                                 </div>
 
                                                 <div className="hidden">
                                                     <Label htmlFor="picture-id" className="mb-2">Kép azonosítója</Label>
-                                                    <Input id="picture-id" name="_id" type="text" disabled={isPending} required value={lightBox._id} />
+                                                    <Input id="picture-id" name="_id" type="text" disabled={isPending} required value={lightBox._id} readOnly />
                                                 </div>
 
                                             </div>
