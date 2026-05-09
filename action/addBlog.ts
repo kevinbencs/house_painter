@@ -1,8 +1,8 @@
 "use server"
 
-import { BSP } from "@/typeScriptType/blogServPlace"
+import { ActionState } from "@/typeScriptType/form"
 
-export const addBlog = async (_prevState: BSP, formData: FormData) => {
+export const addBlog = async (_prevState: ActionState, formData: FormData) => {
     try {
         return {message: ""}
     } catch (error) {

@@ -23,7 +23,7 @@ export const changePassword = async (_prevState: ActionState, formData: FormData
         const url = formData.get("url") as string | undefined
 
         if (auth === "error") {
-            if (!url) return { error: "Kérlek jelentkezz be." };
+            if (!url || url === "") return { error: "Kérlek jelentkezz be." };
             
             const res = await checkNewPassPageUlr(url);
 

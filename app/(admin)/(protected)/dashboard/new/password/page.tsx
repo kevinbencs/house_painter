@@ -4,7 +4,7 @@ const Page = () => {
   return (
       <div className="flex justify-center h-screen pt-40 w-full">
         <div className=" h-[300px] w-full flex justify-center">
-          <NewPassword />
+          <NewPassword url="" />
         </div>
       </div>
 

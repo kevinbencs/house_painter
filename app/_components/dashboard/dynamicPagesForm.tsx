@@ -17,6 +17,8 @@ import {
     QueryClient,
     QueryClientProvider,
 } from '@tanstack/react-query'
+import { BSP } from "@/typeScriptType/blogServPlace";
+import { ActionState } from "@/typeScriptType/form";
 
 const queryClient = new QueryClient()
 
@@ -43,7 +45,7 @@ const DynamicPagesForm = (props: {
         error: undefined,
         failed: undefined,
     },
-    serverAction: () => Promise<{
+    serverAction: (_prevState: ActionState, formData: FormData) => Promise<{
         message: string;
         error?: undefined;
     } | {

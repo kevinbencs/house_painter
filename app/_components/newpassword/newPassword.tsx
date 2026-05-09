@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useActionState } from "react"
 
-const NewPassword = () => {
+const NewPassword = (props: {url: string | undefined}) => {
     const [state, action, isPending] = useActionState(changePassword, null)
     return (
         <Card className="w-full max-w-sm">
@@ -40,6 +40,9 @@ const NewPassword = () => {
                                 <Label htmlFor="password_confirm">Jelszó megerősítése</Label>
                             </div>
                             <Input id="password_confirm" type="password" name="passwordConfirm" required disabled={isPending} />
+                        </div>
+                        <div className="hidden">
+                             <Input id="url" type="text" name="url" value={props.url} readOnly />
                         </div>
                     </div>
                 </form>
