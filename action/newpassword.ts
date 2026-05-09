@@ -2,23 +2,31 @@
 
 import { loginSchema } from "@/schema/schema"
 import Admin from "@/models/Admin"
-import { checkAuth } from "@/lib/checkAuth"
+import { checkAuth, checkNewPassPageUlr } from "@/lib/checkAuth"
 
 
-type ActionState = { message: string } | { error: string } | null | {failed: string[]}
+type ActionState = { message: string } | { error: string } | null | { failed: string[] }
 
 export const sendEmail = async (_prevState: ActionState, formData: FormData) => {
     try {
-        return {message: "success"}
+        return { message: "success" }
     } catch (error) {
         console.error(error)
-        return {error: "Failed login"}
+        return { error: "Failed login" }
     }
 }
 
-export const changePassword = async (_prevState: ActionState, formData: FormData) => {
+export const changePassword = async (_prevState: ActionState, formData: FormData, url: string | undefined) => {
     try {
-       const auth = await checkAuth()
+        const auth = await checkAuth()
+
+        if (auth === "error") {
+            if (!url) return { error: "Kérlek jelentkezz be." };
+            
+            const res = await checkNewPassPageUlr(url);
+
+            if (res === "error") return { error: "Kérlek jelentkezz be." };
+        }
 
         const password = formData.get('password');
         const passwordConfirm = formData.get('passwordConfirm')
@@ -28,20 +36,20 @@ export const changePassword = async (_prevState: ActionState, formData: FormData
             passwordConfirm
         })
 
-        if(res.error){
+        if (res.error) {
             console.log(res.error.issues);
-            return {failed: res.error.issues.map((item) => item.message)}
+            return { failed: res.error.issues.map((item) => item.message) }
         }
 
         const id = "sdjfiesafjiefewofm"
 
-        const admin = await Admin.findByIdAndUpdate(id,{
+        const admin = await Admin.findByIdAndUpdate(id, {
             password
         })
 
-        return {message: "success"}
+        return { message: "success" }
     } catch (error) {
         console.error(error)
-        return {error: "Failed login"}
+        return { error: "Failed login" }
     }
 }
