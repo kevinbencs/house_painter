@@ -10,22 +10,22 @@ export const checkAuth = async () => {
 
         const tokenLongTime = cookie.get("longAuthToken");
 
-        if (!tokenShortTime && !tokenLongTime) return "error"
+        if (!tokenShortTime && !tokenLongTime) return {error: "There is no token"}
 
         if (tokenShortTime) {
             const resShort = await checkJWT(tokenShortTime.value, process.env.JWT_SECRET_Short!)
 
-            if (resShort.message) return "success";
+            if (resShort.res) return {res: resShort};
 
             if (resShort.error) {
                 if (tokenLongTime) {
                     const resLong = await checkJWT(tokenLongTime.value, process.env.JWT_SECRET_Long!)
 
-                    if (resLong.error) return "error";
+                    if (resLong.error) return {error: resLong.error};
 
-                    if (resLong.message) {
+                    if (resLong.res) {
 
-                        const tokenShortTime = jwt.sign(resLong.message, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
+                        const tokenShortTime = jwt.sign(resLong.res, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
 
                         cookie.set(tokenShortTime, "shortAuthToken", {
                             httpOnly: true,
@@ -34,11 +34,11 @@ export const checkAuth = async () => {
                         })
 
 
-                        return "success";
+                        return {res: resLong.res};
                     }
 
                 }
-                else return "error";
+                else return {error: resShort.error};
 
             }
 
@@ -47,9 +47,9 @@ export const checkAuth = async () => {
         if (tokenLongTime) {
             const resLong = await checkJWT(tokenLongTime.value, process.env.JWT_SECRET_Long!)
 
-            if (resLong.message) {
+            if (resLong.res) {
 
-                const tokenShortTime = jwt.sign(resLong.message, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
+                const tokenShortTime = jwt.sign(resLong.res, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
 
                 cookie.set(tokenShortTime, "shortAuthToken", {
                     httpOnly: true,
@@ -58,18 +58,18 @@ export const checkAuth = async () => {
                 })
 
 
-                return "success";
+                return {success: resLong.res};
             }
 
-            if (resLong.error) return "error"
+            if (resLong.error) return { error: resLong.error}
         }
 
-        return "error";
+        return { error: " Error" }
 
     } catch (error) {
         console.log(error)
 
-        return "error"
+        return { error: "Server error" }
     }
 }
 
@@ -79,13 +79,13 @@ export const checkNewPassPageUlr = async (url: string) => {
     try {
         const res = await checkJWT(url, process.env.JWT_SECRET_URL!)
 
-        if(res.error) return "error";
+        if(res.error) return { error: res.error }
 
-        return "success"
+        return {res: res.res}
     } catch (error) {
         console.log(error)
 
-        return "error"
+        return { error: "Server error" }
     }
 }
 
@@ -93,13 +93,13 @@ export const checkNewPassPageUlr = async (url: string) => {
 
 const checkJWT = async (token: string, secret: string) => {
     try {
-        const short = jwt.verify(token, secret)
+        const res = jwt.verify(token, secret)
 
-        const user = await Admin.findById(short)
+        const user = await Admin.findById(res)
 
-        if (!user) return { error: "No admin" }
+        if (!user) return { error: "There is no admin with this id" }
 
-        return { message: short }
+        return {res}
 
     } catch (error) {
         console.log(error)

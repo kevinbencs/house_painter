@@ -2,9 +2,9 @@
 
 import { handleMongooseError } from "@/lib/mongo"
 import Price from "@/models/Price"
+import { ActionState } from "@/typeScriptType/form"
 import { updateTag } from "next/cache"
 
-type ActionState = null | { message: string } | { error: string } | undefined
 
 export const updatePrice = async (_prevSate: ActionState, formData: FormData) => {
     try {

@@ -22,12 +22,22 @@ export const changePassword = async (_prevState: ActionState, formData: FormData
 
         const url = formData.get("url") as string | undefined
 
-        if (auth === "error") {
+        let userId: string;
+
+        if (auth.error) {
             if (!url || url === "") return { error: "Kérlek jelentkezz be." };
-            
+
             const res = await checkNewPassPageUlr(url);
 
-            if (res === "error") return { error: "Kérlek jelentkezz be." };
+            if (res.error) { return { error: "Kérlek jelentkezz be." }; }
+            else {
+                userId = res.res as string;
+            }
+
+
+        }
+        else {
+            userId = auth.res as string
         }
 
         const password = formData.get('password');
@@ -43,15 +53,14 @@ export const changePassword = async (_prevState: ActionState, formData: FormData
             return { failed: res.error.issues.map((item) => item.message) }
         }
 
-        const id = "sdjfiesafjiefewofm"
 
-        const admin = await Admin.findByIdAndUpdate(id, {
+        const admin = await Admin.findByIdAndUpdate(userId, {
             password
         })
 
-        return { message: "success" }
+        return { message: "Jelszó megváltozott" }
     } catch (error) {
         console.error(error)
-        return { error: "Failed login" }
+        return { error: "Jelszó megváltoztatása nem sikerült" }
     }
 }

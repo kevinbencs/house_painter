@@ -2,8 +2,8 @@
 
 import Image from "@/models/Image";
 import { handleMongooseError } from "@/lib/mongo";
+import { ActionState } from "@/typeScriptType/form";
 
-type ActionState = null | {error: string} | {message: string} | undefined
 
 export const updateImage = async (_prevState: ActionState, formData: FormData) => {
     try {

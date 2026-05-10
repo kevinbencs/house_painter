@@ -1,6 +1,8 @@
 "use server"
 
-export const addService= async () => {
+import { ActionState } from "@/typeScriptType/form"
+
+export const addService= async (_prevState: ActionState, formData: FormData) => {
     try {
         return {message: ""}
     } catch (error) {
