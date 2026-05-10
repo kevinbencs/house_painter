@@ -1,6 +1,6 @@
 "use client"
 
-import { useActionState, useState, useEffect, useRef, ReactNode } from "react"
+import { useActionState, useState, useEffect, useRef, ReactNode, Suspense } from "react"
 import { useRouter } from "next/navigation";
 import * as z from 'zod';
 import { v4 as uuid } from "uuid";
@@ -12,12 +12,11 @@ import Link_Anchor from "./renderComponents/linkAnchor";
 import List_embedded from "./renderComponents/listEmbedded";
 import Themes from "./renderComponents/themes";
 import ImgOptgroup from "./renderComponents/imgOptGroup";
-import Img from "./renderComponents/img";
+import Imag from "./renderComponents/img";
 import {
     QueryClient,
     QueryClientProvider,
 } from '@tanstack/react-query'
-import { BSP } from "@/typeScriptType/blogServPlace";
 import { ActionState } from "@/typeScriptType/form";
 
 const queryClient = new QueryClient()
@@ -137,7 +136,7 @@ const DynamicPagesForm = (props: {
                 <input type="text" name='title' className='focus-within:outline-none border-b-2 input-bordered block w-full mb-8 bg-transparent pl-2 dark:text-white' placeholder='Blog címe' value={titleInput} onChange={(e) => setTitleInput(e.target.value)} />
                 <input type="text" name='cover_image_id' className='focus-within:outline-none border-b-2 input-bordered block w-full mb-8 bg-transparent pl-2 dark:text-white' placeholder='Cover kép id' value={coverImageId} onChange={(e) => setCoverImageId(e.target.value)} />
                 <div className='max-w-96 mb-10'>
-                    <Img id={coverImageId} />
+                    <Imag id={coverImageId} />
                 </div>
 
                 <QueryClientProvider client={queryClient}>
@@ -151,9 +150,9 @@ const DynamicPagesForm = (props: {
                 <input type='text' value={detail} onChange={(e) => setDetail(e.target.value)} className='focus-within:outline-none border-b-2 input-bordered block w-full mt-10 mb-10 bg-transparent pl-2 dark:text-white' placeholder='Leírás' />
 
                 <section className='flex gap-2 mb-10 flex-wrap'>
-                    {bold_italic.map((item: string) => <Bold_italic text={item} TextEnterRef={TextEnterRef} key={uuid()} />)}
-                    {link_anchor.map((item: string) => <Link_Anchor text={item} TextEnterRef={TextEnterRef} key={uuid()} />)}
-                    {list_embedded.map(item => <List_embedded TextEnterRef={TextEnterRef} text={item.text} textElem={item.textElem} key={uuid()} />)}
+                    {bold_italic.map((item: string) => <Bold_italic text={item} TextEnterRef={TextEnterRef} key={"key-" + item} />)}
+                    {link_anchor.map((item: string) => <Link_Anchor text={item} TextEnterRef={TextEnterRef} key={"key-" + item} />)}
+                    {list_embedded.map(item => <List_embedded TextEnterRef={TextEnterRef} text={item.text} textElem={item.textElem} key={"key-" + item.text} />)}
                 </section>
 
                 <p contentEditable="true" className={`mt-10 focus-within:outline-none border p-3 rounded min-h-24 dark:text-white ${paragPlaceholder}`} onInput={handleParagraphChange} tabIndex={0} ref={TextEnterRef}></p>

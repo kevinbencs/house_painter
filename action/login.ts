@@ -96,6 +96,6 @@ export const loginTwoFAAction = async (_prevState: ActionState, formData: FormDa
         } else if (error.name === "NotBeforeError") {
             redirect('/login')
         }
-        return { error: "Failed login" }
+        return { error: "Hiba, próbáld újra" }
     }
 }

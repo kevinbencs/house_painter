@@ -4,7 +4,7 @@ import { ActionState } from "@/typeScriptType/form"
 
 export const addBlog = async (_prevState: ActionState, formData: FormData) => {
     try {
-        return {message: ""}
+        return {message: "Cikk létrehozva"}
     } catch (error) {
         console.error(error)
         return {error: ""}

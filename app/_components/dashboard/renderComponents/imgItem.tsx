@@ -69,7 +69,7 @@ const ImgItem = (props: {  setImageId: Dispatcher<string>,  setOptClass: Dispatc
             </div>
 
             {showImage && 
-                <Image src={props.item.newUrl} unoptimized={true} alt={props.item.detail} width={300} height={100} className={`fixed  w-[600px] z-50 `} style={{ left: liLeft - 600, top: liTop }} />
+                <Image src={`/api/images/${props.item.newUrl}`} unoptimized={true} alt={props.item.detail} width={300} height={100} className={`fixed  w-[600px] z-50 `} style={{ left: liLeft - 600, top: liTop }} />
             }
 
         </li>)

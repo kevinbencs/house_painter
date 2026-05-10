@@ -1,14 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { get } from '@vercel/blob';
 import Image from "@/models/Image";
-
-type ImageModel = {
-  blobUrl: string,
-  newUrl: string,
-  detail: string,
-  show: boolean,
-  _id: string
-}
+import { Img } from "@/typeScriptType/img";
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ path: string }> }) {
   try {
@@ -19,7 +12,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ path
       return NextResponse.json({ "error": "BLOB_READ_WRITE_TOKEN is missed." });
     }
 
-    const img: ImageModel[] = await Image.find({
+    const img: Img[] = await Image.find({
       newUrl: path
     })
 
