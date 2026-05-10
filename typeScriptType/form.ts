@@ -1,1 +1,1 @@
-export type ActionState = null | { message: string } | { error: string } | undefined;
+export type ActionState = null | { message: string } | { error: string } | undefined | { failed: string[] };

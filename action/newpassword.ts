@@ -3,9 +3,7 @@
 import { loginSchema } from "@/schema/schema"
 import Admin from "@/models/Admin"
 import { checkAuth, checkNewPassPageUlr } from "@/lib/checkAuth"
-
-
-type ActionState = { message: string } | { error: string } | null | { failed: string[] }
+import { ActionState } from "@/typeScriptType/form"
 
 export const sendEmail = async (_prevState: ActionState, formData: FormData) => {
     try {

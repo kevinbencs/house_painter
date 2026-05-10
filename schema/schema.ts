@@ -24,7 +24,7 @@ export const newPasswordSchema = z.object({
 export const blogServPlaceSchema = z.object({
     heading: z.string({message: 'Címet kötelező megadni'}),
     text:  z.string({message: 'Szöveget kötelező megadni'}),
-    keywords:  z.array(z.string({message: "Kulcsszavakat kötelező megadni"})),
+    keywords: z.string({message: "Kulcsszavakat kötelező megadni"}),
     detail: z.string({message: "A leírás megadása kötelező"}),
     image: z.string({message: "Egy kép id-jének megadása kötelező"})
 })
