@@ -3,13 +3,15 @@
 import { checkAuth } from "@/lib/checkAuth";
 import { handleMongooseError } from "@/lib/mongo";
 import Blog from "@/models/Blog";
-import { blogServPlaceSchema } from "@/schema/schema";
+import {  blogServPlaceSchemaId } from "@/schema/schema";
 import { ActionState } from "@/typeScriptType/form";
 
 
 export const updateImage = async (_prevState: ActionState, formData: FormData) => {
     try {
         const authRes = await checkAuth();
+
+        if (authRes.error) return { error: "Kérlek jelentkezz be." };
 
         const heading = formData.get('heading') as string;
         const text = formData.get('text') as string;
@@ -18,12 +20,13 @@ export const updateImage = async (_prevState: ActionState, formData: FormData) =
         const image = formData.get('image') as string;
         const _id = formData.get('_id') as string;
 
-        const res = blogServPlaceSchema.safeParse({
+        const res = blogServPlaceSchemaId.safeParse({
             heading,
             text,
             detail,
             keywords,
-            image
+            image,
+            _id
         })
 
         if (res.error?.issues) {

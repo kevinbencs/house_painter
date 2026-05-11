@@ -29,4 +29,22 @@ export const blogServPlaceSchema = z.object({
     image: z.string({message: "Egy kép id-jének megadása kötelező"})
 })
 
+
+export const blogServPlaceSchemaId = z.object({
+    heading: z.string({message: 'Címet kötelező megadni'}),
+    text:  z.string({message: 'Szöveget kötelező megadni'}),
+    keywords: z.string({message: "Kulcsszavakat kötelező megadni"}),
+    detail: z.string({message: "A leírás megadása kötelező"}),
+    image: z.string({message: "Egy kép id-jének megadása kötelező"}),
+    _id: z.string({message: "Az oldal id-jének megadása kötelező"}),
+})
+
+
+export const imageId = z.object({
+    newUrl:  z.string({message: 'Az url megadása kötelező'}),
+    show: z.string({message: "Láthatóság megadása kötelező"}),
+    detail: z.string({message: "A leírás megadása kötelező"}),
+    _id: z.string({message: "Az oldal id-jének megadása kötelező"}),
+})
+
 export const deleteSchema = z.string({message: "_id megadása kötelező"})
