@@ -4,7 +4,7 @@ import Image from "@/models/Image";
 import { handleMongooseError } from "@/lib/mongo";
 import { ActionState } from "@/typeScriptType/form";
 import { checkAuth } from "@/lib/checkAuth";
-import { imageId } from "@/schema/schema";
+import {  imageIdSchema } from "@/schema/schema";
 
 
 export const updateImage = async (_prevState: ActionState, formData: FormData) => {
@@ -19,7 +19,7 @@ export const updateImage = async (_prevState: ActionState, formData: FormData) =
         const newUrl = formData.get('image-url') as String;
         const show = formData.get('image-visibility') as String;
 
-        const res = imageId.safeParse({
+        const res = imageIdSchema.safeParse({
             _id,
             newUrl,
             detail,
