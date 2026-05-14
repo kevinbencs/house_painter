@@ -1,8 +1,17 @@
-import React from 'react'
+import { Suspense } from "react"
+import Totp from "./totp"
 
-const page = () => {
+
+
+const page = async () => {
+
+
   return (
-    <div>page</div>
+    <div>
+      <Suspense fallback={"...Betölt"}>
+        <Totp/>
+      </Suspense>
+    </div>
   )
 }
 
