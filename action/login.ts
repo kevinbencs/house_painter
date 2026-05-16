@@ -1,13 +1,17 @@
 "use server"
 
+import { handleMongooseError } from "@/lib/mongo";
 import Admin from "@/models/Admin";
-import { loginSchema } from "@/schema/schema";
+import { loginSchema, otpTokenSchema } from "@/schema/schema";
+import { Adm } from "@/typeScriptType/admin";
+import { ActionState } from "@/typeScriptType/form";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { verify } from "otplib";
 
-type ActionState = { message: string } | { error: string } | null
+
 
 export const loginAction = async (_prevState: ActionState, formData: FormData) => {
     try {
@@ -46,8 +50,19 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
 
         redirect('/login/2fa')
     } catch (error) {
-        console.error(error)
-        return { error: "Failed login" }
+        if (error.name === "TokenExpiredError") {
+            console.error(error)
+            redirect('/login')
+        } else if (error.name === "JsonWebTokenError") {
+            console.error(error)
+            redirect('/login')
+        } else if (error.name === "NotBeforeError") {
+            console.error(error)
+            redirect('/login')
+        }
+
+        const Error = await handleMongooseError(error)
+        return { error: Error }
     }
 }
 
@@ -62,11 +77,24 @@ export const loginTwoFAAction = async (_prevState: ActionState, formData: FormDa
 
         const decoded = jwt.verify(logCookie.value, process.env.JWT_SECRET_URL!)
 
-        const user = await Admin.findById(decoded)
+        const user = await Admin.findById(decoded) as Adm
 
         if (!user) redirect('/login')
 
-            
+        const token = formData.get('optName') as string;
+
+        const valid = otpTokenSchema.safeParse(token);
+
+        if (valid.error) {
+            console.log(valid.error.issues);
+            return { failed: valid.error.issues.map((item) => item.message) }
+        }
+
+        const secret = user.twofa
+
+        const res = await verify({ secret, token });
+
+        if (!res.valid) return { error: "Hiba, próbáld újra." }
 
         const tokenLongTime = jwt.sign(decoded, process.env.JWT_SECRET_Long!, { expiresIn: "1h" });
 
@@ -85,17 +113,22 @@ export const loginTwoFAAction = async (_prevState: ActionState, formData: FormDa
             secure: true,
             maxAge: 300,
         })
-        redirect('/dashboard')
-    } catch (error) {
-        console.error(error)
 
+        redirect('/dashboard')
+
+    } catch (error) {
         if (error.name === "TokenExpiredError") {
+            console.error(error)
             redirect('/login')
         } else if (error.name === "JsonWebTokenError") {
+            console.error(error)
             redirect('/login')
         } else if (error.name === "NotBeforeError") {
+            console.error(error)
             redirect('/login')
         }
-        return { error: "Hiba, próbáld újra" }
+
+        const Error = await handleMongooseError(error)
+        return { error: Error }
     }
 }

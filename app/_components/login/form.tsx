@@ -28,6 +28,8 @@ const Form = () => {
             </CardHeader>
             <CardContent>
                 <form action={action}>
+                    {state?.error && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
+                    {state?.failed && <div className="mb-2 mt-2 text-red-600">{state.failed.map((item) => <div>{item}</div>)}</div>}
                     <div className="flex flex-col gap-6">
                         <div className="grid gap-2">
                             <Label htmlFor="email">Email</Label>

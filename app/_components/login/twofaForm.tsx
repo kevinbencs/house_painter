@@ -27,6 +27,7 @@ const TwoFAForm = () => {
             </CardHeader>
             <CardContent>
                 <form action={action}>
+                    {state?.error && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
                     <div className="flex flex-col gap-6">
 
                         <div className="grid gap-2">
