@@ -1,4 +1,4 @@
-import { generateSecret, generate, verify, generateURI } from "otplib";
+import { generateSecret, generateURI } from "otplib";
 import { connection } from 'next/server'
 import qrcode from "qrcode"
 import Image from "next/image";

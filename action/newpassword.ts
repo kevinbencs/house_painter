@@ -4,6 +4,7 @@ import { loginSchema } from "@/schema/schema"
 import Admin from "@/models/Admin"
 import { checkAuth, checkNewPassPageUlr } from "@/lib/checkAuth"
 import { ActionState } from "@/typeScriptType/form"
+import { handleMongooseError } from "@/lib/mongo"
 
 export const sendEmail = async (_prevState: ActionState, formData: FormData) => {
     try {
@@ -58,7 +59,7 @@ export const changePassword = async (_prevState: ActionState, formData: FormData
 
         return { message: "Jelszó megváltozott" }
     } catch (error) {
-        console.error(error)
-        return { error: "Jelszó megváltoztatása nem sikerült" }
+        const Error = await handleMongooseError(error)
+        return { error: Error }
     }
 }

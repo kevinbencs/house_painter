@@ -54,3 +54,5 @@ export const imageSchema = z.object({
 })
 
 export const deleteSchema = z.string({message: "_id megadása kötelező"})
+
+export const otpTokenSchema = z.string({message: "A Kód megadása kötelező"}).length(6)
