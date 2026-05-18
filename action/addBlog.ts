@@ -44,7 +44,7 @@ export const addBlog = async (_prevState: ActionState, formData: FormData) => {
 
         return {message: "Cikk létrehozva"}
     } catch (error) {
-        const err = handleMongooseError(error)
+        const err = await handleMongooseError(error)
         return {error: err}
     }
 }

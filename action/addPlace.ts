@@ -44,7 +44,7 @@ export const addPlace = async (_prevState: ActionState, formData: FormData) => {
 
         return {message: "Új hely hozzáadva"}
     } catch (error) {
-        const err = handleMongooseError(error)
+        const err = await handleMongooseError(error)
         return {error: err}
     }
 }
