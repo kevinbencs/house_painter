@@ -1,11 +1,16 @@
 import MainElement from '@/app/_components/dashboard/price/mainElement'
+import { checkAuth } from '@/lib/checkAuth'
 import { getCategory, getPriceData } from '@/lib/data'
 import { Categories, ElementOfPrice, MongoData } from '@/typeScriptType/price'
+import { redirect } from 'next/navigation'
 
 
 
 const Page = async () => {
-  
+  const auth = await checkAuth()
+
+  if (auth.error) redirect('/');
+
   const res: MongoData[] = await getPriceData()
 
   const cat: Categories[] = await getCategory()

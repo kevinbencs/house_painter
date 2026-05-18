@@ -1,25 +1,31 @@
 import UpdatePagesList from "@/app/_components/dashboard/updatePagesList"
+import { checkAuth } from "@/lib/checkAuth";
+import { redirect } from "next/navigation";
 
 interface List {
-    id: string,
-    title: string,
-    year: string,
-    month: string,
-    day: string
+  id: string,
+  title: string,
+  year: string,
+  month: string,
+  day: string
 }
 
-const Page = () => {
+const Page = async () => {
+  const auth = await checkAuth()
+
+  if (auth.error) redirect('/');
+
   const l = [{
-    id:'w',
+    id: 'w',
     title: "fa",
-    year:"2026",
+    year: "2026",
     month: "02",
     day: "03"
   }]
 
-  
+
   return (
-    <div className="w-full"><UpdatePagesList lists={l} page="blog"/> </div>
+    <div className="w-full"><UpdatePagesList lists={l} page="blog" /> </div>
   )
 }
 

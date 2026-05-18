@@ -1,9 +1,13 @@
 
 import DynamicPagesForm from "@/app/_components/dashboard/dynamicPagesForm"
 import { addPlace } from "@/action/addPlace"
+import { checkAuth } from "@/lib/checkAuth";
+import { redirect } from "next/navigation";
 
 const page = async ({ params }: { params: Promise<{ year: string, month: string, day: string, title: string }> }) => {
+  const auth = await checkAuth()
 
+  if (auth.error) redirect('/');
 
   const res = {
     error: undefined,
