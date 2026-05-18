@@ -1,11 +1,21 @@
-import type { NextRequest } from 'next/server'
+import type { NextRequest, NextFetchEvent } from 'next/server'
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers';
 import jwt from "jsonwebtoken"
 
-export const middleware = async (req: NextRequest) => {
+export const middleware = async (req: NextRequest, event: NextFetchEvent) => {
 
     const pathname = req.nextUrl.pathname;
+
+    const origin = req.nextUrl.origin
+
+    event.waitUntil(
+        fetch(`${origin}/api/analytics`, {
+            method: 'POST',
+            body: JSON.stringify({ pathname }),
+        })
+    )
+
 
     if (pathname.startsWith('/dashboard')) {
 
@@ -33,6 +43,9 @@ export const middleware = async (req: NextRequest) => {
         }
 
     }
+
+
+    return NextResponse.next()
 
 
 }

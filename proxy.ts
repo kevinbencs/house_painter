@@ -1,9 +1,9 @@
 
-import type { NextRequest } from 'next/server'
+import type { NextRequest, NextFetchEvent } from 'next/server'
 import { middleware } from './lib/proxy'
  
-export async function proxy(request: NextRequest) {
-  return await middleware(request);
+export async function proxy(request: NextRequest, event: NextFetchEvent) {
+  return await middleware(request, event);
 }
  
 export const config = {
