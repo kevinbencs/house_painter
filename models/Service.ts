@@ -3,23 +3,23 @@ import mongoose from "mongoose";
 const ServiceSchema = new mongoose.Schema({
     heading: {
         type: String,
-        require: true
+        required: true
     },
     text: {
         type: String,
-        require: true,
+        required: true,
     },
     detail: {
         type: String,
-        require: true
+        required: true
     },
     keywords: {
         type: String,
-        require: true
+        required: true
     },
     image: {
         type: String,
-        require: true
+        required: true
     }
 }, {timestamps: true})
 

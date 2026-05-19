@@ -3,17 +3,18 @@ import mongoose from "mongoose";
 const AdminSchema = new mongoose.Schema({
     password: {
         type: String,
-        require: true,
+        required: true,
     },
     email: {
         type: String,
-        require: true,
+        required: true,
         unique: true,
         lowercase: true,
         trim: true,
     },
     twofa: {
-        type: String
+        type: String,
+        required: true,
     }
 }, {timestamps: true})
 

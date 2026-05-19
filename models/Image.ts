@@ -3,20 +3,20 @@ import mongoose from "mongoose";
 const ImageSchema = new mongoose.Schema({
     blobUrl: {
         type: String,
-        require: true
+        required: true
     },
     newUrl: {
         type: String,
-        require: true,
+        required: true,
         unique: true,
     },
     detail: {
         type: String,
-        require: true
+        required: true
     },
     show: {
         type: Boolean,
-        require: true,
+        required: true,
         default: true
     }
 }, {timestamps: true})
