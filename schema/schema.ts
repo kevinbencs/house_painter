@@ -56,3 +56,8 @@ export const imageSchema = z.object({
 export const deleteSchema = z.string({message: "_id megadása kötelező"})
 
 export const otpTokenSchema = z.string({message: "A Kód megadása kötelező"}).length(6)
+
+export const PageViewSchema = z.object({
+    pathname: z.string().min(1, {message: "Pathname is require"}),
+    referrer: z.union([z.string(), z.null()])
+})
