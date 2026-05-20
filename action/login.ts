@@ -40,7 +40,7 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
 
         if (!passConfirm) return { error: "Invalid email or password" };
 
-        const tokenShortTime = jwt.sign(admin._id, process.env.JWT_SECRET_URL!, { expiresIn: "5m" });
+        const tokenShortTime = jwt.sign(admin._id, process.env.JWT_SECRET_TWOFA!, { expiresIn: "5m" });
 
         cookieStore.set(tokenShortTime, "2fa", {
             httpOnly: true,

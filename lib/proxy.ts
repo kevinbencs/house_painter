@@ -44,6 +44,31 @@ export const middleware = async (req: NextRequest, event: NextFetchEvent) => {
 
     }
 
+    if (pathname === "/new2fa" || pathname === "/login/2fa") {
+        try {
+            const cookie = await cookies();
+
+            const twoFAToken = cookie.get("2fa")
+
+            if (!twoFAToken || !twoFAToken.value) {
+                console.log("Session error on dashboard");
+                return NextResponse.redirect(new URL('/', req.url))
+            }
+
+            const res = jwt.verify(twoFAToken.value, process.env.JWT_SECRET_TWOFA!)
+
+        } catch (error) {
+            console.log("Session error on dashboard");
+            if (error.name === "TokenExpiredError") {
+                return NextResponse.redirect(new URL('/', req.url))
+            } else if (error.name === "JsonWebTokenError") {
+                return NextResponse.redirect(new URL('/', req.url))
+            } else if (error.name === "NotBeforeError") {
+                return NextResponse.redirect(new URL('/', req.url))
+            }
+        }
+    }
+
 
     return NextResponse.next()
 

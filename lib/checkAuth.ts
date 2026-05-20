@@ -10,18 +10,18 @@ export const checkAuth = async () => {
 
         const tokenLongTime = cookie.get("longAuthToken");
 
-        if (!tokenShortTime && !tokenLongTime) return {error: "There is no token"}
+        if (!tokenShortTime && !tokenLongTime) return { error: "There is no token" }
 
         if (tokenShortTime) {
             const resShort = await checkJWT(tokenShortTime.value, process.env.JWT_SECRET_Short!)
 
-            if (resShort.res) return {res: resShort};
+            if (resShort.res) return { res: resShort };
 
             if (resShort.error) {
                 if (tokenLongTime) {
                     const resLong = await checkJWT(tokenLongTime.value, process.env.JWT_SECRET_Long!)
 
-                    if (resLong.error) return {error: resLong.error};
+                    if (resLong.error) return { error: resLong.error };
 
                     if (resLong.res) {
 
@@ -34,11 +34,11 @@ export const checkAuth = async () => {
                         })
 
 
-                        return {res: resLong.res};
+                        return { res: resLong.res };
                     }
 
                 }
-                else return {error: resShort.error};
+                else return { error: resShort.error };
 
             }
 
@@ -58,10 +58,10 @@ export const checkAuth = async () => {
                 })
 
 
-                return {success: resLong.res};
+                return { success: resLong.res };
             }
 
-            if (resLong.error) return { error: resLong.error}
+            if (resLong.error) return { error: resLong.error }
         }
 
         return { error: " Error" }
@@ -79,9 +79,31 @@ export const checkNewPassPageUlr = async (url: string) => {
     try {
         const res = await checkJWT(url, process.env.JWT_SECRET_URL!)
 
-        if(res.error) return { error: res.error }
+        if (res.error) return { error: res.error }
 
-        return {res: res.res}
+        return { res: res.res }
+    } catch (error) {
+        console.log(error)
+
+        return { error: "Server error" }
+    }
+}
+
+
+export const checkTwoFAToken = async () => {
+    try {
+
+        const cookie = await cookies();
+
+        const token2fa= cookie.get("2fa");
+
+        if (!token2fa) return { error: "There is no token" }
+
+        const res= await checkJWT(token2fa.value, process.env.JWT_SECRET_JWT_SECRET_TWOFA!)
+
+        if (res.res) return { res: res };
+
+        return { error: " Error" }
     } catch (error) {
         console.log(error)
 
@@ -99,7 +121,7 @@ const checkJWT = async (token: string, secret: string) => {
 
         if (!user) return { error: "There is no admin with this id" }
 
-        return {res}
+        return { res }
 
     } catch (error) {
         console.log(error)
