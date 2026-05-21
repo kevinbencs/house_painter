@@ -11,15 +11,15 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { redirect } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useActionState, useEffect } from "react"
 
 
 const TwoFAForm = () => {
     const [state, action, isPending] = useActionState(loginTwoFAAction, null)
-
+    const router = useRouter()
     useEffect(() => {
-        if(state?.redirect) redirect(state.redirect)
+        if(state?.redirect) router.push(state.redirect)
     },[state?.redirect])
 
 
