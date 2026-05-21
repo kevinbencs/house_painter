@@ -11,11 +11,18 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useActionState } from "react"
+import { redirect } from "next/navigation"
+import { useActionState, useEffect } from "react"
 
 
 const TwoFAForm = () => {
     const [state, action, isPending] = useActionState(loginTwoFAAction, null)
+
+    useEffect(() => {
+        if(state?.redirect) redirect(state.redirect)
+    },[state?.redirect])
+
+
     return (
         <Card className="w-full max-w-sm">
             <CardHeader>

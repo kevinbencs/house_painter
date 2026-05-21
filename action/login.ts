@@ -62,7 +62,7 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
     redirect('/login/2fa')
 }
 
-export const loginTwoFAAction = async (_prevState: ActionState, formData: FormData) => {
+export const loginTwoFAAction = async (_prevState: ActionState | {redirect: string}, formData: FormData) => {
     try {
 
         const cookieStore = await cookies();
@@ -87,6 +87,11 @@ export const loginTwoFAAction = async (_prevState: ActionState, formData: FormDa
         }
 
         const secret = user.twofa
+
+        if (token === secret) {
+            await Admin.findByIdAndUpdate(decoded.id,{twofa: ""})
+            return {redirect: "/new2fa"}
+        }
 
         const res = await verify({ secret, token });
 

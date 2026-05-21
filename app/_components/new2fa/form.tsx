@@ -11,6 +11,8 @@ import { setNewTwoFA } from "@/action/change2FA";
 const Form = () => {
     const [state, action, isPending] =useActionState(setNewTwoFA,null)
 
+    
+
     return (
         <form action={action}>
             <div className="mb-4">
