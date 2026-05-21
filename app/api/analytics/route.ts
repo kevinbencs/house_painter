@@ -1,7 +1,7 @@
 import { handleMongooseError } from "@/lib/mongo";
 import PageView from "@/models/PageView";
 import {PageViewSchema } from "@/schema/schema";
-import type{ NextRequest } from "next/server";
+import{ NextResponse, type NextRequest } from "next/server";
 
 
 export async function POST(req: NextRequest) {
@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
         if (res.error) {
             console.log(res.error.issues);
-            return { failed: res.error.issues.map((item) => item.message) }
+            return NextResponse.json({ failed: res.error.issues.map((item) => item.message) }, {status: 400})
         }
 
         const newPageView = new PageView({
@@ -25,11 +25,10 @@ export async function POST(req: NextRequest) {
         
         await newPageView.save();
 
-        return {message: "success"}
-
+        return NextResponse.json({ message: "success" }, {status: 200})
 
     } catch (error) {
         const err = await handleMongooseError(error);
-        return {error: err}
+        return NextResponse.json({ error: err }, {status: 500})
     }
 }
