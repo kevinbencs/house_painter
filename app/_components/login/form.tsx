@@ -17,6 +17,9 @@ import { useActionState } from "react"
 
 const Form = () => {
     const [state, action, isPending] = useActionState(loginAction, null)
+    
+
+
     return (
         <Card className="w-full max-w-sm">
             <CardHeader>
@@ -26,10 +29,11 @@ const Form = () => {
                 </CardDescription>
 
             </CardHeader>
-            <CardContent>
-                <form action={action}>
+            <form action={action}>
+                <CardContent className="mb-6">
+
                     {state?.error && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
-                    {state?.failed && <div className="mb-2 mt-2 text-red-600">{state.failed.map((item) => <div>{item}</div>)}</div>}
+                    {state?.failed && <div className="mb-2 mt-2 text-red-600">{state.failed.map((item) => <div key={item}>{item}</div>)}</div>}
                     <div className="flex flex-col gap-6">
                         <div className="grid gap-2">
                             <Label htmlFor="email">Email</Label>
@@ -37,6 +41,7 @@ const Form = () => {
                                 id="email"
                                 type="email"
                                 placeholder="m@example.com"
+                                name="email"
                                 required
                                 disabled={isPending}
                             />
@@ -51,17 +56,18 @@ const Form = () => {
                                     Elfelejtetted a jelszód?
                                 </Link>
                             </div>
-                            <Input id="password" type="password" required disabled={isPending} />
+                            <Input id="password" type="password" required disabled={isPending} name="password"/>
                         </div>
                     </div>
-                </form>
-            </CardContent>
-            <CardFooter className="flex-col gap-2">
-                <Button type="submit" className="w-full" disabled={isPending}>
-                    Belépés
-                </Button>
 
-            </CardFooter>
+                </CardContent>
+                <CardFooter className="flex-col gap-2">
+                    <Button type="submit" className="w-full" disabled={isPending}>
+                        Belépés
+                    </Button>
+
+                </CardFooter>
+            </form>
         </Card>
     )
 }

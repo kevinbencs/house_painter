@@ -1,13 +1,13 @@
+
 import Form from "@/app/_components/login/form"
 
 
-const Page = () => {
-
+const Page = async() => {
 
   return (
     <div className="flex justify-center h-screen pt-40">
-      <div className=" h-[300px] w-full flex justify-center">
-        <Form />
+      <div className=" h-[400px] w-full flex justify-center">
+          <Form />
       </div>
     </div>
   )

@@ -99,7 +99,7 @@ export const checkTwoFAToken = async () => {
 
         if (!token2fa) return { error: "There is no token" }
 
-        const res= await checkJWT(token2fa.value, process.env.JWT_SECRET_JWT_SECRET_TWOFA!)
+        const res= await checkJWT(token2fa.value, process.env.JWT_SECRET_TWOFA!)
 
         if (res.res) return { res: res };
 
@@ -115,13 +115,13 @@ export const checkTwoFAToken = async () => {
 
 const checkJWT = async (token: string, secret: string) => {
     try {
-        const res = jwt.verify(token, secret)
+        const res = jwt.verify(token, secret) as {id: string}
 
-        const user = await Admin.findById(res)
+        const user = await Admin.findById(res.id)
 
         if (!user) return { error: "There is no admin with this id" }
 
-        return { res }
+        return { res: res.id }
 
     } catch (error) {
         console.log(error)

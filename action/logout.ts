@@ -10,10 +10,12 @@ export const logout = async () => {
         cookieStore.delete("longAuthToken")
         cookieStore.delete("shortAuthToken")
 
-        redirect('/')
+        
     } catch (error) {
         console.error(error);
 
         return {error: "Failed logout"}
     }
+
+    redirect('/')
 }

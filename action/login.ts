@@ -14,6 +14,7 @@ import { verify } from "otplib";
 
 
 export const loginAction = async (_prevState: ActionState, formData: FormData) => {
+    let secret: string = "";
     try {
         const cookieStore = await cookies();
 
@@ -33,37 +34,32 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
         const admin = await Admin.findOne({
             email
         });
+        
+        
 
         if (!admin) return { error: "Invalid email or password" };
 
-        const passConfirm = await bcrypt.compare(admin.password, password)
+        const passConfirm = await bcrypt.compare( password, admin.password)
 
         if (!passConfirm) return { error: "Invalid email or password" };
+        
+        secret = String(admin.secret)
 
-        const tokenShortTime = jwt.sign(admin._id, process.env.JWT_SECRET_TWOFA!, { expiresIn: "5m" });
+        const token2fa = jwt.sign({id: String(admin._id)}, process.env.JWT_SECRET_TWOFA!, { expiresIn: "5m" });
 
-        cookieStore.set(tokenShortTime, "2fa", {
+        cookieStore.set("2fa", token2fa, {
             httpOnly: true,
             secure: true,
             maxAge: 300,
         })
 
-        redirect('/login/2fa')
     } catch (error) {
-        if (error.name === "TokenExpiredError") {
-            console.error(error)
-            redirect('/login')
-        } else if (error.name === "JsonWebTokenError") {
-            console.error(error)
-            redirect('/login')
-        } else if (error.name === "NotBeforeError") {
-            console.error(error)
-            redirect('/login')
-        }
 
         const Error = await handleMongooseError(error)
         return { error: Error }
     }
+    if (secret === "") redirect("/new2fa")
+    redirect('/login/2fa')
 }
 
 export const loginTwoFAAction = async (_prevState: ActionState, formData: FormData) => {
@@ -71,13 +67,13 @@ export const loginTwoFAAction = async (_prevState: ActionState, formData: FormDa
 
         const cookieStore = await cookies();
 
-        const logCookie = await cookieStore.get("2fa")
+        const logCookie = cookieStore.get("2fa")
 
         if (!logCookie) redirect('/login');
 
-        const decoded = jwt.verify(logCookie.value, process.env.JWT_SECRET_URL!)
+        const decoded = jwt.verify(logCookie.value, process.env.JWT_SECRET_URL!) as {id: string}
 
-        const user = await Admin.findById(decoded) as Adm
+        const user = await Admin.findById(decoded.id) as Adm
 
         if (!user) redirect('/login')
 
@@ -96,25 +92,25 @@ export const loginTwoFAAction = async (_prevState: ActionState, formData: FormDa
 
         if (!res.valid) return { error: "Hiba, próbáld újra." }
 
-        const tokenLongTime = jwt.sign(decoded, process.env.JWT_SECRET_Long!, { expiresIn: "1h" });
+        const tokenLongTime = jwt.sign({id: decoded}, process.env.JWT_SECRET_Long!, { expiresIn: "1h" });
 
-        const tokenShortTime = jwt.sign(decoded, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
+        const tokenShortTime = jwt.sign({id: decoded}, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
 
 
 
-        cookieStore.set(tokenLongTime, "longAuthToken", {
+        cookieStore.set("longAuthToken",tokenLongTime, {
             httpOnly: true,
             secure: true,
             maxAge: 3600,
         })
 
-        cookieStore.set(tokenShortTime, "shortAuthToken", {
+        cookieStore.set("shortAuthToken", tokenShortTime,  {
             httpOnly: true,
             secure: true,
             maxAge: 300,
         })
 
-        redirect('/dashboard')
+        
 
     } catch (error) {
         if (error.name === "TokenExpiredError") {
@@ -131,4 +127,6 @@ export const loginTwoFAAction = async (_prevState: ActionState, formData: FormDa
         const Error = await handleMongooseError(error)
         return { error: Error }
     }
+
+    redirect('/dashboard')
 }
