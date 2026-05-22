@@ -25,7 +25,7 @@ const Totp = async () => {
                 <div className="mb-2">Törlő kód letöltése</div>
                 <DeleteCode code={secret}/> 
             </div>
-            <Form/>
+            <Form secret = {secret}/>
         </div>
     )
 }

@@ -19,8 +19,8 @@ const TwoFAForm = () => {
     const [state, action, isPending] = useActionState(loginTwoFAAction, null)
     const router = useRouter()
     useEffect(() => {
-        if(state?.redirect) router.push(state.redirect)
-    },[state?.redirect])
+        if (state?.redirect) router.push(state.redirect)
+    }, [state?.redirect])
 
 
     return (
@@ -32,25 +32,28 @@ const TwoFAForm = () => {
                 </CardDescription>
 
             </CardHeader>
-            <CardContent>
-                <form action={action}>
+            <form action={action}>
+                <CardContent>
+
                     {state?.error && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
+                    {state?.failed && <div className="mb-2 mt-2 text-red-600">{state.failed.map((item) => <div key={item}>{item}</div>)}</div>}
                     <div className="flex flex-col gap-6">
 
                         <div className="grid gap-2">
                             <div className="flex items-center">
                                 <Label htmlFor="code">Kód</Label>
                             </div>
-                            <Input id="code" type="password" required disabled={isPending} />
+                            <Input id="code" type="password" required name="optName" disabled={isPending} />
                         </div>
                     </div>
-                </form>
-            </CardContent>
-            <CardFooter className="flex-col gap-2">
-                <Button type="submit" className="w-full" disabled={isPending}>
-                    Belépés
-                </Button>
-            </CardFooter>
+
+                </CardContent>
+                <CardFooter className="flex-col gap-2">
+                    <Button type="submit" className="w-full" disabled={isPending}>
+                        Belépés
+                    </Button>
+                </CardFooter>
+            </form>
         </Card>
     )
 }

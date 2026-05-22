@@ -2,7 +2,7 @@
 
 import { handleMongooseError } from "@/lib/mongo";
 import Admin from "@/models/Admin";
-import { loginSchema, otpTokenSchema } from "@/schema/schema";
+import { loginSchema, otpTokenSchema2 } from "@/schema/schema";
 import { Adm } from "@/typeScriptType/admin";
 import { ActionState } from "@/typeScriptType/form";
 import bcrypt from "bcrypt"
@@ -34,23 +34,23 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
         const admin = await Admin.findOne({
             email
         });
-        
-        
+
+
 
         if (!admin) return { error: "Invalid email or password" };
 
-        const passConfirm = await bcrypt.compare( password, admin.password)
+        const passConfirm = await bcrypt.compare(password, admin.password)
 
         if (!passConfirm) return { error: "Invalid email or password" };
-        
-        secret = String(admin.secret)
 
-        const token2fa = jwt.sign({id: String(admin._id)}, process.env.JWT_SECRET_TWOFA!, { expiresIn: "5m" });
+        secret = String(admin.twofa)
+
+        const token2fa = jwt.sign({ id: String(admin._id) }, process.env.JWT_SECRET_TWOFA!, { expiresIn: "10m" });
 
         cookieStore.set("2fa", token2fa, {
             httpOnly: true,
             secure: true,
-            maxAge: 300,
+            maxAge: 600,
         })
 
     } catch (error) {
@@ -62,7 +62,7 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
     redirect('/login/2fa')
 }
 
-export const loginTwoFAAction = async (_prevState: ActionState | {redirect: string}, formData: FormData) => {
+export const loginTwoFAAction = async (_prevState: ActionState | { redirect: string }, formData: FormData) => {
     try {
 
         const cookieStore = await cookies();
@@ -71,7 +71,7 @@ export const loginTwoFAAction = async (_prevState: ActionState | {redirect: stri
 
         if (!logCookie) redirect('/login');
 
-        const decoded = jwt.verify(logCookie.value, process.env.JWT_SECRET_URL!) as {id: string}
+        const decoded = jwt.verify(logCookie.value, process.env.JWT_SECRET_URL!) as { id: string }
 
         const user = await Admin.findById(decoded.id) as Adm
 
@@ -79,7 +79,7 @@ export const loginTwoFAAction = async (_prevState: ActionState | {redirect: stri
 
         const token = formData.get('optName') as string;
 
-        const valid = otpTokenSchema.safeParse(token);
+        const valid = otpTokenSchema2.safeParse(token);
 
         if (valid.error) {
             console.log(valid.error.issues);
@@ -89,33 +89,33 @@ export const loginTwoFAAction = async (_prevState: ActionState | {redirect: stri
         const secret = user.twofa
 
         if (token === secret) {
-            await Admin.findByIdAndUpdate(decoded.id,{twofa: ""})
-            return {redirect: "/new2fa"}
+            await Admin.findByIdAndUpdate(decoded.id, { twofa: "" })
+            return { redirect: "/new2fa" }
         }
 
         const res = await verify({ secret, token });
 
         if (!res.valid) return { error: "Hiba, próbáld újra." }
 
-        const tokenLongTime = jwt.sign({id: decoded}, process.env.JWT_SECRET_Long!, { expiresIn: "1h" });
+        const tokenLongTime = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_Long!, { expiresIn: "1h" });
 
-        const tokenShortTime = jwt.sign({id: decoded}, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
+        const tokenShortTime = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
 
+        cookieStore.delete("2fa")
 
-
-        cookieStore.set("longAuthToken",tokenLongTime, {
+        cookieStore.set("longAuthToken", tokenLongTime, {
             httpOnly: true,
             secure: true,
             maxAge: 3600,
         })
 
-        cookieStore.set("shortAuthToken", tokenShortTime,  {
+        cookieStore.set("shortAuthToken", tokenShortTime, {
             httpOnly: true,
             secure: true,
             maxAge: 300,
         })
 
-        
+
 
     } catch (error) {
         if (error.name === "TokenExpiredError") {

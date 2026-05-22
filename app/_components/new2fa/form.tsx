@@ -6,18 +6,18 @@ import { Button } from "@/components/ui/button";
 import { REGEXP_ONLY_DIGITS } from "input-otp"
 import { useActionState } from "react";
 import { setNewTwoFA } from "@/action/change2FA";
+import { Input } from "@/components/ui/input";
 
 
-const Form = () => {
+const Form = (props: {secret: string}) => {
     const [state, action, isPending] =useActionState(setNewTwoFA,null)
 
-    
 
     return (
         <form action={action}>
             <div className="mb-4">
                 {state?.error && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
-                {state?.failed && <div className="mb-2 mt-2 text-red-600">{state.failed.map((item) => <div>{item}</div>)}</div>}
+                {state?.failed && <div className="mb-2 mt-2 text-red-600">{state.failed.map((item) => <div key={item}>{item}</div>)}</div>}
                 <Label className="mb-2" htmlFor="otpId" >6 jegyű kód megadása</Label>
 
                 <InputOTP id="otpId" name="optName" maxLength={6} pattern={REGEXP_ONLY_DIGITS} disabled={isPending}>
@@ -34,7 +34,7 @@ const Form = () => {
                         <InputOTPSlot index={5} />
                     </InputOTPGroup>
                 </InputOTP>
-
+                <Input value={props.secret} readOnly type="password" className="hidden" name="secretName"/>
             </div>
             <Button disabled={isPending}>Mentés</Button>
         </form>

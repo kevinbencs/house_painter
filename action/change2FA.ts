@@ -19,17 +19,21 @@ export const setNewTwoFA = async (_pervState: ActionState, formData: FormData) =
 
         if (!logCookie) redirect('/login');
 
-        const decoded = jwt.verify(logCookie.value, process.env.JWT_SECRET_URL!)
+        const decoded = jwt.verify(logCookie.value, process.env.JWT_SECRET_URL!) as {id: string}
 
-        const user = await Admin.findById(decoded) as Adm
+        const user = await Admin.findById(decoded.id) as Adm
 
-        const secret = user.twofa
+
 
         if (!user) redirect('/login')
 
         const token = formData.get('optName') as string;
+        const secret = formData.get('secretName') as string
 
-        const valid = otpTokenSchema.safeParse(token);
+        const valid = otpTokenSchema.safeParse({
+            otpCode: token,
+            secret: secret
+        });
 
         if (valid.error) {
             console.log(valid.error.issues);
@@ -39,9 +43,16 @@ export const setNewTwoFA = async (_pervState: ActionState, formData: FormData) =
         const res = await verify({ secret, token });
 
         if (res.valid) {
-            const tokenLongTime = jwt.sign(decoded, process.env.JWT_SECRET_Long!, { expiresIn: "1h" });
 
-            const tokenShortTime = jwt.sign(decoded, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
+            await Admin.findByIdAndUpdate(decoded.id,{
+                twofa: secret
+            })
+
+            cookieStore.delete("2fa")
+
+            const tokenLongTime = jwt.sign({id: decoded.id}, process.env.JWT_SECRET_Long!, { expiresIn: "1h" });
+
+            const tokenShortTime = jwt.sign({id: decoded.id}, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
 
 
 
