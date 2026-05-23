@@ -25,9 +25,9 @@ export const checkAuth = async () => {
 
                     if (resLong.res) {
 
-                        const tokenShortTime = jwt.sign(resLong.res, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
+                        const tokenShortTime = jwt.sign({id: resLong.res}, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
 
-                        cookie.set(tokenShortTime, "shortAuthToken", {
+                        cookie.set("shortAuthToken", tokenShortTime,  {
                             httpOnly: true,
                             secure: true,
                             maxAge: 300,
@@ -49,9 +49,9 @@ export const checkAuth = async () => {
 
             if (resLong.res) {
 
-                const tokenShortTime = jwt.sign(resLong.res, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
+                const tokenShortTime = jwt.sign({id: resLong.res}, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
 
-                cookie.set(tokenShortTime, "shortAuthToken", {
+                cookie.set("shortAuthToken", tokenShortTime,  {
                     httpOnly: true,
                     secure: true,
                     maxAge: 300,
