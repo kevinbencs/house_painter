@@ -10,7 +10,7 @@ export const checkAuth = async () => {
 
         const tokenLongTime = cookie.get("longAuthToken");
 
-        if (!tokenShortTime && !tokenLongTime) return { error: "There is no token" }
+        if ((!tokenShortTime && !tokenLongTime) || (!tokenShortTime?.value && !tokenLongTime) || (!tokenShortTime && !tokenLongTime?.value) || (!tokenShortTime?.value && !tokenLongTime?.value)) return { error: "There is no token" }
 
         if (tokenShortTime) {
             const resShort = await checkJWT(tokenShortTime.value, process.env.JWT_SECRET_Short!)
@@ -97,11 +97,11 @@ export const checkTwoFAToken = async () => {
 
         const token2fa= cookie.get("2fa");
 
-        if (!token2fa) return { error: "There is no token" }
+        if (!token2fa || !token2fa.value) return { error: "There is no token" }
 
         const res= await checkJWT(token2fa.value, process.env.JWT_SECRET_TWOFA!)
 
-        if (res.res) return { res: res };
+        if (res.res) return { res: res.res, twofa: res.twofa };
 
         return { error: " Error" }
     } catch (error) {
@@ -121,7 +121,7 @@ const checkJWT = async (token: string, secret: string) => {
 
         if (!user) return { error: "There is no admin with this id" }
 
-        return { res: res.id }
+        return { res: res.id, twofa: user.twofa }
 
     } catch (error) {
         console.log(error)
