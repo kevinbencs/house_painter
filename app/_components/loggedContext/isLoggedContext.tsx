@@ -12,8 +12,8 @@ const TIMEOUT_MS = 6 * 60 * 1000;
 const LoggedContext = createContext<undefined | LoggedContextType>(undefined)
 
 
-export const IsLoggedProvider = ({children, user}: {children: ReactNode, user: boolean}) => {
-  const [IsLogged, setLogged] = useState<boolean>(user);
+export const IsLoggedProvider = ({children}: {children: ReactNode}) => {
+  const [IsLogged, setLogged] = useState<boolean>(false);
   const [Timer, setTimer] = useState(TIMEOUT_MS/1000)
   const logoutTimeRef = useRef<ReturnType <typeof setTimeout> | null>(null)
   const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -21,6 +21,19 @@ export const IsLoggedProvider = ({children, user}: {children: ReactNode, user: b
   const logOut = useCallback(async () => {
     setLogged(false)
   },[])
+
+  useEffect(() => {
+    fetch("/api/isLoggedIn")
+    .then(res => res.json())
+    .then(data => {
+      if(data.success) {
+        console.log(2)
+        {setLogged(true)}}
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }, [])
 
   const startCountdown = () => {
   const id = setInterval(() => {

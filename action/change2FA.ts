@@ -12,14 +12,14 @@ import { otpTokenSchema } from "@/schema/schema";
 
 export const setNewTwoFA = async (_pervState: ActionState, formData: FormData) => {
     try {
-        
+
         const cookieStore = await cookies();
 
         const logCookie = cookieStore.get("2fa")
 
         if (!logCookie) redirect('/login');
 
-        const decoded = jwt.verify(logCookie.value, process.env.JWT_SECRET_URL!) as {id: string}
+        const decoded = jwt.verify(logCookie.value, process.env.JWT_SECRET_URL!) as { id: string }
 
         const user = await Admin.findById(decoded.id) as Adm
 
@@ -44,15 +44,15 @@ export const setNewTwoFA = async (_pervState: ActionState, formData: FormData) =
 
         if (res.valid) {
 
-            await Admin.findByIdAndUpdate(decoded.id,{
+            await Admin.findByIdAndUpdate(decoded.id, {
                 twofa: secret
             })
 
             cookieStore.delete("2fa")
 
-            const tokenLongTime = jwt.sign({id: decoded.id}, process.env.JWT_SECRET_Long!, { expiresIn: "1h" });
+            const tokenLongTime = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_Long!, { expiresIn: "1h" });
 
-            const tokenShortTime = jwt.sign({id: decoded.id}, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
+            const tokenShortTime = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
 
 
 
@@ -67,10 +67,13 @@ export const setNewTwoFA = async (_pervState: ActionState, formData: FormData) =
                 secure: true,
                 maxAge: 300,
             })
-            redirect('/dashboard')
+
+        }
+        else {
+            return { error: "Hiba, próbáld újra." }
         }
 
-        return {error: "Hiba, próbáld újra."}
+
     } catch (error) {
         if (error.name === "TokenExpiredError") {
             console.error(error)
@@ -86,4 +89,6 @@ export const setNewTwoFA = async (_pervState: ActionState, formData: FormData) =
         const Error = await handleMongooseError(error)
         return { error: Error }
     }
+
+    redirect('/dashboard')
 }

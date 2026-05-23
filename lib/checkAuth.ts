@@ -15,7 +15,7 @@ export const checkAuth = async () => {
         if (tokenShortTime) {
             const resShort = await checkJWT(tokenShortTime.value, process.env.JWT_SECRET_Short!)
 
-            if (resShort.res) return { res: resShort };
+            if (resShort.res) return { success: resShort.res };
 
             if (resShort.error) {
                 if (tokenLongTime) {
@@ -34,7 +34,7 @@ export const checkAuth = async () => {
                         })
 
 
-                        return { res: resLong.res };
+                        return { success: resLong.res };
                     }
 
                 }

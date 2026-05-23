@@ -13,13 +13,20 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useRouter } from "next/navigation"
 import { useActionState, useEffect } from "react"
+import { useLogged } from "../loggedContext/isLoggedContext"
 
 
 const TwoFAForm = () => {
-    const [state, action, isPending] = useActionState(loginTwoFAAction, null)
-    const router = useRouter()
+    const [state, action, isPending] = useActionState(loginTwoFAAction, null);
+    const { setLogged } = useLogged();
+    const router = useRouter();
     useEffect(() => {
-        if (state?.redirect) router.push(state.redirect)
+        if (state?.redirect) {
+            if (state.redirect === "/dashboard") {
+                setLogged(true);
+            }
+            router.push(state.redirect)
+        }
     }, [state?.redirect])
 
 

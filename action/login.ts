@@ -35,8 +35,6 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
             email
         });
 
-
-
         if (!admin) return { error: "Invalid email or password" };
 
         const passConfirm = await bcrypt.compare(password, admin.password)
@@ -69,13 +67,13 @@ export const loginTwoFAAction = async (_prevState: ActionState | { redirect: str
 
         const logCookie = cookieStore.get("2fa")
 
-        if (!logCookie) redirect('/login');
+        if (!logCookie) return { redirect: '/login' };
 
         const decoded = jwt.verify(logCookie.value, process.env.JWT_SECRET_URL!) as { id: string }
 
         const user = await Admin.findById(decoded.id) as Adm
 
-        if (!user) redirect('/login')
+        if (!user) return { redirect: '/login' };
 
         const token = formData.get('optName') as string;
 
@@ -115,23 +113,23 @@ export const loginTwoFAAction = async (_prevState: ActionState | { redirect: str
             maxAge: 300,
         })
 
-
+        return { redirect: '/dashboard' };
 
     } catch (error) {
         if (error.name === "TokenExpiredError") {
             console.error(error)
-            redirect('/login')
+            return { redirect: '/login' };
         } else if (error.name === "JsonWebTokenError") {
             console.error(error)
-            redirect('/login')
+            return { redirect: '/login' };
         } else if (error.name === "NotBeforeError") {
             console.error(error)
-            redirect('/login')
+            return { redirect: '/login' };
         }
 
         const Error = await handleMongooseError(error)
         return { error: Error }
     }
 
-    redirect('/dashboard')
+    
 }

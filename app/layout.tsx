@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import Footer from "./_components/footer/footer";
 import HeaderContainer from "./_components/header/headerContainer";
 import TopBar from "./_components/header/topbar";
-import { LoggedContainer } from "./_components/loggedContext/loggedContainer";
+import { IsLoggedProvider } from "./_components/loggedContext/isLoggedContext";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -36,9 +36,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <TopBar />
-        <LoggedContainer>
+        <IsLoggedProvider>
           <HeaderContainer>{children}</HeaderContainer>
-        </LoggedContainer>
+        </IsLoggedProvider>
         <Footer />
       </body>
     </html>
