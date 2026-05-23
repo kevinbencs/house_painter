@@ -3,21 +3,20 @@
 import { ActionState } from "@/typeScriptType/form"
 import { verify } from "otplib";
 import Admin from "@/models/Admin";
-import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken"
 import { Adm } from "@/typeScriptType/admin";
 import { handleMongooseError } from "@/lib/mongo";
 import { otpTokenSchema } from "@/schema/schema";
 
-export const setNewTwoFA = async (_pervState: ActionState, formData: FormData) => {
+export const setNewTwoFA = async ( otp: string, secret: string) => {
     try {
 
         const cookieStore = await cookies();
 
         const logCookie = cookieStore.get("2fa")
 
-        if (!logCookie) redirect('/login');
+        if (!logCookie) return { redirect: '/login' };
 
         const decoded = jwt.verify(logCookie.value, process.env.JWT_SECRET_URL!) as { id: string }
 
@@ -25,10 +24,9 @@ export const setNewTwoFA = async (_pervState: ActionState, formData: FormData) =
 
 
 
-        if (!user) redirect('/login')
+        if (!user) return { redirect: '/login' }
 
-        const token = formData.get('optName') as string;
-        const secret = formData.get('secretName') as string
+        const token = otp;
 
         const valid = otpTokenSchema.safeParse({
             otpCode: token,
@@ -68,6 +66,8 @@ export const setNewTwoFA = async (_pervState: ActionState, formData: FormData) =
                 maxAge: 300,
             })
 
+            return { redirect: '/dashboard' };
+
         }
         else {
             return { error: "Hiba, próbáld újra." }
@@ -77,18 +77,17 @@ export const setNewTwoFA = async (_pervState: ActionState, formData: FormData) =
     } catch (error) {
         if (error.name === "TokenExpiredError") {
             console.error(error)
-            redirect('/login')
+            return { redirect: '/login' }
         } else if (error.name === "JsonWebTokenError") {
             console.error(error)
-            redirect('/login')
+            return { redirect: '/login' }
         } else if (error.name === "NotBeforeError") {
             console.error(error)
-            redirect('/login')
+            return { redirect: '/login' }
         }
 
         const Error = await handleMongooseError(error)
         return { error: Error }
     }
 
-    redirect('/dashboard')
 }

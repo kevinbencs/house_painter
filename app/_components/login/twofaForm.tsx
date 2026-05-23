@@ -12,23 +12,36 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useRouter } from "next/navigation"
-import { useActionState, useEffect } from "react"
+import { SyntheticEvent,useState, useTransition } from "react"
 import { useLogged } from "../loggedContext/isLoggedContext"
 
 
 const TwoFAForm = () => {
-    const [state, action, isPending] = useActionState(loginTwoFAAction, null);
+    const [ isPending, startTransition] = useTransition()
+    const [otp, setOtp] = useState<string>("")
     const { setLogged } = useLogged();
     const router = useRouter();
-    useEffect(() => {
-        if (state?.redirect) {
-            if (state.redirect === "/dashboard") {
-                setLogged(true);
-            }
-            router.push(state.redirect)
-        }
-    }, [state?.redirect])
+    const [error, setError] = useState<string>('')
+    const [failed, setFailed] = useState<string[]>([])
 
+   
+
+    const submit = async(e: SyntheticEvent) => {
+        e.preventDefault();
+
+        startTransition(async() => {
+            const res = await loginTwoFAAction(otp)
+
+            if(res.error) setError(res.error);
+
+            if(res.failed) setFailed(res.failed);
+
+            if(res.redirect) {
+                setLogged(true);
+                router.push(res.redirect)
+            }
+        })
+    }
 
     return (
         <Card className="w-full max-w-sm">
@@ -39,18 +52,18 @@ const TwoFAForm = () => {
                 </CardDescription>
 
             </CardHeader>
-            <form action={action}>
+            <form onSubmit={submit}>
                 <CardContent>
 
-                    {state?.error && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
-                    {state?.failed && <div className="mb-2 mt-2 text-red-600">{state.failed.map((item) => <div key={item}>{item}</div>)}</div>}
+                    {error !== "" && <div className="mb-2 mt-2 text-red-600">{error}</div>}
+                    {failed.length !== 0 && <div className="mb-2 mt-2 text-red-600">{failed.map((item) => <div key={item}>{item}</div>)}</div>}
                     <div className="flex flex-col gap-6">
 
                         <div className="grid gap-2">
                             <div className="flex items-center">
                                 <Label htmlFor="code">Kód</Label>
                             </div>
-                            <Input id="code" type="password" required name="optName" disabled={isPending} />
+                            <Input id="code" type="password" required name="otpName" disabled={isPending} value={otp} onChange={(e) => setOtp(e.target.value)}/>
                         </div>
                     </div>
 

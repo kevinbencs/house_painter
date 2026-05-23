@@ -60,7 +60,7 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
     redirect('/login/2fa')
 }
 
-export const loginTwoFAAction = async (_prevState: ActionState | { redirect: string }, formData: FormData) => {
+export const loginTwoFAAction = async ( otp: string) => {
     try {
 
         const cookieStore = await cookies();
@@ -75,7 +75,7 @@ export const loginTwoFAAction = async (_prevState: ActionState | { redirect: str
 
         if (!user) return { redirect: '/login' };
 
-        const token = formData.get('optName') as string;
+        const token = otp;
 
         const valid = otpTokenSchema2.safeParse(token);
 
@@ -113,6 +113,7 @@ export const loginTwoFAAction = async (_prevState: ActionState | { redirect: str
             maxAge: 300,
         })
 
+    
         return { redirect: '/dashboard' };
 
     } catch (error) {

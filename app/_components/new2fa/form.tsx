@@ -4,23 +4,46 @@ import { Label } from "@/components/ui/label";
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
 import { REGEXP_ONLY_DIGITS } from "input-otp"
-import { useActionState } from "react";
+import { SyntheticEvent, useState, useTransition } from "react";
 import { setNewTwoFA } from "@/action/change2FA";
-import { Input } from "@/components/ui/input";
+import { useLogged } from "../loggedContext/isLoggedContext";
+import { useRouter } from "next/router";
 
 
 const Form = (props: {secret: string}) => {
-    const [state, action, isPending] =useActionState(setNewTwoFA,null)
 
+    const { setLogged } = useLogged();
+    const router = useRouter();
+    const [error, setError] = useState<string>('');
+    const [failed, setFailed] = useState<string[]>([]);
+    const [ isPending, startTransition] = useTransition()
+    const [otp, setOtp] = useState<string>("");
+
+
+    const handleSubmit = async (e: SyntheticEvent) => {
+        e.preventDefault();
+        startTransition(async() => {
+            const res = await setNewTwoFA(otp, props.secret)
+
+            if(res.error) setError(res.error);
+
+            if(res.failed) setFailed(res.failed);
+
+            if(res.redirect) {
+                setLogged(true);
+                router.push(res.redirect)
+            }
+        })
+    }
 
     return (
-        <form action={action}>
+        <form onSubmit={handleSubmit}>
             <div className="mb-4">
-                {state?.error && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
-                {state?.failed && <div className="mb-2 mt-2 text-red-600">{state.failed.map((item) => <div key={item}>{item}</div>)}</div>}
+                {error && <div className="mb-2 mt-2 text-red-600">{error}</div>}
+                {failed && <div className="mb-2 mt-2 text-red-600">{failed.map((item) => <div key={item}>{item}</div>)}</div>}
                 <Label className="mb-2" htmlFor="otpId" >6 jegyű kód megadása</Label>
 
-                <InputOTP id="otpId" name="optName" maxLength={6} pattern={REGEXP_ONLY_DIGITS} disabled={isPending}>
+                <InputOTP id="otpId" name="optName" maxLength={6} pattern={REGEXP_ONLY_DIGITS} disabled={isPending} value={otp} onChange={(e) => setOtp(e)}>
                     <InputOTPGroup>
                         <InputOTPSlot index={0} />
                         <InputOTPSlot index={1} />
@@ -34,7 +57,6 @@ const Form = (props: {secret: string}) => {
                         <InputOTPSlot index={5} />
                     </InputOTPGroup>
                 </InputOTP>
-                <Input value={props.secret} readOnly type="password" className="hidden" name="secretName"/>
             </div>
             <Button disabled={isPending}>Mentés</Button>
         </form>
