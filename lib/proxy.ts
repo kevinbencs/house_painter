@@ -17,7 +17,7 @@ export const middleware = async (req: NextRequest, event: NextFetchEvent) => {
     )*/
 
 
-    if (pathname.startsWith('/dashboard')) {
+    /*if (pathname.startsWith('/dashboard')) {
 
         try {
             const cookie = await cookies();
@@ -42,7 +42,7 @@ export const middleware = async (req: NextRequest, event: NextFetchEvent) => {
             }
         }
 
-    }
+    }*/
 
     if (pathname === "/new2fa" || pathname === "/login/2fa") {
         try {
