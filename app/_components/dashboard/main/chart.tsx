@@ -45,7 +45,7 @@ const data = [
 // #endregion
 export default function Step1() {
   return (
-     <LineChart style={{ width: '100%', aspectRatio: 1.618, maxWidth: 800, margin: 'auto' }}  width={600} height={371} responsive data={data}>
+     <LineChart style={{ width: '100%', aspectRatio: 1.618,  margin: 'auto' }}  width={600} height={371} responsive data={data}>
       <CartesianGrid strokeDasharray="5 5" />
       <XAxis dataKey="name"  />
       <YAxis width="auto"  />
