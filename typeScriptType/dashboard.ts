@@ -4,7 +4,7 @@ export interface ChartType{
 }
 
 export interface PieType{
-    referrer: string,
+    referrer: string | null,
     count: number
 }
 
@@ -14,5 +14,11 @@ export interface ChartType2{
     amt: number
     pv: number
 }
+
+export interface PieType2{
+    name: string | null,
+    value: number
+}
+
 
 

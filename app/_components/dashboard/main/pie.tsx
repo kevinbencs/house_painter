@@ -2,13 +2,8 @@
 
 import { Pie, PieChart, PieLabelRenderProps, PieSectorShapeProps, Sector } from 'recharts';
 import { RechartsDevtools } from '@recharts/devtools';
+import { PieType2 } from '@/typeScriptType/dashboard';
 
-// #region Sample data
-const data = [
-    { name: 'Group A', value: 400 },
-    { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 },
-];
 
 const RADIAN = Math.PI / 180;
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', ];
@@ -34,7 +29,7 @@ const MyCustomPie = (props: PieSectorShapeProps) => {
     return <Sector {...props} fill={COLORS[props.index % COLORS.length]} />;
 };
 
-export default function PieChartDefaultIndex({ isAnimationActive = true }: { isAnimationActive?: boolean }) {
+export default function PieChartDefaultIndex({ isAnimationActive = true, data }: { isAnimationActive?: boolean, data: PieType2[] }) {
     return (
         <PieChart style={{ width: '100%', maxWidth: '500px', maxHeight: '80vh', aspectRatio: 1 }} responsive>
             <Pie

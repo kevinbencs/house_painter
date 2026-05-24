@@ -2,48 +2,9 @@
 
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
 import { RechartsDevtools } from '@recharts/devtools';
-import { ChartType, ChartType2 } from '@/typeScriptType/dashboard';
+import { ChartType2 } from '@/typeScriptType/dashboard';
 
-const data = [
-  {
-    name: 'A',
-    uv: 400,
-    pv: 240,
-    amt: 2400,
-  },
-  {
-    name: 'B',
-    uv: 300,
-    pv: 456,
-    amt: 2400,
-  },
-  {
-    name: 'C',
-    uv: 300,
-    pv: 139,
-    amt: 2400,
-  },
-  {
-    name: 'D',
-    uv: 200,
-    pv: 980,
-    amt: 2400,
-  },
-  {
-    name: 'E',
-    uv: 278,
-    pv: 390,
-    amt: 2400,
-  },
-  {
-    name: 'F',
-    uv: 189,
-    pv: 480,
-    amt: 2400,
-  },
-];
 
-// #endregion
 export default function Step1(props: {data: ChartType2[]}) {
   return (
      <LineChart style={{ width: '100%', aspectRatio: 1.618,  margin: 'auto' }}  width={600} height={371} responsive data={props.data}>
