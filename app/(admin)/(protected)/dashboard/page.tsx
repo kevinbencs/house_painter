@@ -5,6 +5,7 @@ import Blog from '@/models/Blog';
 import PageView from '@/models/PageView';
 import Place from '@/models/Place';
 import Service from '@/models/Service';
+import { ChartType, ChartType2, PieType } from '@/typeScriptType/dashboard';
 import { redirect } from 'next/navigation';
 import { connection } from 'next/server'
 
@@ -39,31 +40,30 @@ const page = async () => {
     Service.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2)
   ])
 
-  console.log(res)
 
-  const perDay = Object.entries(
-    res[0].reduce((acc, { _id, count }) => {
+
+  const perDay: ChartType[] = Object.entries(
+    res[0].reduce((acc, { _id, count }: { _id: { date: string }, count: number }) => {
       acc[_id.date] = (acc[_id.date] ?? 0) + count;
       return acc;
     }, {} as Record<string, number>)
-  ).map(([date, count]) => ({ date, count }));
+  ).map(([date, count]) => ({ date, count })) as ChartType[];
 
-  const perReferrer = Object.entries(
-    res[0].reduce((acc, { _id, count }) => {
+  const perReferrer: PieType[] = Object.entries(
+    res[0].reduce((acc, { _id, count }: { _id: { referrer: string }, count: number }) => {
       acc[_id.referrer] = (acc[_id.referrer] ?? 0) + count;
       return acc;
     }, {} as Record<string, number>)
-  ).map(([referrer, count]) => ({ referrer, count }));
+  ).map(([referrer, count]) => ({ referrer, count })) as PieType[];
 
-  console.log(perReferrer)
+
 
   return (
     <div className='w-full'>
       <div className='flex gap-10'>
-        <Step1 />
+        <Step1 data={perDay.map((item) => ({ name: item.date, amt: 2400, pv: item.count }))} />
         <PieChartDefaultIndex />
       </div>
-
     </div>
   )
 }

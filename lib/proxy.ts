@@ -9,12 +9,12 @@ export const middleware = async (req: NextRequest, event: NextFetchEvent) => {
 
     const origin = req.nextUrl.origin
 
-    event.waitUntil(
+    /*event.waitUntil(
         fetch(`${origin}/api/analytics`, {
             method: 'POST',
             body: JSON.stringify({ pathname, referrer: null }),
         })
-    )
+    )*/
 
 
     /*if (pathname.startsWith('/dashboard')) {
