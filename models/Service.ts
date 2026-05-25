@@ -20,6 +20,11 @@ const ServiceSchema = new mongoose.Schema({
     image: {
         type: String,
         required: true
+    },
+    hide: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 }, {timestamps: true})
 

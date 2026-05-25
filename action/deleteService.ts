@@ -18,7 +18,9 @@ export const deletePlace = async (_id: string) => {
             return { failed: res.error.issues.map((item) => item.message) }
         }
 
-        await Service.findByIdAndDelete(_id)
+        await Service.findByIdAndUpdate(_id,{
+            hide: true
+        })
 
         return { message: "Blog törölve." }
 
