@@ -12,7 +12,7 @@ export interface PieType{
 export interface ChartType2{
     name: string,
     amt: number
-    pv: number
+    Látogatottság: number
 }
 
 export interface PieType2{

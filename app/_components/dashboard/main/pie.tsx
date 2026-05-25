@@ -1,12 +1,12 @@
 "use client"
 
-import { Pie, PieChart, PieLabelRenderProps, PieSectorShapeProps, Sector } from 'recharts';
+import { Pie, PieChart, PieLabelRenderProps, PieSectorShapeProps, Sector, Tooltip } from 'recharts';
 import { RechartsDevtools } from '@recharts/devtools';
 import { PieType2 } from '@/typeScriptType/dashboard';
 
 
 const RADIAN = Math.PI / 180;
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', ];
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28',];
 
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: PieLabelRenderProps) => {
     if (cx == null || cy == null || innerRadius == null || outerRadius == null) {
@@ -33,6 +33,9 @@ export default function PieChartDefaultIndex({ isAnimationActive = true, data }:
     return (
         <PieChart style={{ width: '100%', maxWidth: '500px', maxHeight: '80vh', aspectRatio: 1 }} responsive>
             <Pie
+                activeShape={{
+                    fill: 'red',
+                }}
                 data={data}
                 labelLine={false}
                 label={renderCustomizedLabel}
@@ -41,6 +44,7 @@ export default function PieChartDefaultIndex({ isAnimationActive = true, data }:
                 isAnimationActive={isAnimationActive}
                 shape={MyCustomPie}
             />
+            <Tooltip defaultIndex={2} />
             <RechartsDevtools />
         </PieChart>
     );

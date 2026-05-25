@@ -1,6 +1,6 @@
 "use client"
 
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from 'recharts';
+import { CartesianGrid, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
 import { RechartsDevtools } from '@recharts/devtools';
 import { ChartType2 } from '@/typeScriptType/dashboard';
 
@@ -11,27 +11,16 @@ export default function Step1(props: {data: ChartType2[]}) {
       <CartesianGrid strokeDasharray="5 5" />
       <XAxis dataKey="name"  />
       <YAxis width="auto"  />
+      <Tooltip />
       <Line
-        type="monotone"
-        dataKey="uv"
-        stroke="var(--color-chart-1)"
-        dot={{
-          fill: 'var(--color-surface-base)',
-        }}
-        activeDot={{
-          stroke: 'var(--color-surface-base)',
-        }}
-      />
-      <Line
-        type="monotone"
-        dataKey="pv"
+        type="natural"
+        dataKey="Látogatottság"
         stroke="var(--color-chart-2)"
         dot={{
           fill: 'var(--color-surface-base)',
         }}
-        activeDot={{
-          stroke: 'var(--color-surface-base)',
-        }}
+        activeDot={false}
+        connectNulls
       />
       <RechartsDevtools />
     </LineChart>

@@ -6,6 +6,7 @@ import PageView from '@/models/PageView';
 import Place from '@/models/Place';
 import Service from '@/models/Service';
 import { ChartType, ChartType2, PieType } from '@/typeScriptType/dashboard';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { connection } from 'next/server'
 
@@ -61,21 +62,21 @@ const page = async () => {
   return (
     <div className='w-full'>
       <div className='flex gap-10'>
-        <Step1 data={perDay.map((item) => ({ name: item.date, amt: 2400, pv: item.count }))} />
-        <PieChartDefaultIndex data={perReferrer.map((item) => ({ name: item.referrer || "", value: item.count }))} />
+        <Step1 data={perDay.map((item) => ({ name: item.date, amt: 2400, Látogatottság: item.count }))} />
+        <PieChartDefaultIndex data={perReferrer.map((item) => ({ name: (item.referrer === null || item.referrer ==='null') ? "Keresők": item.referrer, value: item.count }))} />
       </div>
       <section>
         <h2>Utoljára elkészített oldalak</h2>
-        <div className='flex gap-2'>
+        <div className='flex gap-2 flex-col'>
           <div>
-            {res[1].map((item) => <div key={String(item._id) + 'dashboard'}>{item.heading}</div>)}
+            {res[1].map((item) => <Link href={"/"+item.heading.replaceAll(" ","-")} target='_blank' key={String(item._id) + 'dashboard'}>{item.heading}</Link>)}
           </div>
 
           <div>
-            {res[2].map((item) => <div key={String(item._id) + 'dashboard'}>{item.heading}</div>)}
+            {res[2].map((item) => <Link href={"/"+item.heading.replaceAll(" ","-")} target='_blank' key={String(item._id) + 'dashboard'}>{item.heading}</Link>)}
           </div>
           <div>
-            {res[3].map((item) => <div key={String(item._id) + 'dashboard'}>{item.heading}</div>)}
+            {res[3].map((item) => <Link href={"/"+item.heading.replaceAll(" ","-")} target='_blank' key={String(item._id) + 'dashboard'}>{item.heading}</Link>)}
           </div>
         </div>
       </section>
