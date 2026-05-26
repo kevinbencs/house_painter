@@ -3,5 +3,16 @@ export interface BSP {
     text: string, 
     keywords: string[],
     detail: string,
-    image: string
+    image: string,
+    hide: boolean
+}
+
+
+export interface BSPClientList {
+  id: string,
+  title: string,
+  year: string,
+  month: string,
+  day: string,
+  hide: boolean
 }

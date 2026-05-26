@@ -1,14 +1,8 @@
 import UpdatePagesList from "@/app/_components/dashboard/updatePagesList"
 import { checkAuth } from "@/lib/checkAuth";
 import { redirect } from "next/navigation";
+import {  BSPClientList } from "@/typeScriptType/blogServPlace";
 
-interface List {
-  id: string,
-  title: string,
-  year: string,
-  month: string,
-  day: string
-}
 
 const Page = async () => {
   const auth = await checkAuth()
@@ -20,12 +14,13 @@ const Page = async () => {
     title: "fa",
     year: "ad",
     month: "safd",
-    day: "asd"
+    day: "asd",
+    hide: false
   }]
 
 
   return (
-    <div className="w-full"><UpdatePagesList lists={l} page="place" /> </div>
+    <div className="w-full"><UpdatePagesList list={l} page="place" /> </div>
   )
 }
 

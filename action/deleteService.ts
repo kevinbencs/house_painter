@@ -5,7 +5,7 @@ import { handleMongooseError } from "@/lib/mongo";
 import Service from "@/models/Service";
 import { deleteSchema } from "@/schema/schema";
 
-export const deletePlace = async (_id: string) => {
+export const deleteService = async (_id: string) => {
     try {
 
         const authRes = await checkAuth();

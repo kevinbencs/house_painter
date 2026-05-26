@@ -37,7 +37,8 @@ export const addPlace = async (_prevState: ActionState, formData: FormData) => {
             text,
             detail,
             image,
-            keywords
+            keywords,
+            hide: false
         });
 
         await blog.save();
