@@ -8,6 +8,13 @@ export interface BSP {
 }
 
 
+export interface BSPAdmin {
+    heading: string,
+    _id: string
+    hide: boolean
+}
+
+
 export interface BSPClientList {
   id: string,
   title: string,

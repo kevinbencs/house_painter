@@ -6,6 +6,7 @@ import { deleteService } from "@/action/deleteService";
 import { BSPClientList } from "@/typeScriptType/blogServPlace";
 import Link from "next/link"
 import { MdDelete } from "react-icons/md";
+import { FaPlusCircle } from "react-icons/fa";
 
 
 
@@ -37,8 +38,8 @@ const UpdatePagesList = (props: { list: BSPClientList[], page: string, }) => {
     <section>
       {props.list.map((item) => <li className="flex justify-between w-full mb-2 border-b-2" key={item.id}>
         <Link href={`/dashboard/update/${props.page}/${item.year}/${item.month}/${item.day}/${item.title.toLowerCase().replaceAll(' ', '-')}`} className="w-full" >{item.title}</Link>
-        {item.hide === false && < button onClick={() => deleteItem(item.id)} className="p-2"><MdDelete /></button>}
-        {item.hide === true && < button onClick={() => deleteItem(item.id)} className="p-2"><MdDelete /></button>}
+        {item.hide === false && < button onClick={() => deleteItem(item.id)} className="p-2 text-red-600"><MdDelete /></button>}
+        {item.hide === true && < button onClick={() => deleteItem(item.id)} className="p-2 text-green-600"><FaPlusCircle /></button>}
       </li>)
       }
     </section >

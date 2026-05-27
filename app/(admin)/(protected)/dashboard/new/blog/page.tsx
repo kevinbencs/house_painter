@@ -5,9 +5,9 @@ import { checkAuth } from "@/lib/checkAuth";
 
 
 const Page = async () => {
-  const auth = await checkAuth();
+ /* const auth = await checkAuth();
 
-  if (auth.error) redirect('/');
+  if (auth.error) redirect('/');*/
   const params= {
     year: "0",
     month: "0",

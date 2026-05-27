@@ -3,7 +3,8 @@
 import { RefObject } from "react";
 
 const Link_Anchor = (props: { TextEnterRef: RefObject<HTMLParagraphElement | null>, text: string }) => {
-    const handleClick = () => {
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
         if (props.TextEnterRef.current) {
             props.TextEnterRef.current.focus();
             const selection = window.getSelection();

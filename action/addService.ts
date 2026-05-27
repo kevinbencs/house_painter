@@ -6,7 +6,7 @@ import Service from "@/models/Service";
 import { blogServPlaceSchema } from "@/schema/schema";
 import { ActionState } from "@/typeScriptType/form"
 
-export const addService= async (_prevState: ActionState, formData: FormData) => {
+export const addService= async ( formData: FormData) => {
     try {
         const auth = await checkAuth()
 

@@ -1,6 +1,6 @@
 "use client"
 
-import { useActionState, useState, useEffect, useRef, ReactNode, Suspense, SyntheticEvent } from "react"
+import { useTransition, useState, useEffect, useRef, ReactNode, Suspense, SyntheticEvent } from "react"
 import { useRouter } from "next/navigation";
 import * as z from 'zod';
 import { v4 as uuid } from "uuid";
@@ -17,7 +17,6 @@ import {
     QueryClient,
     QueryClientProvider,
 } from '@tanstack/react-query'
-import { ActionState } from "@/typeScriptType/form";
 
 const queryClient = new QueryClient()
 
@@ -29,7 +28,7 @@ const DynamicPagesForm = (props: {
         failed: undefined,
         data: undefined,
     } | {
-        failed: z.ZodIssue[],
+        failed: string[],
         error: undefined,
         data: undefined,
     } | {
@@ -44,7 +43,7 @@ const DynamicPagesForm = (props: {
         error: undefined,
         failed: undefined,
     },
-    serverAction: (_prevState: ActionState, formData: FormData) => Promise<{
+    serverAction: (formData: FormData) => Promise<{
         error: string;
         failed?: undefined;
         message?: undefined;
@@ -79,11 +78,12 @@ const DynamicPagesForm = (props: {
 
     const [success, setSuccess] = useState<string | undefined>('');
     const [error, setError] = useState<string | undefined>('');
-    const [failed, setFailed] = useState<undefined | z.ZodIssue[]>([])
+    const [failed, setFailed] = useState<undefined | string[]>([])
 
     const TextEnterRef = useRef<null | HTMLParagraphElement>(null);
 
-    const [state, action, isPending] = useActionState(props.serverAction, null)
+    const [isPending, startTransition] = useTransition()
+
 
 
     const bold_italic: string[] = ['bold', 'italic'];
@@ -135,31 +135,32 @@ const DynamicPagesForm = (props: {
         else setParagPlaceholder('');
     }
 
-    const submitEvenet = async (e: SyntheticEvent) => {
+    const submitEvent = async (e: SyntheticEvent) => {
         e.preventDefault();
-        const form = new FormData();
-        form.append("heading", titleInput);
-        form.append("text", paragraphInput)
-        form.append("detail", detail)
-        form.append("keywords", themes.join(';'))
-        form.append("image", coverImageId)
+        startTransition(async () => {
+            const form = new FormData();
+            form.append("heading", titleInput);
+            form.append("text", paragraphInput)
+            form.append("detail", detail)
+            form.append("keywords", themes.join(';'))
+            form.append("image", coverImageId)
 
-        action(form);
+            const res = await props.serverAction(form)
+
+            if (res.error) setError(res.error);
+
+            if (res.failed) setFailed(res.failed);
+
+            if (res.message) setSuccess(res.message);
+        })
+
     }
 
 
     return (
         <>
-            <form action="" className='mb-20 mt-10' onSubmit={submitEvenet}>
-                {state?.message &&
-                    <div className="text-green-500 text-2xl">{state.message}</div>
-                }
-                {state?.error &&
-                    <div className="text-red-500 text-2xl">{state.error}</div>
-                }
-                {state?.failed &&
-                    <div className="text-red-500 text-2xl">{state.failed.map((item) => <div>{item}</div> )}</div>
-                }
+            <form action="" className='mb-20 mt-10' onSubmit={submitEvent}>
+
                 <input type="text" name='title' className='focus-within:outline-none border-b-2 input-bordered block w-full mb-8 bg-transparent pl-2 dark:text-white' placeholder='Blog címe' value={titleInput} onChange={(e) => setTitleInput(e.target.value)} />
                 <input type="text" name='cover_image_id' className='focus-within:outline-none border-b-2 input-bordered block w-full mb-8 bg-transparent pl-2 dark:text-white' placeholder='Cover kép id' value={coverImageId} onChange={(e) => setCoverImageId(e.target.value)} />
                 <div className='max-w-96 mb-10'>
@@ -205,7 +206,7 @@ const DynamicPagesForm = (props: {
             }
             {(failed && failed.length > 0) &&
                 <div className='text-red-700 font-bold dark:bg-red-400/15 dark:text-red-500 bg-red-700/25 text-center rounded-lg mb-40  p-2'>
-                    {failed.map(e => <p key={uuid()}>{e.message}</p>)}
+                    {failed.map(e => <p key={uuid()}>{e}</p>)}
                 </div>
             }
 
