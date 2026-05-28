@@ -3,28 +3,36 @@ import DynamicPagesForm from "@/app/_components/dashboard/dynamicPagesForm"
 import { addBlog } from "@/action/addBlog";
 import { checkAuth } from "@/lib/checkAuth";
 import { redirect } from "next/navigation";
+import Blog from "@/models/Blog";
+import { connection } from "next/server";
 
 const Page = async ({ params }: { params: Promise<{ year: string, month: string, day: string, title: string }> }) => {
-  const auth = await checkAuth()
+  /*const auth = await checkAuth()
 
-  if (auth.error) redirect('/');
+  if (auth.error) redirect('/');*/
+  await connection()
+  const par = await params
+  const title = par.title.replaceAll('-', ' ')
+  const data = await Blog.findOne({heading: title})
+
+  
 
   const res = {
     error: undefined,
     failed: undefined,
     data: {
-      title: "",
-      text: "",
-      cover_img_id: "",
-      keyword: [],
-      id: "",
-      detail: "",
+      title: data.heading,
+      text: data.text,
+      cover_img_id: data.image,
+      keyword: data.keywords.split(";"),
+      id: String(data._id),
+      detail: data.detail,
     }
   }
 
   return (
     <div className="w-full">
-      <DynamicPagesForm params={await params} res={res} serverAction={addBlog} />
+      <DynamicPagesForm res={res} serverAction={addBlog} />
     </div>
   )
 }

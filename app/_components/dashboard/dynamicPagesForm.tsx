@@ -22,7 +22,6 @@ const queryClient = new QueryClient()
 
 
 const DynamicPagesForm = (props: {
-    params: { year: string, month: string, day: string, title: string },
     res: {
         error: string,
         failed: undefined,
