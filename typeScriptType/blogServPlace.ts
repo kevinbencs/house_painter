@@ -18,8 +18,15 @@ export interface BSPAdmin {
 export interface BSPClientList {
   id: string,
   title: string,
-  year: string,
-  month: string,
-  day: string,
+  year: number,
+  month: number,
+  day: number,
   hide: boolean
+}
+
+export interface BSPGetUpdateList {
+    _id: string,
+    hide: boolean,
+    createdAt: Date,
+    heading: string
 }

@@ -8,9 +8,9 @@ import { ActionState } from "@/typeScriptType/form"
 
 export const addBlog = async ( formData: FormData) => {
     try {
-        const auth = await checkAuth()
+        /*const auth = await checkAuth()
 
-        if (auth.error) return { error: "Kérlek jelentkezz be." };
+        if (auth.error) return { error: "Kérlek jelentkezz be." };*/
         
 
         const heading = formData.get('heading') as string;
