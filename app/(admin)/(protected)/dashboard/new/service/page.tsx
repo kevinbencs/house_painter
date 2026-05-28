@@ -9,12 +9,7 @@ const Page = async () => {
 
   if (auth.error) redirect('/');
   
-  const params = {
-    year: "0",
-    month: "0",
-    day: "0",
-    title: ""
-  }
+
 
   const res = {
     error: undefined,
@@ -31,7 +26,7 @@ const Page = async () => {
 
   return (
     <div className="w-full">
-      <DynamicPagesForm params={params} res={res} serverAction={addService} />
+      <DynamicPagesForm  res={res} serverAction={addService} />
     </div>
   )
 }
