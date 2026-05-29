@@ -5,7 +5,7 @@ import { handleMongooseError } from "@/lib/mongo";
 import Service from "@/models/Service";
 import { deleteSchema } from "@/schema/schema";
 
-export const deleteService = async (_id: string) => {
+export const displayService = async (_id: string) => {
     try {
 
         const authRes = await checkAuth();
@@ -19,10 +19,10 @@ export const deleteService = async (_id: string) => {
         }
 
         await Service.findByIdAndUpdate(_id,{
-            hide: true
+            hide: false
         })
 
-        return { message: "Szolgáltatás törölve." }
+        return { message: "Szolgáltatás megjelenítése" }
 
     } catch (error) {
         const Error = await handleMongooseError(error);
