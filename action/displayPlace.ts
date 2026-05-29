@@ -5,7 +5,7 @@ import { handleMongooseError } from "@/lib/mongo";
 import Place from "@/models/Place";
 import { deleteSchema } from "@/schema/schema";
 
-export const deletePlace = async (_id: string) => {
+export const displayPlace = async (_id: string) => {
     try {
 
         const authRes = await checkAuth();
@@ -20,7 +20,7 @@ export const deletePlace = async (_id: string) => {
         }
 
         await Place.findByIdAndUpdate(_id,{
-            hide: true
+            hide: false
         })
 
         return {message: "Hely törölve."}

@@ -9,7 +9,7 @@ import { MdDelete } from "react-icons/md";
 import { FaPlusCircle } from "react-icons/fa";
 import { displayBlog } from "@/action/displayBlog";
 import { displayService } from "@/action/displayService";
-
+import { displayPlace } from "@/action/displayPlace";
 
 
 
@@ -48,7 +48,7 @@ const UpdatePagesList = (props: { list: BSPClientList[], page: string, }) => {
         if (resSer.failed) alert(resSer.failed.join(" "));
         break;
       case "place":
-        const resPla = await dispalyPlace(id);
+        const resPla = await displayPlace(id);
         if (resPla.error) alert(resPla.error);
         if (resPla.failed) alert(resPla.failed.join(" "));
         break;
