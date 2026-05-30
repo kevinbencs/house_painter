@@ -2,13 +2,15 @@ import DynamicPagesForm from "@/app/_components/dashboard/dynamicPagesForm"
 import { addService } from "@/action/addService"
 import { redirect } from "next/navigation";
 import { checkAuth } from "@/lib/checkAuth";
+import { connection } from "next/server";
 
 
 const Page = async () => {
-  const auth = await checkAuth()
+  await connection()
+  /*const auth = await checkAuth()
 
-  if (auth.error) redirect('/');
-  
+  if (auth.error) redirect('/');*/
+
 
 
   const res = {
@@ -26,7 +28,8 @@ const Page = async () => {
 
   return (
     <div className="w-full">
-      <DynamicPagesForm  res={res} serverAction={addService} />
+      <h1 className="text-3xl mb-2">Új szolgáltatás hozzáadása</h1>
+      <DynamicPagesForm res={res} serverAction={addService} />
     </div>
   )
 }

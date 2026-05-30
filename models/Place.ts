@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const PlaceSchema = new mongoose.Schema({
-    name: {
+    heading: {
         type: String,
         required: true
     },

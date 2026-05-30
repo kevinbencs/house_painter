@@ -32,6 +32,7 @@ const Page = async ({ params }: { params: Promise<{ year: string, month: string,
 
   return (
     <div className="w-full">
+      <h1 className="text-3xl mb-2">Blog szerkesztése</h1>
       <DynamicPagesForm res={res} serverAction={addBlog} />
     </div>
   )

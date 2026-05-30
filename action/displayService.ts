@@ -22,7 +22,7 @@ export const displayService = async (_id: string) => {
             hide: false
         })
 
-        return { message: "Szolgáltatás megjelenítése" }
+        return { message: "Szolgáltatás megjelenítve" }
 
     } catch (error) {
         const Error = await handleMongooseError(error);

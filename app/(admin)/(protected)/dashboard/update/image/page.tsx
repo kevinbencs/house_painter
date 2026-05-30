@@ -14,6 +14,7 @@ const Page = async () => {
 
   return (
     <section>
+      <h1 className="text-3xl mb-2">Képek</h1>
       <Suspense fallback={<div>Betöltés...</div>}>
         <ImageUpdatePage img={imgs} />
       </Suspense>

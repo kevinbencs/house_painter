@@ -17,7 +17,6 @@ import { LuPaintBucket } from "react-icons/lu"
 
 const Links = [
   { url: "/dashboard", text: 'Dashboard', img: <MdDashboard /> },
-  { url: "/dashboard/2fa", text: '2FA', img: <FaLock /> },
   { url: "/dashboard/new/password", text: 'Új jelszó', img: <MdOutlinePassword /> },
   { url: "/dashboard/new/image", text: 'Új Kép hozzáadása', img: <FaFileImage /> },
   { url: "/dashboard/price", text: 'Árak', img: <FaWallet /> },

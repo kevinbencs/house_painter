@@ -4,13 +4,12 @@ import { checkAuth } from "@/lib/checkAuth";
 import { handleMongooseError } from "@/lib/mongo";
 import Place from "@/models/Place";
 import { blogServPlaceSchema } from "@/schema/schema";
-import { ActionState } from "@/typeScriptType/form"
 
 export const addPlace = async ( formData: FormData) => {
      try {
-        const auth = await checkAuth()
+        /*const auth = await checkAuth()
 
-        if (auth.error) return { error: "Kérlek jelentkezz be." };
+        if (auth.error) return { error: "Kérlek jelentkezz be." };*/
         
 
         const heading = formData.get('heading') as string;

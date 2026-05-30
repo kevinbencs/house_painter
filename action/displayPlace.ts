@@ -23,7 +23,7 @@ export const displayPlace = async (_id: string) => {
             hide: false
         })
 
-        return {message: "Hely törölve."}
+        return {message: "Hely megjelenítve."}
 
     } catch (error) {
         const Error = await handleMongooseError(error);

@@ -3,13 +3,16 @@ import { checkAuth } from '@/lib/checkAuth'
 import { getCategory, getPriceData } from '@/lib/data'
 import { Categories, ElementOfPrice, MongoData } from '@/typeScriptType/price'
 import { redirect } from 'next/navigation'
+import { connection } from 'next/server'
 
 
 
 const Page = async () => {
-  const auth = await checkAuth()
+  /*const auth = await checkAuth()
 
-  if (auth.error) redirect('/');
+  if (auth.error) redirect('/');*/
+
+  await connection()
 
   const res: MongoData[] = await getPriceData()
 
@@ -41,6 +44,7 @@ const Page = async () => {
 
   return (
     <div className='w-full'>
+      <h1 className="text-3xl mb-2">Árak</h1>
       <MainElement data={data} />
     </div>
   )

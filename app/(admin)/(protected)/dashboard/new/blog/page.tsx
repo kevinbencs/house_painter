@@ -25,6 +25,7 @@ const Page = async () => {
 
   return (
     <div className="w-full">
+      <h1 className="text-3xl mb-2">Új blog hozzáadása</h1>
       <DynamicPagesForm   res={res} serverAction={addBlog}/>
     </div>
   )

@@ -7,9 +7,9 @@ import Place from "@/models/Place";
 import { connection } from "next/server";
 
 const page = async ({ params }: { params: Promise<{ year: string, month: string, day: string, title: string }> }) => {
-  const auth = await checkAuth()
+  /*const auth = await checkAuth()
 
-  if (auth.error) redirect('/');
+  if (auth.error) redirect('/');*/
 
   await connection()
   const par = await params
@@ -34,6 +34,7 @@ const page = async ({ params }: { params: Promise<{ year: string, month: string,
 
   return (
     <div className="w-full">
+      <h1 className="text-3xl mb-2">Hely szerkesztése</h1>
       <DynamicPagesForm  res={res} serverAction={addPlace} />
     </div>
   )
