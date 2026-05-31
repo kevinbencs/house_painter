@@ -22,6 +22,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Budapesten szobafestés",
   description: "Megbíható, precíz szobafestés Budapesten és környékén",
+  alternates: {
+    canonical: 'https://your-budapest-painter.hu',
+  },
 };
 
 export default function RootLayout({
@@ -29,6 +32,26 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'HomeAndConstructionBusiness',
+    'name': 'Budapest Painter Pro',
+    'address': {
+      '@type': 'PostalAddress',
+      'addressLocality': 'Budapest',
+      'addressCountry': 'HU',
+      // Add specific district if applicable
+    },
+    'geo': {
+      '@type': 'GeoCoordinates',
+      'latitude': '47.4979',
+      'longitude': '19.0402'
+    },
+    'url': 'https://your-budapest-painter.hu',
+    'telephone': '+3612345678',
+    'priceRange': '$$',
+    'image': 'https://your-budapest-painter.hu/hero-painting.jpg'
+  }
   return (
     <html
       lang="en"
@@ -36,6 +59,10 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <TopBar />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <IsLoggedProvider>
           <HeaderContainer>{children}</HeaderContainer>
         </IsLoggedProvider>

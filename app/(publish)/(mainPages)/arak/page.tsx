@@ -6,14 +6,14 @@ import { cacheLife, cacheTag } from "next/cache"
 
 export const metadata: Metadata = {
   title: 'Árak',
-  description: 'Árak a budapesti szobafestés esetén',
+  description: 'Szobafestés árak Budapesten és környékén',
   keywords: ['',],
   authors: [{ name: 'Seb' }, { name: 'Josh', url: 'https://nextjs.org' }],
   creator: '',
   publisher: '',
   openGraph: {
     title: 'Árak - Budapest szobafestés',
-    description: '',
+    description: 'Szobafestés árak Budapesten és környékén',
     url: '',
     siteName: 'Next.js',
     images: [
