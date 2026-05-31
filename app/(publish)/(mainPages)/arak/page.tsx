@@ -7,23 +7,23 @@ import { cacheLife, cacheTag } from "next/cache"
 export const metadata: Metadata = {
   title: 'Árak',
   description: 'Árak a budapesti szobafestés esetén',
-  keywords: ['Next.js', 'React', 'JavaScript'],
+  keywords: ['',],
   authors: [{ name: 'Seb' }, { name: 'Josh', url: 'https://nextjs.org' }],
-  creator: 'Jiachi Liu',
-  publisher: 'Sebastian Markbåge',
+  creator: '',
+  publisher: '',
   openGraph: {
-    title: 'Next.js',
-    description: 'The React Framework for the Web',
-    url: 'https://nextjs.org',
+    title: 'Árak - Budapest szobafestés',
+    description: '',
+    url: '',
     siteName: 'Next.js',
     images: [
       {
-        url: 'https://nextjs.org/og.png', // Must be an absolute URL
+        url: '', // Must be an absolute URL
         width: 800,
         height: 600,
       },
       {
-        url: 'https://nextjs.org/og-alt.png', // Must be an absolute URL
+        url: '', // Must be an absolute URL
         width: 1800,
         height: 1600,
         alt: 'My custom alt',
@@ -56,13 +56,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'app',
-    title: 'Next.js',
-    description: 'The React Framework for the Web',
+    title: 'Árak',
+    description: 'Árak - Budapest szobafestés',
     siteId: '1467726470533754880',
     creator: '@nextjs',
     creatorId: '1467726470533754880',
     images: {
-      url: 'https://nextjs.org/og.png',
+      url: '',
       alt: 'Next.js Logo',
     },
     app: {
