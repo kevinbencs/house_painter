@@ -30,3 +30,11 @@ export interface BSPGetUpdateList {
     createdAt: Date,
     heading: string
 }
+
+
+export interface BSPPublicPagesList {
+    _id: string,
+    hide: boolean,
+    image: Date,
+    heading: string
+}

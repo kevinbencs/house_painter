@@ -113,7 +113,7 @@ export const metadata: Metadata = {
 
 const Page = async () => {
   'use cache'
-  cacheTag('img-page')
+  cacheTag('price-page')
   cacheLife('hours')
   const res = await getPriceData()
 
