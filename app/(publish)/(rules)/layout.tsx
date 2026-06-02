@@ -1,4 +1,4 @@
-import SendMessage from "../../_components/sendMessage";
+import SendMessage from "../../_components/sendMessage/sendMessage";
 
 export default function Layout({
     children,

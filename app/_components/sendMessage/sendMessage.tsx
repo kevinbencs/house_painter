@@ -8,10 +8,11 @@ import { Label } from "@/components/ui/label"
 
 
 
-const SendMessage = () => {
+const SendMessageForm = () => {
   return (
     
-    <form className="w-full lg:w-[50%] lg:max-w-[700px] text-white">
+    <form className="w-full lg:w-[60%] lg:max-w-[800px] ">
+      <div className="text-4xl mb-10">Írjon bizalommal</div>
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor="name">Név</FieldLabel>
@@ -52,4 +53,4 @@ const SendMessage = () => {
   )
 }
 
-export default SendMessage
+export default SendMessageForm

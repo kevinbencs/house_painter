@@ -1,6 +1,6 @@
 import Image from "next/image";
-import SendMessage from "./_components/sendMessage";
 import SideBar from "./_components/sidebar/sideBar";
+import SendMessageContainer from "./_components/sendMessage/sendMessageContainer";
 
 export default function Home() {
   return (
@@ -49,9 +49,7 @@ export default function Home() {
 
 
       </div>
-      <div className="flex justify-center p-2 pb-6 bg-mist-900 dark" >
-        <SendMessage />
-      </div>
+      <SendMessageContainer />
       <SideBar />
     </>
 

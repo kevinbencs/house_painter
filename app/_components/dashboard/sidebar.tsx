@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation"
 import { FaBloggerB, FaCity, FaPencil } from "react-icons/fa6";
 import { FaWallet } from "react-icons/fa6";
 import { MdDashboard } from "react-icons/md";
-import { FaLock } from "react-icons/fa";
 import { MdOutlinePassword } from "react-icons/md";
 import { FaFileImage } from "react-icons/fa";
 import { IoIosImages } from "react-icons/io";
