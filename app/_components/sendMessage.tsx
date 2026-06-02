@@ -4,20 +4,21 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
 
 
 
 const SendMessage = () => {
   return (
-
-    <form className="w-full lg:w-[50%] lg:max-w-[700px]">
+    
+    <form className="w-full lg:w-[50%] lg:max-w-[700px] text-white">
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor="name">Név</FieldLabel>
           <Input id="name" placeholder="Név" required />
         </Field>
         <Field>
-          <FieldLabel htmlFor="email">Email</FieldLabel>
+          <Label htmlFor="email">Email</Label>
           <Input id="email"
             type="email"
             placeholder="nev@valami.com"

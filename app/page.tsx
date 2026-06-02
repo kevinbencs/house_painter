@@ -47,9 +47,10 @@ export default function Home() {
         <p>df</p>
         <p>df</p>
 
-        <div className="flex justify-center m-2 mb-10">
-          <SendMessage />
-        </div>
+
+      </div>
+      <div className="flex justify-center p-2 pb-6 bg-mist-900 dark" >
+        <SendMessage />
       </div>
       <SideBar />
     </>

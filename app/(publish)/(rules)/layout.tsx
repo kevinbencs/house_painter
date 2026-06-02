@@ -9,9 +9,6 @@ export default function Layout({
         <>
             
             <div className="mt-10 lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2" >{children}</div>
-            <div className="flex justify-center m-2 bg-gray-900">
-                <SendMessage />
-            </div>
         </>
     )
 }
