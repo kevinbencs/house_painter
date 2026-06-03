@@ -8,7 +8,7 @@ import Link from 'next/link'
 
 const page = async () => {
   "use cache"
-  cacheTag("blog-list");
+  cacheTag("service-list");
   cacheLife("hours")
 
   const data: BSPPublicPagesList[] = await Service.find({hide: false},{id: 1, heading: 1, image: 1, hide: 1})

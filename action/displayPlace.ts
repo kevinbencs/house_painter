@@ -4,6 +4,7 @@ import { checkAuth } from "@/lib/checkAuth";
 import { handleMongooseError } from "@/lib/mongo";
 import Place from "@/models/Place";
 import { deleteSchema } from "@/schema/schema";
+import { updateTag } from "next/cache";
 
 export const displayPlace = async (_id: string) => {
     try {
@@ -22,6 +23,8 @@ export const displayPlace = async (_id: string) => {
         await Place.findByIdAndUpdate(_id,{
             hide: false
         })
+
+        updateTag('place-list')
 
         return {message: "Hely megjelenítve."}
 

@@ -4,6 +4,7 @@ import { checkAuth } from "@/lib/checkAuth";
 import { handleMongooseError } from "@/lib/mongo";
 import Blog from "@/models/Blog";
 import { deleteSchema } from "@/schema/schema";
+import { updateTag } from "next/cache";
 
 export const deleteBlog = async (_id: string) => {
     try {
@@ -20,6 +21,8 @@ export const deleteBlog = async (_id: string) => {
         await Blog.findByIdAndUpdate(_id,{
             hide: true
         })
+
+        updateTag('blog-list')
 
         return {message: "Blog törölve."}
 

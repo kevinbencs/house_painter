@@ -4,7 +4,7 @@ import { checkAuth } from "@/lib/checkAuth";
 import { handleMongooseError } from "@/lib/mongo";
 import Blog from "@/models/Blog";
 import { blogServPlaceSchema } from "@/schema/schema";
-import { ActionState } from "@/typeScriptType/form"
+import { updateTag } from "next/cache";
 
 export const addBlog = async ( formData: FormData) => {
     try {
@@ -42,6 +42,8 @@ export const addBlog = async ( formData: FormData) => {
         });
 
         await blog.save();
+
+        updateTag('blog-list')
 
         return {message: "Cikk létrehozva"}
     } catch (error) {

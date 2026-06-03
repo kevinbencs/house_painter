@@ -4,6 +4,7 @@ import { checkAuth } from "@/lib/checkAuth";
 import { handleMongooseError } from "@/lib/mongo";
 import Place from "@/models/Place";
 import { deleteSchema } from "@/schema/schema";
+import { updateTag } from "next/cache";
 
 export const deletePlace = async (_id: string) => {
     try {
@@ -22,6 +23,7 @@ export const deletePlace = async (_id: string) => {
         await Place.findByIdAndUpdate(_id,{
             hide: true
         })
+        updateTag('place-list')
 
         return {message: "Hely törölve."}
 

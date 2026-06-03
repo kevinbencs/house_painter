@@ -4,6 +4,7 @@ import { checkAuth } from "@/lib/checkAuth";
 import { handleMongooseError } from "@/lib/mongo";
 import Place from "@/models/Place";
 import { blogServPlaceSchema } from "@/schema/schema";
+import { updateTag } from "next/cache";
 
 export const addPlace = async ( formData: FormData) => {
      try {
@@ -41,6 +42,9 @@ export const addPlace = async ( formData: FormData) => {
         });
 
         await blog.save();
+
+        updateTag('place-list')
+
 
         return {message: "Új hely hozzáadva"}
     } catch (error) {

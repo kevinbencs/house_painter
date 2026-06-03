@@ -4,6 +4,7 @@ import { checkAuth } from "@/lib/checkAuth";
 import { handleMongooseError } from "@/lib/mongo";
 import Service from "@/models/Service";
 import { deleteSchema } from "@/schema/schema";
+import { updateTag } from "next/cache";
 
 export const displayService = async (_id: string) => {
     try {
@@ -21,6 +22,8 @@ export const displayService = async (_id: string) => {
         await Service.findByIdAndUpdate(_id,{
             hide: false
         })
+
+        updateTag('service-list')
 
         return { message: "Szolgáltatás megjelenítve" }
 

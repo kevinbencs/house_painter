@@ -4,6 +4,7 @@ import { checkAuth } from "@/lib/checkAuth";
 import { handleMongooseError } from "@/lib/mongo";
 import Service from "@/models/Service";
 import { blogServPlaceSchema } from "@/schema/schema";
+import { updateTag } from "next/cache";
 
 export const addService= async ( formData: FormData) => {
     try {
@@ -39,6 +40,8 @@ export const addService= async ( formData: FormData) => {
             keywords,
             hide: false
         });
+
+        updateTag('service-list')
 
         await blog.save();
 

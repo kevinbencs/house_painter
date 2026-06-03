@@ -4,6 +4,7 @@ import { checkAuth } from "@/lib/checkAuth";
 import { handleMongooseError } from "@/lib/mongo";
 import Blog from "@/models/Blog";
 import { deleteSchema } from "@/schema/schema";
+import { updateTag } from "next/cache";
 
 export const displayBlog = async (_id: string) => {
     try {
@@ -20,8 +21,13 @@ export const displayBlog = async (_id: string) => {
         await Blog.findByIdAndUpdate(_id,{
             hide: false
         })
+        
+        updateTag('blog-list')
 
         return {message: "Blog megjelenítve."}
+
+        
+
 
     } catch (error) {
         const Error = await handleMongooseError(error);
