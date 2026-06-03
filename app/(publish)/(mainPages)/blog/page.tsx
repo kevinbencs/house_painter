@@ -21,7 +21,7 @@ const page = async() => {
       <h1 className='text-3xl mb-6'>Blogok</h1>
       <ul className='flex gap-4 flex-wrap justify-between '>
         {data.map((item, i) => <li key={"blog-"+String(item._id)}>
-          <Link className="hover:text-gray-600 flex flex-col gap-2 bg-blue-500" href={`blog/${item.heading.replaceAll(" ","-")}`}>
+          <Link className="hover:text-gray-100 flex flex-col gap-2 bg-gray-500" href={`blog/${item.heading.replaceAll(" ","-")}`}>
           { imgData[i] !== null  && <ImgBSP  url={imgData[i].newUrl} detail={imgData[i].detail}/>}
           <h1>{item.heading}</h1>
           </Link>
