@@ -18,7 +18,7 @@ const page = async () => {
 
   return (
     <section className='mb-10'>
-      <h1 className='text-3xl mb-20'>Helyek</h1>
+      <h1 className='text-3xl mb-20 text-center'>Ahol jelen vagyok szobafestőként</h1>
       <ul>
         {data.map((item, i) => <li key={"blog-" + String(item._id)}>
           <Link className="hover:text-gray-500 flex gap-2 pb-2 border-black w-full border-b mb-6" href={`blog/${item.heading.replaceAll(" ", "-")}`}>
