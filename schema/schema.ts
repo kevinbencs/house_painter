@@ -63,6 +63,13 @@ export const otpTokenSchema = z.object({
 export const otpTokenSchema2 =  z.string({message: "A Kód megadása kötelező"}).min(1);
 
 export const PageViewSchema = z.object({
-    pathname: z.string().min(1, {message: "Pathname is require"}),
+    pathname: z.string().min(1, {message: "Pathname megadása kötelező"}),
     referrer: z.union([z.string(), z.null()])
+})
+
+export const addPriceSchema = z.object({
+    price: z.int().gte(1,{message: "Az ár megadása kötelező"}),
+    category: z.string().min(1,{message: "Kategória megadása kötelező"}),
+    name: z.string().min(1,{message:"A név megadása kötelező"}),
+    unitOfMea: z.string().min(1, {message: "A mértékegység megadása kötelező"})
 })
