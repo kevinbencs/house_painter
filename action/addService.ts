@@ -38,7 +38,7 @@ export const addService= async ( formData: FormData) => {
             detail,
             image,
             keywords,
-            hide: false
+            visibility: false
         });
 
         updateTag('service-list')

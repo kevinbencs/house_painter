@@ -21,7 +21,7 @@ export const displayPlace = async (_id: string) => {
         }
 
         await Place.findByIdAndUpdate(_id,{
-            hide: false
+            visibility: false
         })
 
         updateTag('place-list')

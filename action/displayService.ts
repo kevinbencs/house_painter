@@ -20,7 +20,7 @@ export const displayService = async (_id: string) => {
         }
 
         await Service.findByIdAndUpdate(_id,{
-            hide: false
+            visibility: false
         })
 
         updateTag('service-list')

@@ -4,14 +4,14 @@ export interface BSP {
     keywords: string[],
     detail: string,
     image: string,
-    hide: boolean
+    visibility: boolean
 }
 
 
 export interface BSPAdmin {
     heading: string,
     _id: string
-    hide: boolean
+    visibility: boolean
 }
 
 
@@ -21,12 +21,12 @@ export interface BSPClientList {
   year: number,
   month: number,
   day: number,
-  hide: boolean
+  visibility: boolean
 }
 
 export interface BSPGetUpdateList {
     _id: string,
-    hide: boolean,
+    visibility: boolean,
     createdAt: Date,
     heading: string
 }
@@ -34,7 +34,7 @@ export interface BSPGetUpdateList {
 
 export interface BSPPublicPagesList {
     _id: string,
-    hide: boolean,
+    visibility: boolean,
     image: Date,
     heading: string
 }

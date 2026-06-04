@@ -19,7 +19,7 @@ export const displayBlog = async (_id: string) => {
         }
 
         await Blog.findByIdAndUpdate(_id,{
-            hide: false
+            visibility: false
         })
         
         updateTag('blog-list')

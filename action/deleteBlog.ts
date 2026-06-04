@@ -19,7 +19,7 @@ export const deleteBlog = async (_id: string) => {
         }
 
         await Blog.findByIdAndUpdate(_id,{
-            hide: true
+            visibility: true
         })
 
         updateTag('blog-list')

@@ -12,9 +12,9 @@ const Page = async () => {
 
   if (auth.error) redirect('/');*/
 
-  const res: BSPGetUpdateList[] = await Place.find({}, { _id: 1, heading: 1, hide: 1, createdAt: 1 })
+  const res: BSPGetUpdateList[] = await Place.find({}, { _id: 1, heading: 1, visibility: 1, createdAt: 1 })
 
-  const list: BSPClientList[] = res.map((item) => ({ id: String(item._id), title: item.heading, hide: item.hide, year: new Date(item.createdAt).getFullYear(), month: new Date(item.createdAt).getMonth(), day: new Date(item.createdAt).getDay() }))
+  const list: BSPClientList[] = res.map((item) => ({ id: String(item._id), title: item.heading, visibility: item.visibility, year: new Date(item.createdAt).getFullYear(), month: new Date(item.createdAt).getMonth(), day: new Date(item.createdAt).getDay() }))
 
 
   return (

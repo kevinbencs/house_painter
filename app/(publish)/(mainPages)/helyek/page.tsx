@@ -11,7 +11,7 @@ const page = async () => {
   cacheTag("place-list");
   cacheLife("hours")
 
-  const data: BSPPublicPagesList[] = await Service.find({ hide: false }, { id: 1, heading: 1, image: 1, hide: 1 })
+  const data: BSPPublicPagesList[] = await Service.find({ visibility: false }, { id: 1, heading: 1, image: 1, visibility: 1 })
 
   const imgData: (Img | null)[] = await Promise.all(data.map((item) => Image.findById(item.image)))
 

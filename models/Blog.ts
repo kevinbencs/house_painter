@@ -21,7 +21,7 @@ const BlogSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    hide: {
+    visibility: {
         type: Boolean,
         required: true,
         default: false

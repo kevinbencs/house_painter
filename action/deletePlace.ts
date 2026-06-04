@@ -21,7 +21,7 @@ export const deletePlace = async (_id: string) => {
         }
 
         await Place.findByIdAndUpdate(_id,{
-            hide: true
+            visibility: true
         })
         updateTag('place-list')
 

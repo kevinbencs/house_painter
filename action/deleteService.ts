@@ -20,7 +20,7 @@ export const deleteService = async (_id: string) => {
         }
 
         await Service.findByIdAndUpdate(_id,{
-            hide: true
+            visibility: true
         })
 
         updateTag('service-list')
