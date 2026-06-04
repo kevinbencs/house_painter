@@ -1,6 +1,6 @@
 "use client"
 
-import { useActionState } from "react"
+import { useActionState, useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -13,9 +13,16 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { addPrice } from "@/action/addPrice"
 
+const formatChange = (value: string) => {
+    const digits = value.replace(/\D/g, '');
+
+    return digits.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
 const FormElement = () => {
 
     const [state, action, isPending] = useActionState(addPrice, null)
+    const [price, setPrice] = useState(formatChange(""))
 
     return (
         <div className='flex justify-center'>
@@ -27,6 +34,7 @@ const FormElement = () => {
                     <CardContent>
 
                         {state?.error && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
+                        {state?.failed && <div className="mb-2 mt-2 text-red-600">{state.failed.map((item) => <div key={item}>{item}</div>)}</div>}
                         {state?.message && <div className="mb-2 mt-2 text-green-600">{state?.message}</div>}
                         <div className="flex flex-col gap-6">
                             <div className="grid gap-2">
@@ -50,7 +58,7 @@ const FormElement = () => {
                                 <div className="flex items-center">
                                     <Label htmlFor="price">Ár</Label>
                                 </div>
-                                <Input id="price" name="price" type="number" required disabled={isPending} />
+                                <Input id="price" name="price" type="text" required disabled={isPending} onChange={e => { setPrice(formatChange(e.target.value)) }} value={price}/>
                             </div>
                             <div className="grid gap-2">
                                 <div className="flex items-center">

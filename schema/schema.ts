@@ -73,3 +73,11 @@ export const addPriceSchema = z.object({
     name: z.string().min(1,{message:"A név megadása kötelező"}),
     unitOfMea: z.string().min(1, {message: "A mértékegység megadása kötelező"})
 })
+
+export const updatePriceSchema = z.object({
+    price: z.int().gte(1,{message: "Az ár megadása kötelező"}),
+    category: z.string().min(1,{message: "Kategória megadása kötelező"}),
+    _id: z.string().min(1,{message: "Kategória megadása kötelező"}),
+    name: z.string().min(1,{message:"A név megadása kötelező"}),
+    unitOfMea: z.string().min(1, {message: "A mértékegység megadása kötelező"})
+})
