@@ -10,6 +10,10 @@ import { updateTag } from "next/cache"
 export const updatePrice = async (_prevSate: ActionState, formData: FormData) => {
     try {
 
+        /*const auth = await checkAuth()
+
+        if (auth.error) return { error: "Kérlek jelentkezz be." };*/
+
         const arr = [];
         for (const [key, value] of formData) {
             arr.push(value);

@@ -7,23 +7,28 @@ import { updateTag } from "next/cache";
 
 
 
-export const deletePrice = async ( _id: string) => {
+export const deletePrice = async (_id: string) => {
     try {
-         const res = deleteSchema.safeParse(_id);
-        if(res.error?.issues) {
-            console.log(res.error.issues)
-            return {failed: res.error.issues.map((item) => item.message)}
-        }
+
+        /*const auth = await checkAuth()
+
+        if (auth.error) return { error: "Kérlek jelentkezz be." };*/
         
+        const res = deleteSchema.safeParse(_id);
+        if (res.error?.issues) {
+            console.log(res.error.issues)
+            return { failed: res.error.issues.map((item) => item.message) }
+        }
+
         await Price.findByIdAndDelete(_id);
 
         updateTag("price-data");
         updateTag("price-cat")
 
-        return {message: "Ár törölve"}
+        return { message: "Ár törölve" }
     } catch (error) {
         const Error = await handleMongooseError(error);
 
-        return {error: Error}
+        return { error: Error }
     }
 }

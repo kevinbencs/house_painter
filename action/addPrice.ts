@@ -10,6 +10,10 @@ import { updateTag } from "next/cache"
 export const addPrice = async (_prevState: ActionState, formData: FormData) => {
     try {
 
+        /*const auth = await checkAuth()
+
+        if (auth.error) return { error: "Kérlek jelentkezz be." };*/
+
         const price = Number(String(formData.get("price")).replace(/\s/g, ''));
         const category = formData.get("category");
         const name = formData.get("name");

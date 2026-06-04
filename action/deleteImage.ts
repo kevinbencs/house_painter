@@ -17,6 +17,10 @@ interface Img {
 export const deleteImage = async (_id: string) => {
     try {
 
+        /*const auth = await checkAuth()
+
+        if (auth.error) return { error: "Kérlek jelentkezz be." };*/
+
         const res = deleteSchema.safeParse(_id);
         if(res.error?.issues) {
             console.log(res.error.issues)
