@@ -1,7 +1,7 @@
 export interface BSP {
     heading: string,
     text: string, 
-    keywords: string[],
+    keywords: string,
     detail: string,
     image: string,
     visibility: boolean
