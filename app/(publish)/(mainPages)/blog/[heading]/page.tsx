@@ -1,4 +1,5 @@
 import ChooseTypeOfTextItem from '@/app/_components/bsp/blogRender';
+import { getBlogByHeading } from '@/lib/data';
 import { connectToMongo } from '@/lib/mongo';
 import Blog from '@/models/Blog';
 import Image from '@/models/Image';
@@ -11,7 +12,7 @@ import { connection } from 'next/server';
 
 
 
-/*export async function generateMetadata(
+export async function generateMetadata(
   { params }: { params: Promise<{ heading: string }> },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
@@ -19,9 +20,7 @@ import { connection } from 'next/server';
   const { heading } = await params
 
 
-  const data: BSPRender | null = await Blog.findOne({
-    heading: decodeURIComponent(heading.replaceAll('-', ' '))
-  })
+  const data: BSPRender | null = await getBlogByHeading(decodeURIComponent(heading))
 
   if (data === null) return {}
 
@@ -60,7 +59,7 @@ import { connection } from 'next/server';
 
   }
 }
-*/
+
 export async function generateStaticParams() {
   await connectToMongo()
   
@@ -71,18 +70,14 @@ export async function generateStaticParams() {
 }
 
 const Page = async ({ params }: { params: Promise<{ heading: string }> }) => {
-  'use cache'
-  cacheLife("hours")
+
   const { heading } = await params;
-  cacheTag("blog-"+heading)
 
   if(heading === '__placeholder__') notFound()
 
   
 
-  const data: BSPRender | null = await Blog.findOne({
-    heading: decodeURIComponent(heading.replaceAll('-', ' '))
-  })
+  const data: BSPRender | null = await getBlogByHeading(decodeURIComponent(heading))
 
   if (data === null) notFound();
 

@@ -5,6 +5,8 @@ import Image from '@/models/Image'
 import { Img } from '@/typeScriptType/img'
 import { MongoData } from '@/typeScriptType/price'
 import { Categories } from '@/typeScriptType/price'
+import { BSPRender } from '@/typeScriptType/blogServPlace'
+import Blog from '@/models/Blog'
 
 
 export const getPriceData = async () => {
@@ -39,7 +41,7 @@ export const getCategory = async () => {
 
 export const getAllImg = async () => {
 
-    const imgs: Img[] = await Image.find({}, {_id: 1, show: 1, newUrl:1, detail: 1}).lean();
+    const imgs: Img[] = await Image.find({}, { _id: 1, show: 1, newUrl: 1, detail: 1 }).lean();
 
     return imgs.map(img => ({
         ...img,
@@ -55,7 +57,7 @@ export const getNumbOfImag = async () => {
 
     const numb = await Image.estimatedDocumentCount();
 
-    return Math.ceil(numb/20);
+    return Math.ceil(numb / 20);
 }
 
 
@@ -64,10 +66,22 @@ export const getTwentyImg = async (page: number) => {
     cacheLife('hours')
     cacheTag('img-data')
 
-    const imgs: Img[] = await Image.find({}, {_id: 1, show: 1, newUrl:1, detail: 1}).skip((page-1)*20).limit(20).lean();
+    const imgs: Img[] = await Image.find({}, { _id: 1, show: 1, newUrl: 1, detail: 1 }).skip((page - 1) * 20).limit(20).lean();
 
     return imgs.map(img => ({
         ...img,
         _id: String(img._id)
     }))
+}
+
+
+export const getBlogByHeading = async (heading: string): Promise<BSPRender | null> => {
+    'use cache'
+    cacheTag(`blog-${heading}`)
+    cacheLife('days')
+
+
+    return Blog.findOne({
+        heading: heading.replaceAll('-', ' ')
+    })
 }
