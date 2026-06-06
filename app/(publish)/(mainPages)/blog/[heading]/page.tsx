@@ -1,14 +1,17 @@
+import ChooseTypeOfTextItem from '@/app/_components/bsp/blogRender';
+import { connectToMongo } from '@/lib/mongo';
 import Blog from '@/models/Blog';
 import Image from '@/models/Image';
-import { BSP } from '@/typeScriptType/blogServPlace';
+import { BSPRender } from '@/typeScriptType/blogServPlace';
 import { Img } from '@/typeScriptType/img';
 import type { Metadata, ResolvingMetadata } from 'next';
+import { cacheLife, cacheTag } from 'next/cache';
 import { notFound } from 'next/navigation';
 import { connection } from 'next/server';
 
 
 
-export async function generateMetadata(
+/*export async function generateMetadata(
   { params }: { params: Promise<{ heading: string }> },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
@@ -16,7 +19,7 @@ export async function generateMetadata(
   const { heading } = await params
 
 
-  const data: BSP | null = await Blog.findOne({
+  const data: BSPRender | null = await Blog.findOne({
     heading: decodeURIComponent(heading.replaceAll('-', ' '))
   })
 
@@ -31,38 +34,53 @@ export async function generateMetadata(
     keywords: data.keywords.split(';'),
     description: data.detail,
     openGraph: {
+      locale: 'hu_HU',
       title: decodeURIComponent(heading.replaceAll('-', ' ')),
       description: data.detail,
       type: 'website',
-      publishedTime: res.data?.date,
       url: `${process.env.URL}/blog/${heading}`,
-      images: ['/api/images' + imgData?.newUrl],
+      images: [
+        {
+          url: process.env.URL + '/api/images' + imgData?.newUrl,
+          alt: imgData?.detail
+        }
+      ],
     },
-    robots: {
-    index: true,
-    follow: true,
-    noarchive:false,
-    nocache: false,
-    noimageindex:false,
-    googleBot: {
-      index: true,
-      follow: true,
-      noarchive:false,
-      nocache:false,
-      noimageindex: false,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+    twitter: {
+      card: 'summary_large_image',
+      title: decodeURIComponent(heading.replaceAll('-', ' ')),
+      description: data.detail,
+      images: [
+        {
+          url: process.env.URL + '/api/images' + imgData?.newUrl,
+          alt: imgData?.detail
+        }
+      ],
     },
-  }
+
   }
 }
+*/
+export async function generateStaticParams() {
+  await connectToMongo()
+  
+  const data = await Blog.find({},{heading: 1})
 
-const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
-  await connection();
+  if(data.length === 0) return ([{heading: '__placeholder__'}])
+  return data.map((item) => ({heading: item.heading}))
+}
+
+const Page = async ({ params }: { params: Promise<{ heading: string }> }) => {
+  'use cache'
+  cacheLife("hours")
   const { heading } = await params;
+  cacheTag("blog-"+heading)
 
-  const data: BSP | null = await Blog.findOne({
+  if(heading === '__placeholder__') notFound()
+
+  
+
+  const data: BSPRender | null = await Blog.findOne({
     heading: decodeURIComponent(heading.replaceAll('-', ' '))
   })
 
@@ -71,8 +89,9 @@ const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
   return (
     <section>
       <h1>{decodeURIComponent(heading.replaceAll('-', ' '))}</h1>
+      {data.text.split('$').map((s: string) => <ChooseTypeOfTextItem key={data._id} s={s} />)}
     </section>
   )
 }
 
-export default page
+export default Page

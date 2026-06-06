@@ -7,6 +7,17 @@ export interface BSP {
     visibility: boolean
 }
 
+export interface BSPRender {
+    heading: string,
+    text: string, 
+    keywords: string,
+    detail: string,
+    image: string,
+    visibility: boolean,
+    _id: string
+}
+
+
 
 export interface BSPAdmin {
     heading: string,

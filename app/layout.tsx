@@ -20,11 +20,41 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Budapesten szobafestés",
-  description: "Megbíható, precíz szobafestés Budapesten és környékén",
+  title: {
+    template: '%s | Budapesten szobafestés',
+    default: "Budapesten szobafestés",
+  },
+  description: "Megbízható, precíz szobafestés Budapesten és környékén",
   alternates: {
     canonical: 'https://your-budapest-painter.hu',
   },
+  category: 'Szobafestés',
+  pinterest: {
+    richPin: true,
+  },
+  openGraph: {
+    siteName: 'Budafestő',
+    locale: 'hu_HU',
+    type: 'website',
+    images: [{ url: "/api/images", alt: 'Budafestő - festés Budapesten' }],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    noarchive: false,
+    nocache: false,
+    noimageindex: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noarchive: false,
+      nocache: false,
+      noimageindex: false,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  }
 };
 
 export default function RootLayout({
@@ -56,7 +86,7 @@ export default function RootLayout({
     <html
       lang="en"
       className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
-      
+
     >
       <body className="min-h-full flex flex-col">
         <TopBar />
