@@ -1,6 +1,7 @@
 "use server"
 
 import { checkAuth } from "@/lib/checkAuth";
+import { chooseTypeOfTextItem } from "@/lib/checkTextBSP";
 import { handleMongooseError } from "@/lib/mongo";
 import Service from "@/models/Service";
 import { blogServPlaceSchema } from "@/schema/schema";
@@ -32,7 +33,13 @@ export const addService= async ( formData: FormData) => {
             return { failed: res.error.issues.map((item) => item.message) }
         }
 
-        const blog = new Service({
+        const textArr = text.split("\n")
+        for (let i = 0; i < textArr.length; i++) {
+            const mess = chooseTypeOfTextItem(textArr[i])
+            if (mess.indexOf('Error') > -1) return { error: mess }
+        }
+
+        const service = new Service({
             heading,
             text,
             detail,
@@ -43,7 +50,7 @@ export const addService= async ( formData: FormData) => {
 
         updateTag('service-list')
 
-        await blog.save();
+        await service.save();
 
         return {message: "Új hely hozzáadva"}
     } catch (error) {

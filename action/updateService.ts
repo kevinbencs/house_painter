@@ -1,9 +1,10 @@
 "use server"
 
 import { checkAuth } from "@/lib/checkAuth";
+import { chooseTypeOfTextItem } from "@/lib/checkTextBSP";
 import { handleMongooseError } from "@/lib/mongo";
 import Service from "@/models/Service";
-import {  blogServPlaceSchemaId } from "@/schema/schema";
+import { blogServPlaceSchemaId } from "@/schema/schema";
 import { ActionState } from "@/typeScriptType/form";
 
 
@@ -32,6 +33,12 @@ export const updateImage = async (_prevState: ActionState, formData: FormData) =
         if (res.error?.issues) {
             console.log(res.error.issues)
             return { failed: res.error.issues.map((item) => item.message) }
+        }
+
+        const textArr = text.split("\n")
+        for (let i = 0; i < textArr.length; i++) {
+            const mess = chooseTypeOfTextItem(textArr[i])
+            if (mess.indexOf('Error') > -1) return { error: mess }
         }
 
         await Service.findByIdAndUpdate(_id, {

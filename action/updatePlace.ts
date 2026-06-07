@@ -1,6 +1,7 @@
 "use server"
 
 import { checkAuth } from "@/lib/checkAuth";
+import { chooseTypeOfTextItem } from "@/lib/checkTextBSP";
 import { handleMongooseError } from "@/lib/mongo";
 import Place from "@/models/Place";
 import {  blogServPlaceSchemaId } from "@/schema/schema";
@@ -32,6 +33,12 @@ export const updateImage = async (_prevState: ActionState, formData: FormData) =
         if (res.error?.issues) {
             console.log(res.error.issues)
             return { failed: res.error.issues.map((item) => item.message) }
+        }
+
+        const textArr = text.split("\n")
+        for (let i = 0; i < textArr.length; i++) {
+            const mess = chooseTypeOfTextItem(textArr[i])
+            if (mess.indexOf('Error') > -1) return { error: mess }
         }
 
         await Place.findByIdAndUpdate(_id, {

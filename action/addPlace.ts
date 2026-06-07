@@ -1,6 +1,7 @@
 "use server"
 
 import { checkAuth } from "@/lib/checkAuth";
+import { chooseTypeOfTextItem } from "@/lib/checkTextBSP";
 import { handleMongooseError } from "@/lib/mongo";
 import Place from "@/models/Place";
 import { blogServPlaceSchema } from "@/schema/schema";
@@ -32,7 +33,13 @@ export const addPlace = async ( formData: FormData) => {
             return { failed: res.error.issues.map((item) => item.message) }
         }
 
-        const blog = new Place({
+        const textArr = text.split("\n")
+        for (let i = 0; i < textArr.length; i++) {
+            const mess = chooseTypeOfTextItem(textArr[i])
+            if (mess.indexOf('Error') > -1) return { error: mess }
+        }
+
+        const place= new Place({
             heading,
             text,
             detail,
@@ -41,7 +48,7 @@ export const addPlace = async ( formData: FormData) => {
             visibility: false
         });
 
-        await blog.save();
+        await place.save();
 
         updateTag('place-list')
 
