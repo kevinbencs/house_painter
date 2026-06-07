@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const BlogSchema = new mongoose.Schema({
     heading: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     text: {
         type: String,

@@ -16,6 +16,7 @@ const page = async () => {
 
   if (auth.error) redirect('/');*/
 
+  await connection();
 
 
   const res = await Promise.all([
