@@ -328,7 +328,7 @@ const createImg = (s: string, setTextError: Dispatch<SetStateAction<string>>) =>
     const index2: number = s.indexOf(')');
     const BeginOfText = s.slice(0, index1 + 1);
     const EndOfText = s.slice(index2, s.length);
-    
+
     if (BeginOfText.length !== 11 || EndOfText.length !== 3) {
         setTextError('Error in Image');
         return <div key={uuid()}></div>;;
@@ -392,7 +392,8 @@ const createHighlight = (s: string, setTextError: Dispatch<SetStateAction<string
     const index2 = s.indexOf('</highlight>');
 
     if (index1 !== 0 || index2 === -1 || s.length !== index2 + 12) {
-        setTextError('Error in Highlight');
+
+        setTextError('Hiba a Highlight-ban');
         return <div key={uuid()}></div>;
     }
 

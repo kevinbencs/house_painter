@@ -13,12 +13,12 @@ export const updateImage = async (_prevState: ActionState, formData: FormData) =
 
         if (authRes.error) return { error: "Kérlek jelentkezz be." };
 
-        const heading = formData.get('heading') as string;
-        const text = formData.get('text') as string;
-        const detail = formData.get('detail') as string;
-        const keywords = formData.get('keywords') as string;
-        const image = formData.get('image') as string;
-        const _id = formData.get('_id') as string;
+        const heading = (formData.get('heading') as string).replaceAll('\n','');
+        const text = (formData.get('text') as string).replaceAll('\n','');
+        const detail = (formData.get('detail') as string).replaceAll('\n','');
+        const keywords = (formData.get('keywords') as string).replaceAll('\n','');
+        const image = (formData.get('image') as string).replaceAll('\n','');
+        const _id = (formData.get('_id') as string).replaceAll('\n','');
 
         const res = blogServPlaceSchemaId.safeParse({
             heading,

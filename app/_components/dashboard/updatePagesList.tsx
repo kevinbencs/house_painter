@@ -59,9 +59,9 @@ const UpdatePagesList = (props: { list: BSPClientList[], page: string, }) => {
   return (
     <section>
       {props.list.map((item) => <li className="flex justify-between w-full mb-2 border-b-2" key={item.id}>
-        <Link href={`/dashboard/update/${props.page}/${item.year}/${item.month}/${item.day}/${item.title.toLowerCase().replaceAll(' ', '-')}`} className="w-full" >{item.title}</Link>
-        {item.hide === false && < button onClick={() => deleteItem(item.id)} className="p-2 text-red-600"><MdDelete /></button>}
-        {item.hide === true && < button onClick={() => displayItem(item.id)} className="p-2 text-green-600"><FaPlusCircle /></button>}
+        <Link href={`/dashboard/update/${props.page}/${item.year}/${item.month}/${item.day}/${item.title.replaceAll(' ', '-')}`} className="w-full" >{item.title}</Link>
+        {item.visibility === false && < button onClick={() => deleteItem(item.id)} className="p-2 text-red-600"><MdDelete /></button>}
+        {item.visibility === true && < button onClick={() => displayItem(item.id)} className="p-2 text-green-600"><FaPlusCircle /></button>}
       </li>)
       }
     </section >

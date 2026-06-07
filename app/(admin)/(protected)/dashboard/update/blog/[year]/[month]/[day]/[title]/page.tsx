@@ -13,27 +13,26 @@ const Page = async ({ params }: { params: Promise<{ year: string, month: string,
   await connection()
   const par = await params
   const title = par.title.replaceAll('-', ' ')
-  const data = await Blog.findOne({heading: title})
-
-  
+  const data = await Blog.findOne({heading: decodeURIComponent(title)})
 
   const res = {
     error: undefined,
     failed: undefined,
     data: {
-      title: data.heading,
-      text: data.text,
-      cover_img_id: data.image,
-      keyword: data.keywords.split(";"),
-      id: String(data._id),
-      detail: data.detail,
+      title: data?.heading || "",
+      text: data?.text || "",
+      cover_img_id: data?.image || "",
+      keyword: data?.keywords.split(";") || [""],
+      id: String(data?._id) || "",
+      detail: data?.detail || "",
     }
   }
 
   return (
     <div className="w-full">
       <h1 className="text-3xl mb-2">Blog szerkesztése</h1>
-      <DynamicPagesForm res={res} serverAction={addBlog} />
+      {data === null && <div className="text-center text-2xl">Nincs ilyen blog</div> } 
+      {data && <DynamicPagesForm res={res} serverAction={addBlog} />}
     </div>
   )
 }
