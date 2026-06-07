@@ -95,7 +95,9 @@ const DynamicPagesForm = (props: {
     ]
 
     useEffect(() => {
-
+        setSuccess("")
+        setError("")
+        setFailed([])
         if (props.res.data) {
             setTitleInput(props.res.data.title);
             setParagraphInput(props.res.data.text.split('$').join('\n\n'));
@@ -105,7 +107,7 @@ const DynamicPagesForm = (props: {
             setParagPlaceholder('');
             setDetail(props.res.data.detail);
         }
-        if (props.res.error) router.push('/')
+        if (props.res.error) setError(props.res.error)
         if (props.res.failed) setFailed(props.res.failed);
 
     }, [])
@@ -136,6 +138,9 @@ const DynamicPagesForm = (props: {
 
     const submitEvent = async (e: SyntheticEvent) => {
         e.preventDefault();
+        setError("");
+        setFailed([]);
+        setSuccess("")
         startTransition(async () => {
             const form = new FormData();
             form.append("heading", titleInput);
