@@ -32,7 +32,7 @@ const HeaderContainer = ({children}: { children: ReactNode }) => {
     return (
         <>
             <Header mainPos={mainPos} />
-            <main ref={mainRef} className="mt-10 lg:pl-[calc(50%-600px)] lg:pr-[calc(50%-600px)]  ">
+            <main ref={mainRef} className="mt-10   ">
                 {children}
             </main>
         </>

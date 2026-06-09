@@ -3,7 +3,7 @@ import { BSPHeading } from "@/typeScriptType/blogServPlace";
 import Link from "next/link";
 
 
-const Services = async () => {
+const Places = async () => {
     let data: BSPHeading[];
 
     try {
@@ -18,7 +18,7 @@ const Services = async () => {
 
 
     return (
-        <div className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row gap-5">
             <section className="flex flex-col items-center">
                 {data.slice(0, data.length / 2).map((item) => <Link href={item.heading.replaceAll(' ', '-')} key={`footer-service-${item._id}`}>{item.heading}</Link>)}
             </section>
@@ -30,4 +30,4 @@ const Services = async () => {
     )
 }
 
-export default Services
+export default Places
