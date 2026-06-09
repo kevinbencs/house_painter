@@ -106,3 +106,11 @@ export const getServiceFooter = async () => {
 
     return Service.find({visibility: true}, {_id: 1, heading: 1, visibility: 1}).limit(10)
 }
+
+export const getServiceTopBar = async() => {
+    'use cache'
+    cacheTag('service-topbar')
+    cacheLife('days')
+
+    return Service.find({visibility: true}, {_id: 1, heading: 1, visibility: 1}).limit(4)
+}

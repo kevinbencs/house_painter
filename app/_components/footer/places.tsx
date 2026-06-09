@@ -20,10 +20,10 @@ const Places = async () => {
     return (
         <div className="flex flex-col md:flex-row gap-5">
             <section className="flex flex-col items-center">
-                {data.slice(0, data.length / 2).map((item) => <Link href={item.heading.replaceAll(' ', '-')} key={`footer-service-${item._id}`}>{item.heading}</Link>)}
+                {data.slice(0, data.length / 2).map((item) => <Link href={item.heading.replaceAll(' ', '-')} key={`footer-place-${item._id}`}>{item.heading}</Link>)}
             </section>
             <section className="flex flex-col items-center">
-                {data.slice(data.length / 2, data.length).map((item) => <Link href={item.heading.replaceAll(' ', '-')} key={`footer-service-${item._id}`}>{item.heading}</Link>)}
+                {data.slice(data.length / 2, data.length).map((item) => <Link href={item.heading.replaceAll(' ', '-')} key={`footer-place-${item._id}`}>{item.heading}</Link>)}
             </section>
         </div>
 
