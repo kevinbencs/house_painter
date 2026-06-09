@@ -115,9 +115,13 @@ const Page = async () => {
   'use cache'
   cacheTag('price-page')
   cacheLife('hours')
-  const res = await getPriceData()
 
-  const cat = await getCategory()
+
+  const [res, cat] = await Promise.all([
+    getPriceData(),
+    getCategory()
+  ])
+
 
   const catArr = cat.map((i) => i._id)
 

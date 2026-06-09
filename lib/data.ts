@@ -66,7 +66,7 @@ export const getNumbOfImag = async () => {
 export const getTwentyImg = async (page: number) => {
     'use cache'
     cacheLife('hours')
-    cacheTag('img-data')
+    cacheTag('img-data-'+String(page))
 
     const imgs: Img[] = await Image.find({}, { _id: 1, show: 1, newUrl: 1, detail: 1 }).skip((page - 1) * 20).limit(20).lean();
 

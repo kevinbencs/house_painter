@@ -11,7 +11,7 @@ const page = async() => {
   cacheTag("blog-list");
   cacheLife("hours")
 
-  const data: BSPPublicPagesList[] = await Blog.find({visibility: false},{id: 1, heading: 1, image: 1, visibility: 1})
+  const data: BSPPublicPagesList[] = await Blog.find({visibility: false},{_id: 1, heading: 1, image: 1, visibility: 1})
 
   const imgData:(Img | null) [] = await Promise.all(data.map( (item) => Image.findById(item.image)))
 
@@ -22,7 +22,7 @@ const page = async() => {
       <ul className='flex gap-4 flex-wrap justify-between '>
         {data.map((item, i) => <li key={"blog-"+String(item._id)}>
           <Link className="hover:text-gray-100 flex flex-col gap-2 bg-gray-500" href={`blog/${item.heading.replaceAll(" ","-")}`}>
-          { imgData[i] !== null  && <ImgBSP  url={imgData[i].newUrl} detail={imgData[i].detail}/>}
+          { (imgData[i] !== undefined && imgData[i] !== null)   && <ImgBSP  url={imgData[i].newUrl} detail={imgData[i].detail}/>}
           <h2>{item.heading}</h2>
           </Link>
         </li>)}

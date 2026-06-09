@@ -13,10 +13,11 @@ const Page = async () => {
   if (auth.error) redirect('/');*/
 
   await connection()
+  const [res, cat ]: [MongoData[], Categories[]] = await Promise.all([
+    getPriceData(),
+    getCategory()
+  ])
 
-  const res: MongoData[] = await getPriceData()
-
-  const cat: Categories[] = await getCategory()
 
   const catArr = cat.map((i) => i._id)
 

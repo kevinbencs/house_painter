@@ -5,12 +5,11 @@ import { cacheLife, cacheTag } from 'next/cache'
 
 
 const Page = async () => { 
-  'use cache'
-  cacheTag('img-page')
-  cacheLife('hours')
-  const pageNumb = await getNumbOfImag()
 
-  const Img = await getTwentyImg(1)
+  const [pageNumb, Img] = await Promise.all([
+    getNumbOfImag(),
+    getTwentyImg(1)
+  ])
 
   return (
     <>
