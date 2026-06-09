@@ -95,7 +95,7 @@ export const getPlaceFooter = async () => {
     cacheTag('place-footer')
     cacheLife('days')
 
-    return Place.find({}, {_id: 1, heading: 1})
+    return Place.find({visibility: true}, {_id: 1, heading: 1, visibility: 1})
 }
 
 
@@ -104,5 +104,5 @@ export const getServiceFooter = async () => {
     cacheTag('service-footer')
     cacheLife('days')
 
-    return Service.find({}, {_id: 1, heading: 1}).limit(10)
+    return Service.find({visibility: true}, {_id: 1, heading: 1, visibility: 1}).limit(10)
 }

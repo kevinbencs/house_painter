@@ -1,5 +1,6 @@
 import Link from "next/link"
 import SocialMeadia from "./socialMedia"
+import Services from "./services"
 
 
 const LinksDescription = () => {
@@ -19,6 +20,7 @@ const LinksDescription = () => {
       </article>
       <article>
         <h3 className="mb-3"><Link href="/szolgaltatas" className="hover:underline">Szolgáltatásaim</Link></h3>
+        <Services/>
       </article>
       <article>
         <h3 className="mb-3">Egyéb felületek</h3>

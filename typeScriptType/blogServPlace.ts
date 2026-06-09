@@ -19,7 +19,7 @@ export interface BSPRender {
 
 
 
-export interface BSPAdmin {
+export interface BSPHeading {
     heading: string,
     _id: string
     visibility: boolean
