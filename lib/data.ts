@@ -7,6 +7,8 @@ import { MongoData } from '@/typeScriptType/price'
 import { Categories } from '@/typeScriptType/price'
 import { BSPRender } from '@/typeScriptType/blogServPlace'
 import Blog from '@/models/Blog'
+import Place from '@/models/Place'
+import Service from '@/models/Service'
 
 
 export const getPriceData = async () => {
@@ -84,4 +86,23 @@ export const getBlogByHeading = async (heading: string): Promise<BSPRender | nul
     return Blog.findOne({
         heading: heading.replaceAll('-', ' ')
     })
+}
+
+
+
+export const getPlaceFooter = async () => {
+    'use cache'
+    cacheTag('place-footer')
+    cacheLife('days')
+
+    return Place.find({}, {_id: 1, heading: 1})
+}
+
+
+export const getServiceFooter = async () => {
+    'use cache'
+    cacheTag('service-footer')
+    cacheLife('days')
+
+    return Service.find({}, {_id: 1, heading: 1}).limit(10)
 }
