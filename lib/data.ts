@@ -89,6 +89,17 @@ export const getBlogByHeading = async (heading: string): Promise<BSPRender | nul
 }
 
 
+export const getPlaceByHeading = async (heading: string): Promise<BSPRender | null> => {
+    'use cache'
+    cacheTag(`place-${heading}`)
+    cacheLife('days')
+
+
+    return Place.findOne({
+        heading: heading.replaceAll('-', ' ')
+    })
+}
+
 
 export const getPlaceFooter = async () => {
     'use cache'

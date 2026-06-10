@@ -5,6 +5,7 @@ import { BSPRender } from "@/typeScriptType/blogServPlace"
 import { notFound } from "next/navigation"
 import type { Metadata, ResolvingMetadata } from 'next';
 import { Img } from '@/typeScriptType/img';
+import { getPlaceByHeading } from "@/lib/data"
 
 export async function generateMetadata(
   { params }: { params: Promise<{ heading: string }> },
