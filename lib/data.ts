@@ -100,6 +100,17 @@ export const getPlaceByHeading = async (heading: string): Promise<BSPRender | nu
     })
 }
 
+export const getServiceByHeading = async (heading: string): Promise<BSPRender | null> => {
+    'use cache'
+    cacheTag(`service-${heading}`)
+    cacheLife('days')
+
+
+    return Service.findOne({
+        heading: heading.replaceAll('-', ' ')
+    })
+}
+
 
 export const getPlaceFooter = async () => {
     'use cache'
