@@ -5,7 +5,9 @@ const REQUIRED_ENV_VARS = [
     'JWT_SECRET_Long',
     'JWT_SECRET_Short',
     'JWT_SECRET_URL',
-    'JWT_SECRET_TWOFA'
+    'JWT_SECRET_TWOFA',
+    'URL',
+    'RESEND'
 ] as const;
 
 
