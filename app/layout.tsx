@@ -38,6 +38,12 @@ export const metadata: Metadata = {
     type: 'website',
     images: [{ url: "/api/images", alt: 'Budafestő - festés Budapesten' }],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Képek",
+    description: 'Megbízható, precíz szobafestés Budapesten és környékén',
+    images: [{ url: "/api/images", alt: 'Budafestő - Képek' }],
+  },
   robots: {
     index: true,
     follow: true,
