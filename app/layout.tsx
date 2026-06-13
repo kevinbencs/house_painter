@@ -6,6 +6,7 @@ import Footer from "./_components/footer/footer";
 import HeaderContainer from "./_components/header/headerContainer";
 import TopBar from "./_components/header/topbar";
 import { IsLoggedProvider } from "./_components/loggedContext/isLoggedContext";
+import { FormProvided } from "./_components/sendMessage/formContext";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -100,10 +101,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <IsLoggedProvider>
-          <HeaderContainer>{children}</HeaderContainer>
-        </IsLoggedProvider>
-        <Footer />
+        <FormProvided>
+          <IsLoggedProvider>
+            <HeaderContainer>{children}</HeaderContainer>
+          </IsLoggedProvider>
+          <Footer />
+        </FormProvided>
       </body>
     </html>
   );

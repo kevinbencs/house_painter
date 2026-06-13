@@ -10,7 +10,10 @@ const ToFormButton = () => {
     const handleClick = () => {
         
         ref.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-        ref.current?.focus()
+        setTimeout(() => {
+            ref.current?.focus()
+        },500)
+        
     }
 
     return (
