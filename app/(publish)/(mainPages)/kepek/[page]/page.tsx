@@ -30,9 +30,12 @@ const Page = async ({ params }: { params: Promise<{ page: string }> }) => {
   return (
     <section className='mb-40'>
       <h1 className='text-3xl mb-10'>Képek</h1>
-      <Suspense fallback={<div>...Betöltés</div>}>
-        <Main params={params} />
-      </Suspense>
+      <div className='lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2'>
+        <Suspense fallback={<div>...Betöltés</div>}>
+          <Main params={params} />
+        </Suspense>
+      </div>
+
     </section>
 
 

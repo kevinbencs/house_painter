@@ -78,7 +78,10 @@ const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
 
   if (data === null) notFound();
   return (
-    <div>page</div>
+    <section>
+      <h1>Places</h1>
+      <div className="lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2"></div>
+    </section>
   )
 }
 

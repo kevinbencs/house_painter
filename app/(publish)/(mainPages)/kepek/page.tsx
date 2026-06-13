@@ -16,17 +16,17 @@ export const metadata: Metadata = {
     images: [{ url: "/api/images", alt: 'Budafestő - Képek' }],
   },
   twitter: {
-      card: 'summary_large_image',
-      title: "Képek",
-      description: 'Képek a szobafestésről, tapétázásról és egyéb felújításai munkálatokról.',
-      images: [{ url: "/api/images", alt: 'Budafestő - Képek' }],
-    },
+    card: 'summary_large_image',
+    title: "Képek",
+    description: 'Képek a szobafestésről, tapétázásról és egyéb felújításai munkálatokról.',
+    images: [{ url: "/api/images", alt: 'Budafestő - Képek' }],
+  },
 
 }
 
 
 
-const Page = async () => { 
+const Page = async () => {
 
   const [pageNumb, Img] = await Promise.all([
     getNumbOfImag(),
@@ -37,10 +37,13 @@ const Page = async () => {
     <>
       <section className='mb-40'>
         <h1 className='text-3xl mb-20 text-center'>Képek szobafestésről, felújításról</h1>
-        <ImagePage img={Img} />
-        <Pagination pageNumber={pageNumb} currentPage={1} />
+        <div className='lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2'>
+          <ImagePage img={Img} />
+          <Pagination pageNumber={pageNumb} currentPage={1} />
+        </div>
+
       </section>
-      
+
     </>
   )
 }

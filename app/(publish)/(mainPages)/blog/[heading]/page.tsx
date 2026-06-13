@@ -62,20 +62,20 @@ export async function generateMetadata(
 
 export async function generateStaticParams() {
   await connectToMongo()
-  
-  const data = await Blog.find({},{heading: 1})
 
-  if(data.length === 0) return ([{heading: '__placeholder__'}])
-  return data.map((item) => ({heading: item.heading}))
+  const data = await Blog.find({}, { heading: 1 })
+
+  if (data.length === 0) return ([{ heading: '__placeholder__' }])
+  return data.map((item) => ({ heading: item.heading }))
 }
 
 const Page = async ({ params }: { params: Promise<{ heading: string }> }) => {
 
   const { heading } = await params;
 
-  if(heading === '__placeholder__') notFound()
+  if (heading === '__placeholder__') notFound()
 
-  
+
 
   const data: BSPRender | null = await getBlogByHeading(decodeURIComponent(heading))
 
@@ -84,7 +84,10 @@ const Page = async ({ params }: { params: Promise<{ heading: string }> }) => {
   return (
     <section>
       <h1>{decodeURIComponent(heading.replaceAll('-', ' '))}</h1>
-      {data.text.split('$').map((s: string) => <ChooseTypeOfTextItem key={data._id} s={s} />)}
+      <div className="lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2">
+        {data.text.split('$').map((s: string) => <ChooseTypeOfTextItem key={data._id} s={s} />)}
+      </div>
+
     </section>
   )
 }
