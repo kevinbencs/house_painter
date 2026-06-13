@@ -13,13 +13,10 @@ const SendMessageContainer = () => {
                     <PiPhoneOutgoingFill />
                     +00-00/000-00-00
                 </div>
-                <div className='flex gap-3  items-center'>
+                <a href='mailto:example@example.com' className='flex gap-3  items-center'>
                     <MdEmail />
                     ben@....
-                </div>
-
-
-
+                </a>
             </section>
             <SendMessageForm />
         </div>

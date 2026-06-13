@@ -20,11 +20,12 @@ const SendMessageForm = () => {
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor="name">Név</FieldLabel>
-          <Input id="name" placeholder="Név" required ref={ref}/>
+          <Input id="name" name="name" placeholder="Név" required ref={ref}/>
         </Field>
         <Field>
           <Label htmlFor="email">Email</Label>
           <Input id="email"
+            name="email"
             type="email"
             placeholder="nev@valami.com"
             required
@@ -32,7 +33,7 @@ const SendMessageForm = () => {
 
         </Field>
         <FieldLabel htmlFor="message">Üzenet</FieldLabel>
-        <Textarea id="message" placeholder="Írja ide az üzenetét." required />
+        <Textarea id="message" placeholder="Írja ide az üzenetét." required name="message"/>
         <Field orientation="horizontal">
           <Checkbox id="terms-checkbox" name="terms-checkbox" required />
           <FieldContent>

@@ -3,7 +3,7 @@ import * as z from "zod"
 
 export const loginSchema = z.object({
     email: z.email({message: "Email-t kötelező megadni"}),
-    password: z.string({message: 'Jeszót kötelezó megadni'})
+    password: z.string().min(1,{message: 'Jeszót kötelezó megadni'})
 })
 
 export const newPasswordSchema = z.object({
@@ -22,42 +22,42 @@ export const newPasswordSchema = z.object({
 
 
 export const blogServPlaceSchema = z.object({
-    heading: z.string({message: 'Címet kötelező megadni'}),
-    text:  z.string({message: 'Szöveget kötelező megadni'}),
-    keywords: z.string({message: "Kulcsszavakat kötelező megadni"}),
-    detail: z.string({message: "A leírás megadása kötelező"}),
-    image: z.string({message: "Egy kép id-jének megadása kötelező"})
+    heading: z.string().min(1,{message: 'Címet kötelező megadni'}),
+    text:  z.string().min(1,{message: 'Szöveget kötelező megadni'}),
+    keywords: z.string().min(1,{message: "Kulcsszavakat kötelező megadni"}),
+    detail: z.string().min(1,{message: "A leírás megadása kötelező"}),
+    image: z.string().min(1,{message: "Egy kép id-jének megadása kötelező"})
 })
 
 
 export const blogServPlaceSchemaId = z.object({
-    heading: z.string({message: 'Címet kötelező megadni'}),
-    text:  z.string({message: 'Szöveget kötelező megadni'}),
-    keywords: z.string({message: "Kulcsszavakat kötelező megadni"}),
-    detail: z.string({message: "A leírás megadása kötelező"}),
-    image: z.string({message: "Egy kép id-jének megadása kötelező"}),
-    _id: z.string({message: "Az oldal id-jének megadása kötelező"}),
+    heading: z.string().min(1,{message: 'Címet kötelező megadni'}),
+    text:  z.string().min(1,{message: 'Szöveget kötelező megadni'}),
+    keywords: z.string().min(1,{message: "Kulcsszavakat kötelező megadni"}),
+    detail: z.string().min(1,{message: "A leírás megadása kötelező"}),
+    image: z.string().min(1,{message: "Egy kép id-jének megadása kötelező"}),
+    _id: z.string().min(1,{message: "Az oldal id-jének megadása kötelező"}),
 })
 
 
 export const imageIdSchema = z.object({
-    newUrl:  z.string({message: 'Az url megadása kötelező'}),
-    show: z.string({message: "Láthatóság megadása kötelező"}),
-    detail: z.string({message: "A leírás megadása kötelező"}),
-    _id: z.string({message: "Az oldal id-jének megadása kötelező"}),
+    newUrl:  z.string().min(1,{message: 'Az url megadása kötelező'}),
+    show: z.string().min(1,{message: "Láthatóság megadása kötelező"}),
+    detail: z.string().min(1,{message: "A leírás megadása kötelező"}),
+    _id: z.string().min(1,{message: "Az oldal id-jének megadása kötelező"}),
 })
 
 export const imageSchema = z.object({
-    newUrl:  z.string({message: 'Az url megadása kötelező'}),
-    file: z.string({message: "Láthatóság megadása kötelező"}),
+    newUrl:  z.string().min(1,{message: 'Az url megadása kötelező'}),
+    file: z.string().min(1,{message: "Láthatóság megadása kötelező"}),
     detail: z.file({message: "A kép megadása kötelező"}),
 })
 
 export const deleteSchema = z.string({message: "_id megadása kötelező"})
 
 export const otpTokenSchema = z.object({
-    secret: z.string({message: "A secret megadása kötelező"}).min(1),
-    otpCode: z.string({message: "A Kód megadása kötelező"}).length(6)
+    secret: z.string().min(1,{message: "A secret megadása kötelező"}).min(1),
+    otpCode: z.string().min(1,{message: "A Kód megadása kötelező"}).length(6)
 }) 
 
 export const otpTokenSchema2 =  z.string({message: "A Kód megadása kötelező"}).min(1);
@@ -80,4 +80,11 @@ export const updatePriceSchema = z.object({
     _id: z.string().min(1,{message: "Kategória megadása kötelező"}),
     name: z.string().min(1,{message:"A név megadása kötelező"}),
     unitOfMea: z.string().min(1, {message: "A mértékegység megadása kötelező"})
+})
+
+
+export const messageSchema = z.object({
+    email: z.email({message: "Email-t kötelező megadni"}),
+    name: z.string().min(1,{message: 'Nevet kötelezó megadni'}),
+    message: z.string().min(1,{message: 'Üzenetet kötelezó megadni'})
 })
