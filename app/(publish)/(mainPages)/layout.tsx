@@ -1,3 +1,4 @@
+import { FormProvided } from "@/app/_components/sendMessage/formContext";
 import SendMessageContainer from "@/app/_components/sendMessage/sendMessageContainer";
 
 export default function Layout({
@@ -6,10 +7,9 @@ export default function Layout({
     children: React.ReactNode;
 }>) {
     return (
-        <>
-
-            <div className="mt-10" >{children}</div>
+        <FormProvided>
+            {children}
             <SendMessageContainer />
-        </>
+        </FormProvided>
     )
 }

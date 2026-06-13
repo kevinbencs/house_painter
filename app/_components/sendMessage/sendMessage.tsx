@@ -1,3 +1,5 @@
+"use client"
+
 
 import { Field, FieldContent, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
@@ -5,10 +7,12 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
+import { useForm } from "./formContext"
 
 
 
 const SendMessageForm = () => {
+  const {ref} = useForm()
   return (
     
     <form className="w-full lg:w-[60%] lg:max-w-[800px] ">
@@ -16,7 +20,7 @@ const SendMessageForm = () => {
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor="name">Név</FieldLabel>
-          <Input id="name" placeholder="Név" required />
+          <Input id="name" placeholder="Név" required ref={ref}/>
         </Field>
         <Field>
           <Label htmlFor="email">Email</Label>
