@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { useForm } from "./formContext"
-import { useActionState } from "react"
+import { useActionState, useEffect, useState } from "react"
 import { sendMessage } from "@/action/sendMessage"
 
 
@@ -16,17 +16,30 @@ import { sendMessage } from "@/action/sendMessage"
 const SendMessageForm = () => {
   const { ref } = useForm()
   const [state, action, isPending] = useActionState(sendMessage, null)
+  const [shown, setShown] = useState(false)
+
+  useEffect(() => {
+    setShown(true);
+    const id = setTimeout(() => {
+      setShown(false)
+    }, 5000);
+
+    return () => clearTimeout(id);
+  }, [state])
+
   return (
 
     <form className="w-full lg:w-[60%] lg:max-w-[800px] " action={action}>
       <div className="text-4xl mb-10">Írjon bizalommal</div>
       {state?.error && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
       {state?.failed && <div className="mb-2 mt-2 text-red-600">{state.failed.map((item) => <div key={item}>{item}</div>)}</div>}
-      {state?.message && <div className="mb-2 mt-2 text-green-600">{state?.message}</div>}
+      {(shown && state?.message) && <div className="mb-2 mt-2 text-green-600">{state?.message}</div>}
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor="name">Név</FieldLabel>
-          <Input id="name" name="name" placeholder="Név" required ref={ref} disabled={isPending} />
+          <Input id="name" name="name" placeholder="Név" required ref={ref} disabled={isPending} defaultValue={state && state.fieldData && typeof state.fieldData[0] === 'string'
+            ? state.fieldData[0]
+            : ''} />
         </Field>
         <Field>
           <Label htmlFor="email">Email</Label>
@@ -36,11 +49,18 @@ const SendMessageForm = () => {
             placeholder="nev@valami.com"
             required
             disabled={isPending}
+            defaultValue={state && state.fieldData && typeof state.fieldData[1] === 'string'
+            ? state.fieldData[1]
+            : ''}
           />
 
         </Field>
         <FieldLabel htmlFor="message">Üzenet</FieldLabel>
-        <Textarea id="message" placeholder="Írja ide az üzenetét." required name="message" disabled={isPending} />
+        <Textarea id="message" placeholder="Írja ide az üzenetét." required name="message" disabled={isPending} 
+          defaultValue={state && state.fieldData && typeof state.fieldData[2] === 'string'
+            ? state.fieldData[2]
+            : ''}
+        />
         <Field orientation="horizontal">
           <Checkbox id="terms-checkbox" name="terms-checkbox" required />
           <FieldContent>

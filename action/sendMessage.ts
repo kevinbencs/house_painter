@@ -10,9 +10,9 @@ const resend = new Resend(process.env.RESEND);
 
 export const sendMessage = async (_prevState: ActionState, formData: FormData) => {
     try {
-        const name = formData.get("name");
-        const email = formData.get("email");
-        const message = formData.get("message")
+        const name = formData.get("name") ;
+        const email = formData.get("email") ;
+        const message = formData.get("message");
 
         const res = messageSchema.safeParse({
             name,
@@ -22,19 +22,19 @@ export const sendMessage = async (_prevState: ActionState, formData: FormData) =
 
         if (res.error?.issues) {
             console.log(res.error.issues)
-            return { failed: res.error.issues.map((item) => item.message) }
+            return { failed: res.error.issues.map((item) => item.message), fieldData: [name, email, message] }
         }
 
-        const { data, error } = await resend.batch.send({
+        const { data, error } = await resend.emails.send({
             from: 'Acme <onboarding@resend.dev>',
-            to: ['delivered@resend.dev'],
+            to: ['kevinbencs8@gmail.com'],
             subject: 'Árajánlat kérés: ' + name,
             html: `<div>${message}</div><div>Név: ${name}</div><div>Email: ${email}</div>`,
         })
 
         if (error) {
             console.log(error)
-            return {error: 'Hiba, próbáld újra'};
+            return {error: 'Hiba, próbáld újra', fieldData: [name, email, message]};
         }
 
         return {message: "Üzenet elküldve"}
@@ -42,7 +42,11 @@ export const sendMessage = async (_prevState: ActionState, formData: FormData) =
 
     } catch (error) {
         console.log(error)
-        return { error: 'Hiba, próbáld újra' }
+        const name = formData.get("name");
+        const email = formData.get("email");
+        const message = formData.get("message");
+        
+        return { error: 'Hiba, próbáld újra',  fieldData: [name, email, message] }
     }
 
 }
