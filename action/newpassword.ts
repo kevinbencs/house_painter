@@ -16,6 +16,8 @@ export const sendEmail = async (_prevState: ActionState, formData: FormData) => 
 }
 
 export const changePassword = async (_prevState: ActionState, formData: FormData) => {
+    const password = formData.get('password');
+    const passwordConfirm = formData.get('passwordConfirm')
     try {
         const auth = await checkAuth()
 
@@ -24,11 +26,13 @@ export const changePassword = async (_prevState: ActionState, formData: FormData
         let userId: string;
 
         if (auth.error) {
-            if (!url || url === "") return { error: "Kérlek jelentkezz be." };
+
+
+            if (!url || url === "") return { error: "Kérlek jelentkezz be.", fieldData: [password, passwordConfirm] };
 
             const res = await checkNewPassPageUlr(url);
 
-            if (res.error) { return { error: "Kérlek jelentkezz be." }; }
+            if (res.error) { return { error: "Kérlek jelentkezz be.", fieldData: [password, passwordConfirm] }; }
             else {
                 userId = res.res as string;
             }
@@ -36,11 +40,10 @@ export const changePassword = async (_prevState: ActionState, formData: FormData
 
         }
         else {
-            userId = auth.res as string
+            userId = auth.success as string
         }
 
-        const password = formData.get('password');
-        const passwordConfirm = formData.get('passwordConfirm')
+
 
         const res = loginSchema.safeParse({
             password,
@@ -49,7 +52,7 @@ export const changePassword = async (_prevState: ActionState, formData: FormData
 
         if (res.error) {
             console.log(res.error.issues);
-            return { failed: res.error.issues.map((item) => item.message) }
+            return { failed: res.error.issues.map((item) => item.message), fieldData: [password, passwordConfirm] }
         }
 
 
@@ -60,6 +63,6 @@ export const changePassword = async (_prevState: ActionState, formData: FormData
         return { message: "Jelszó megváltozott" }
     } catch (error) {
         const Error = await handleMongooseError(error)
-        return { error: Error }
+        return { error: Error, fieldData: [password, passwordConfirm] }
     }
 }

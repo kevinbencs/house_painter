@@ -1,6 +1,6 @@
 "use client"
 
-import { Img } from "@/typeScriptType/img";
+import { ImgWithoutBlob } from "@/typeScriptType/img";
 import Image from "next/image"
 import { MouseEvent, useState } from "react"
 import { FaWindowClose } from "react-icons/fa";
@@ -8,8 +8,8 @@ import { IconContext } from "react-icons";
 
 
 
-const ImagePage = (props: { img: Img[] }) => {
-    const [lightBox, setLightBox] = useState<Img>({ newUrl: "", detail: '', _id: "", show: true })
+const ImagePage = (props: { img: ImgWithoutBlob[] }) => {
+    const [lightBox, setLightBox] = useState<ImgWithoutBlob>({ newUrl: "", detail: '', _id: "", show: true })
 
     const clickOnImage = async (newUrl: string, detail: string, _id: string, show: boolean) => {
         setLightBox({ newUrl, detail, _id, show });

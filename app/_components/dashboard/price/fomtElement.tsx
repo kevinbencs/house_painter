@@ -26,7 +26,7 @@ const FormElement = () => {
 
     return (
         <div className='flex justify-center'>
-            <form action={action}  className="w-full max-w-sm" >
+            <form action={action} className="w-full max-w-sm" >
                 <Card className="w-full max-w-sm">
                     <CardHeader>
                         <CardTitle>Új ár hozzáadása</CardTitle>
@@ -46,25 +46,34 @@ const FormElement = () => {
                                     placeholder="Pl: festés"
                                     required
                                     disabled={isPending}
+                                    defaultValue={state && state.fieldData && typeof state.fieldData[1] === 'string'
+                                        ? state.fieldData[1]
+                                        : ''}
                                 />
                             </div>
                             <div className="grid gap-2">
                                 <div className="flex items-center">
                                     <Label htmlFor="name">Név</Label>
                                 </div>
-                                <Input id="name" type="text" name="name" required disabled={isPending} />
+                                <Input id="name" type="text" name="name" required disabled={isPending} defaultValue={state && state.fieldData && typeof state.fieldData[2] === 'string'
+                                        ? state.fieldData[2]
+                                        : ''}/>
                             </div>
                             <div className="grid gap-2">
                                 <div className="flex items-center">
                                     <Label htmlFor="price">Ár</Label>
                                 </div>
-                                <Input id="price" name="price" type="text" required disabled={isPending} onChange={e => { setPrice(formatChange(e.target.value)) }} value={price}/>
+                                <Input id="price" name="price" type="text" required disabled={isPending} onChange={e => { setPrice(formatChange(e.target.value)) }} value={price} defaultValue={state && state.fieldData && typeof state.fieldData[0] === 'string'
+                                        ? state.fieldData[0]
+                                        : ''}/>
                             </div>
                             <div className="grid gap-2">
                                 <div className="flex items-center">
                                     <Label htmlFor="unitOfMea">Mértékegység</Label>
                                 </div>
-                                <Input id="unitOfMea" name="unitOfMea" type="text" required disabled={isPending} />
+                                <Input id="unitOfMea" name="unitOfMea" type="text" required disabled={isPending} defaultValue={state && state.fieldData && typeof state.fieldData[3] === 'string'
+                                        ? state.fieldData[3]
+                                        : ''}/>
                             </div>
                         </div>
 

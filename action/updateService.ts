@@ -5,10 +5,9 @@ import { chooseTypeOfTextItem } from "@/lib/checkTextBSP";
 import { handleMongooseError } from "@/lib/mongo";
 import Service from "@/models/Service";
 import { blogServPlaceSchemaId } from "@/schema/schema";
-import { ActionState } from "@/typeScriptType/form";
 
 
-export const updateImage = async (_prevState: ActionState, formData: FormData) => {
+export const updateImage = async ( formData: FormData) => {
     try {
         const authRes = await checkAuth();
 

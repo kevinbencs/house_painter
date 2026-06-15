@@ -15,11 +15,12 @@ import { verify } from "otplib";
 
 export const loginAction = async (_prevState: ActionState, formData: FormData) => {
     let secret: string = "";
+    const email = formData.get("email");
+    const password = formData.get("password");
     try {
         const cookieStore = await cookies();
 
-        const email = formData.get("email");
-        const password = formData.get("password") as string;
+
 
         const res = loginSchema.safeParse({
             email,
@@ -28,18 +29,18 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
 
         if (res.error) {
             console.log(res.error.issues);
-            return { failed: res.error.issues.map((item) => item.message) }
+            return { failed: res.error.issues.map((item) => item.message), fieldData: [email, password] }
         }
 
         const admin = await Admin.findOne({
             email
         });
 
-        if (!admin) return { error: "Invalid email or password" };
+        if (!admin) return { error: "Invalid email or password", fieldData: [email, password] };
 
-        const passConfirm = await bcrypt.compare(password, admin.password)
+        const passConfirm = await bcrypt.compare(String(password), admin.password)
 
-        if (!passConfirm) return { error: "Invalid email or password" };
+        if (!passConfirm) return { error: "Invalid email or password", fieldData: [email, password] };
 
         secret = String(admin.twofa)
 
@@ -52,15 +53,14 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
         })
 
     } catch (error) {
-
         const Error = await handleMongooseError(error)
-        return { error: Error }
+        return { error: Error, fieldData: [email, password] }
     }
     if (secret === "") redirect("/new2fa")
     redirect('/login/2fa')
 }
 
-export const loginTwoFAAction = async ( otp: string) => {
+export const loginTwoFAAction = async (otp: string) => {
     try {
 
         const cookieStore = await cookies();
@@ -113,7 +113,7 @@ export const loginTwoFAAction = async ( otp: string) => {
             maxAge: 300,
         })
 
-    
+
         return { redirect: '/dashboard' };
 
     } catch (error) {
@@ -132,5 +132,5 @@ export const loginTwoFAAction = async ( otp: string) => {
         return { error: Error }
     }
 
-    
+
 }

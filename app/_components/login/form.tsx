@@ -17,7 +17,7 @@ import { useActionState } from "react"
 
 const Form = () => {
     const [state, action, isPending] = useActionState(loginAction, null)
-    
+
 
 
     return (
@@ -44,6 +44,9 @@ const Form = () => {
                                 name="email"
                                 required
                                 disabled={isPending}
+                                defaultValue={state && state.fieldData && typeof state.fieldData[0] === 'string'
+                                    ? state.fieldData[0]
+                                    : ''}
                             />
                         </div>
                         <div className="grid gap-2">
@@ -56,7 +59,9 @@ const Form = () => {
                                     Elfelejtetted a jelszód?
                                 </Link>
                             </div>
-                            <Input id="password" type="password" required disabled={isPending} name="password"/>
+                            <Input id="password" type="password" required disabled={isPending} name="password" defaultValue={state && state.fieldData && typeof state.fieldData[1] === 'string'
+                                ? state.fieldData[1]
+                                : ''} />
                         </div>
                     </div>
 

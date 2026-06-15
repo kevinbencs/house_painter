@@ -2,7 +2,7 @@ import { cacheLife, cacheTag } from 'next/cache'
 
 import Price from '@/models/Price'
 import Image from '@/models/Image'
-import { Img } from '@/typeScriptType/img'
+import { Img, ImgWithoutBlob } from '@/typeScriptType/img'
 import { MongoData } from '@/typeScriptType/price'
 import { Categories } from '@/typeScriptType/price'
 import { BSPRender } from '@/typeScriptType/blogServPlace'
@@ -68,7 +68,7 @@ export const getTwentyImg = async (page: number) => {
     cacheLife('hours')
     cacheTag('img-data-'+String(page))
 
-    const imgs: Img[] = await Image.find({}, { _id: 1, show: 1, newUrl: 1, detail: 1 }).skip((page - 1) * 20).limit(20).lean();
+    const imgs: ImgWithoutBlob[] = await Image.find({}, { _id: 1, show: 1, newUrl: 1, detail: 1 }).skip((page - 1) * 20).limit(20).lean();
 
     return imgs.map(img => ({
         ...img,

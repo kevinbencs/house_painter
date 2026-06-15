@@ -33,13 +33,17 @@ const NewPassword = (props: {url: string | undefined}) => {
                             <div className="flex items-center">
                                 <Label htmlFor="password">Jelszó</Label>
                             </div>
-                            <Input id="password" name="password" type="password" required disabled={isPending} />
+                            <Input id="password" name="password" type="password" required disabled={isPending} defaultValue={state && state.fieldData && typeof state.fieldData[0] === 'string'
+            ? state.fieldData[0]
+            : ''}/>
                         </div>
                         <div className="grid gap-2">
                             <div className="flex items-center">
                                 <Label htmlFor="password_confirm">Jelszó megerősítése</Label>
                             </div>
-                            <Input id="password_confirm" type="password" name="passwordConfirm" required disabled={isPending} />
+                            <Input id="password_confirm" type="password" name="passwordConfirm" required disabled={isPending} defaultValue={state && state.fieldData && typeof state.fieldData[1] === 'string'
+            ? state.fieldData[1]
+            : ''}/>
                         </div>
                         <div className="hidden">
                              <Input id="url" type="text" name="url" value={props.url} readOnly />

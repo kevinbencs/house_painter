@@ -35,15 +35,19 @@ const NewImageForm = () => {
                     <CardContent>
                         <div className="mb-5">
                             <Label htmlFor="picture" className="mb-2">Kép</Label>
-                            <Input id="picture" name="image" type="file" accept="image/*" disabled={isPending} required/>
+                            <Input id="picture" name="image" type="file" accept="image/*" disabled={isPending} required />
                         </div>
                         <div className="mb-5">
                             <Label htmlFor="picture-url" className="mb-2">Kép url-je</Label>
-                            <Input id="picture-url" name="image-url" type="text" disabled={isPending} required/>
+                            <Input id="picture-url" name="image-url" type="text" disabled={isPending} required defaultValue={state && state.fieldData && typeof state.fieldData[2] === 'string'
+            ? state.fieldData[2]
+            : ''}/>
                         </div>
                         <div>
                             <Label htmlFor="picture-alt" className="mb-2">Kép leírása</Label>
-                            <Input id="picture-alt" name="image-alt" type="text" disabled={isPending} required />
+                            <Input id="picture-alt" name="image-alt" type="text" disabled={isPending} required defaultValue={state && state.fieldData && typeof state.fieldData[1] === 'string'
+            ? state.fieldData[1]
+            : ''}/>
                         </div>
 
                     </CardContent>
