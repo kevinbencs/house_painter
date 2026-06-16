@@ -19,13 +19,15 @@ export const addPlace = async ( formData: FormData) => {
         const detail = formData.get('detail') as string;
         const keywords = formData.get('keywords') as string;
         const image = formData.get('image') as string;
+        const paragh = formData.get('paragh') as string;
 
         const res = blogServPlaceSchema.safeParse({
             heading,
             text,
             detail,
             keywords,
-            image
+            image,
+            paragh
         })
 
         if (res.error) {
@@ -45,7 +47,8 @@ export const addPlace = async ( formData: FormData) => {
             detail,
             image,
             keywords,
-            visibility: false
+            visibility: false,
+            paragh
         });
 
         await place.save();

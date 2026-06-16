@@ -1,4 +1,4 @@
-import DynamicPagesForm from "@/app/_components/dashboard/dynamicPagesForm"
+import DynamicPagesForm from "@/app/_components/dashboard/place/dynamicPagesForm"
 import { addPlace } from "@/action/addPlace"
 import { redirect } from "next/navigation";
 import { checkAuth } from "@/lib/checkAuth";

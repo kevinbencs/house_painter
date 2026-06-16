@@ -26,8 +26,13 @@ const PlaceSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    headingParahg: {
+        type: String,
+        required: true,
+        unique: true
     }
-}, {timestamps: true})
+}, { timestamps: true })
 
 
 export default mongoose.models.Place || mongoose.model("Place", PlaceSchema)
