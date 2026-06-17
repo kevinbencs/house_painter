@@ -4,7 +4,7 @@ import { checkAuth } from "@/lib/checkAuth";
 import { chooseTypeOfTextItem } from "@/lib/checkTextBSP";
 import { handleMongooseError } from "@/lib/mongo";
 import Place from "@/models/Place";
-import { blogServPlaceSchema } from "@/schema/schema";
+import { PlaceSchema } from "@/schema/schema";
 import { updateTag } from "next/cache";
 
 export const addPlace = async ( formData: FormData) => {
@@ -21,7 +21,7 @@ export const addPlace = async ( formData: FormData) => {
         const image = formData.get('image') as string;
         const paragh = formData.get('paragh') as string;
 
-        const res = blogServPlaceSchema.safeParse({
+        const res = PlaceSchema.safeParse({
             heading,
             text,
             detail,

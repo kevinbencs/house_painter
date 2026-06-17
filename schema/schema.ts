@@ -30,6 +30,16 @@ export const blogServPlaceSchema = z.object({
 })
 
 
+export const PlaceSchema = z.object({
+    heading: z.string().min(1,{message: 'Címet kötelező megadni'}),
+    text:  z.string().min(1,{message: 'Szöveget kötelező megadni'}),
+    keywords: z.string().min(1,{message: "Kulcsszavakat kötelező megadni"}),
+    detail: z.string().min(1,{message: "A leírás megadása kötelező"}),
+    image: z.string().min(1,{message: "Egy kép id-jének megadása kötelező"}),
+    paragh: z.string().min(1,{message: "A cím alatti leírás megadása kötelező"}),
+})
+
+
 export const blogServPlaceSchemaId = z.object({
     heading: z.string().min(1,{message: 'Címet kötelező megadni'}),
     text:  z.string().min(1,{message: 'Szöveget kötelező megadni'}),
@@ -37,6 +47,17 @@ export const blogServPlaceSchemaId = z.object({
     detail: z.string().min(1,{message: "A leírás megadása kötelező"}),
     image: z.string().min(1,{message: "Egy kép id-jének megadása kötelező"}),
     _id: z.string().min(1,{message: "Az oldal id-jének megadása kötelező"}),
+})
+
+
+export const placeSchemaId = z.object({
+    heading: z.string().min(1,{message: 'Címet kötelező megadni'}),
+    text:  z.string().min(1,{message: 'Szöveget kötelező megadni'}),
+    keywords: z.string().min(1,{message: "Kulcsszavakat kötelező megadni"}),
+    detail: z.string().min(1,{message: "A leírás megadása kötelező"}),
+    image: z.string().min(1,{message: "Egy kép id-jének megadása kötelező"}),
+    _id: z.string().min(1,{message: "Az oldal id-jének megadása kötelező"}),
+    paragh: z.string().min(1,{message: "A cím alatti leírás megadása kötelező"}),
 })
 
 

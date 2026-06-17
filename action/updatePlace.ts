@@ -4,7 +4,7 @@ import { checkAuth } from "@/lib/checkAuth";
 import { chooseTypeOfTextItem } from "@/lib/checkTextBSP";
 import { handleMongooseError } from "@/lib/mongo";
 import Place from "@/models/Place";
-import {  blogServPlaceSchemaId } from "@/schema/schema";
+import {  placeSchemaId } from "@/schema/schema";
 
 
 export const updateImage = async ( formData: FormData) => {
@@ -20,7 +20,7 @@ export const updateImage = async ( formData: FormData) => {
         const image = formData.get('image') as string;
         const _id = formData.get('_id') as string;
 
-        const res = blogServPlaceSchemaId.safeParse({
+        const res = placeSchemaId.safeParse({
             heading,
             text,
             detail,
