@@ -46,6 +46,15 @@ export interface BSPGetUpdateList {
 export interface BSPPublicPagesList {
     _id: string,
     visibility: boolean,
-    image: Date,
+    image: string,
+    heading: string
+}
+
+
+
+export interface typeBlogMainPage {
+    _id: string,
+    visibility: boolean,
+    image: string,
     heading: string
 }

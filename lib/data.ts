@@ -136,3 +136,13 @@ export const getServiceTopBar = async() => {
 
     return Service.find({visibility: true}, {_id: 1, heading: 1, visibility: 1}).limit(4)
 }
+
+
+export const getBlogMainPage = async () => {
+    'use cache'
+    cacheTag('main-page-blogs')
+    cacheLife('days')
+
+    return Service.find({visibility: true},{_id:1, heading:1, visibility:1, image: 1}).limit(5)
+
+}
