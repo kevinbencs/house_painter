@@ -11,13 +11,17 @@ const Blogs = async () => {
 
   const imgData: (Img | null)[] = await Promise.all(data.map((item) => Image.findById(item.image)))
   return (
-    <section className='mb-40 flex flex-wrap gap-5'>
+    <section className='mb-40 '>
+      <h2 className='mb-10 text-center text-xl'>Blogok</h2>
+      <section className='mb-10 flex flex-wrap gap-5'>
+      </section>
       {data.map((item, i) => <Link key={`main-page-${item._id}`} href={`/blog/${item.heading.replaceAll(' ', '-')}`}>
         <div>
           {(imgData[i] !== undefined && imgData[i] !== null) && <ImgBSP url={imgData[i].newUrl} detail={imgData[i].detail} />}
-          <h2>{item.heading}</h2>
+          <h3>{item.heading}</h3>
         </div>
       </Link>)}
+      <p className='text-center'>Amennyiben többet szeretne tudni, az alábbi <Link href={'/szolgaltatasok'} className='bg-mauve-900 text-white p-1 hover:underline rounded-md'>linken</Link> többet megtudhat.</p>
     </section>
   )
 }

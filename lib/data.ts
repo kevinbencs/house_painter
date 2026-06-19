@@ -156,3 +156,17 @@ export const getServiceMainPage = async () => {
     return Service.find({visibility: true},{_id:1, heading:1, visibility:1, image: 1}).limit(5)
 
 }
+
+export const getImagesMainPage = async () => {
+    'use cache'
+    cacheTag('main-page-images')
+    cacheLife('days')
+
+    const imgs: ImgWithoutBlob[]  = await Image.find({},{_id: 1, newUrl: 1, detail: 1, show: 1}).limit(4).lean();
+
+    return imgs.map(img => ({
+        ...img,
+        _id: String(img._id)
+    }))
+ 
+}
