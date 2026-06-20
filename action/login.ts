@@ -116,7 +116,7 @@ export const loginTwoFAAction = async (otp: string) => {
 
         return { redirect: '/dashboard' };
 
-    } catch (error) {
+    } catch (error: any) {
         if (error.name === "TokenExpiredError") {
             console.error(error)
             return { redirect: '/login' };

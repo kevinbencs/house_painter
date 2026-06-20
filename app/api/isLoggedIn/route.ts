@@ -1,9 +1,10 @@
 import { checkAuth } from "@/lib/checkAuth";
-import {  NextResponse } from "next/server";
+import {  NextResponse, connection } from "next/server";
 import type { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
     try {
+        
         const auth = await checkAuth()
 
         if (auth.error) return NextResponse.json({ error: "Kérlek jelentkezz be." },{status: 401});

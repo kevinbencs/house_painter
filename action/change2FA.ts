@@ -74,7 +74,7 @@ export const setNewTwoFA = async ( otp: string, secret: string) => {
         }
 
 
-    } catch (error) {
+    } catch (error: any) {
         if (error.name === "TokenExpiredError") {
             console.error(error)
             return { redirect: '/login' }

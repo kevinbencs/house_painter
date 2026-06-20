@@ -57,7 +57,7 @@ export const middleware = async (req: NextRequest, event: NextFetchEvent) => {
 
             const res = jwt.verify(twoFAToken.value, process.env.JWT_SECRET_TWOFA!)
 
-        } catch (error) {
+        } catch (error: any) {
             console.log("Session error on dashboard");
             if (error.name === "TokenExpiredError") {
                 return NextResponse.redirect(new URL('/', req.url))

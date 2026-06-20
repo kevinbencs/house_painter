@@ -2,10 +2,12 @@ import ImageUpdatePage from "@/app/_components/dashboard/updateImage/imageUpdate
 import { checkAuth } from "@/lib/checkAuth";
 import { getAllImg } from "@/lib/data";
 import { redirect } from "next/navigation";
+import { connection } from "next/server";
 import { Suspense } from "react";
 
 
 const Page = async () => {
+  await connection()
   const auth = await checkAuth()
 
   if (auth.error) redirect('/');

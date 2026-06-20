@@ -123,7 +123,7 @@ const checkJWT = async (token: string, secret: string) => {
 
         return { res: res.id, twofa: user.twofa }
 
-    } catch (error) {
+    } catch (error: any) {
         console.log(error)
         if (error.name === "TokenExpiredError") {
             return { error: 'JWT error' };

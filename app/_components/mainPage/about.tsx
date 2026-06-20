@@ -1,8 +1,11 @@
-import React from 'react'
+
 
 const About = () => {
   return (
-    <div>About</div>
+    <div className="text-center mb-40">
+      <p className="text-center mb-10">About</p>
+    </div>
+    
   )
 }
 

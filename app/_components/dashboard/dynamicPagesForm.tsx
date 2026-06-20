@@ -130,9 +130,9 @@ const DynamicPagesForm = (props: {
         setLastText(paragraphInput.split('\n').filter(item => item !== ''))
     }, [paragraphInput])
 
-    const handleParagraphChange = (e: React.ChangeEvent<HTMLParagraphElement>) => {
-        setParagraphInput(e.target.innerText);
-        if (e.target.innerText == '\n' || e.target.innerText === '') setParagPlaceholder('placeholder');
+    const handleParagraphChange = (s: string) => {
+        setParagraphInput(s);
+        if (s == '\n' || s === '') setParagPlaceholder('placeholder');
         else setParagPlaceholder('');
     }
 
@@ -186,7 +186,7 @@ const DynamicPagesForm = (props: {
                     {list_embedded.map(item => <List_embedded TextEnterRef={TextEnterRef} text={item.text} textElem={item.textElem} key={"key-" + item.text} />)}
                 </section>
 
-                <p contentEditable="true" className={`mt-10 focus-within:outline-none border p-3 rounded min-h-24 dark:text-white ${paragPlaceholder}`} onInput={handleParagraphChange} tabIndex={0} ref={TextEnterRef}></p>
+                <p contentEditable="true" className={`mt-10 focus-within:outline-none border p-3 rounded min-h-24 dark:text-white ${paragPlaceholder}`} onInput={(e) => handleParagraphChange(e.currentTarget.innerText)} tabIndex={0} ref={TextEnterRef}></p>
 
                 <div className='text-end'>
                     <input type="submit" value='Mentés' className='bg-slate-600 text-white cursor-pointer hover:bg-slate-400 rounded p-2 mt-10' />

@@ -14,9 +14,9 @@ export async function generateMetadata(
   { params }: { params: Promise<{ heading: string }> },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-
+  'use cache'
   const { heading } = await params
-
+  cacheLife('days')
 
   const data: BSPRender | null = await getServiceByHeading(decodeURIComponent(heading))
 

@@ -62,6 +62,6 @@ export const updatePrice = async (_prevSate: ActionState, formData: FormData) =>
 
     } catch (error) {
         const Error = await handleMongooseError(error);
-        return { error: Error }
+        return { error: Error, fieldData:[''] }
     }
 }

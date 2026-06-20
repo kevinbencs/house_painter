@@ -14,9 +14,9 @@ export const AddImage = async (_prevState: ActionState, formData: FormData) => {
     const url = formData.get('image-url');
     try {
 
-        const authRes = await checkAuth();
+        /*const authRes = await checkAuth();
 
-        if (authRes.error) return { error: "Kérlek jelentkezz be.", fieldData: [file, alt, url] };
+        if (authRes.error) return { error: "Kérlek jelentkezz be.", fieldData: [file, alt, url] };*/
 
 
 

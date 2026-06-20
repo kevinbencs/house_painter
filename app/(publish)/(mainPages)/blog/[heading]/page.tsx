@@ -8,7 +8,6 @@ import { Img } from '@/typeScriptType/img';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { cacheLife, cacheTag } from 'next/cache';
 import { notFound } from 'next/navigation';
-import { connection } from 'next/server';
 
 
 
@@ -16,9 +15,9 @@ export async function generateMetadata(
   { params }: { params: Promise<{ heading: string }> },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-
+  'use cache'
   const { heading } = await params
-
+  cacheLife('days')
 
   const data: BSPRender | null = await getBlogByHeading(decodeURIComponent(heading))
 
@@ -70,11 +69,12 @@ export async function generateStaticParams() {
 }
 
 const Page = async ({ params }: { params: Promise<{ heading: string }> }) => {
-
+  'use cache'
   const { heading } = await params;
 
   if (heading === '__placeholder__') notFound()
-
+  cacheTag('blog-'+heading)
+  cacheLife('days')
 
 
   const data: BSPRender | null = await getBlogByHeading(decodeURIComponent(heading))

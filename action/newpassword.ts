@@ -11,7 +11,7 @@ export const sendEmail = async (_prevState: ActionState, formData: FormData) => 
         return { message: "success" }
     } catch (error) {
         console.error(error)
-        return { error: "Failed login" }
+        return { error: "Failed login", fieldData:[''] }
     }
 }
 

@@ -6,13 +6,15 @@ import { notFound } from "next/navigation"
 import type { Metadata, ResolvingMetadata } from 'next';
 import { Img } from '@/typeScriptType/img';
 import { getPlaceByHeading } from "@/lib/data"
+import { cacheLife, cacheTag } from "next/cache"
 
 export async function generateMetadata(
   { params }: { params: Promise<{ heading: string }> },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-
+  'use cache'
   const { heading } = await params
+  cacheLife('days')
 
 
   const data: BSPRender | null = await getPlaceByHeading(decodeURIComponent(heading))
@@ -33,29 +35,30 @@ export async function generateMetadata(
       description: data.detail,
       type: 'website',
       url: `${process.env.URL}/blog/${heading}`,
-      images: [
+      /*images: [
         {
           url: process.env.URL + '/api/images' + imgData?.newUrl,
           alt: imgData?.detail
         }
-      ],
+      ],*/
     },
     twitter: {
       card: 'summary_large_image',
       title: decodeURIComponent(heading.replaceAll('-', ' ')),
       description: data.detail,
-      images: [
+      /*images: [
         {
           url: process.env.URL + '/api/images' + imgData?.newUrl,
           alt: imgData?.detail
         }
-      ],
+      ],*/
     },
 
   }
 }
 
 export async function generateStaticParams() {
+  
   await connectToMongo()
 
   const data = await Place.find({}, { heading: 1 })
@@ -67,19 +70,21 @@ export async function generateStaticParams() {
 
 
 const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
+  'use cache'
 
   const { heading } = await params;
 
   if (heading === '__placeholder__') notFound()
 
-
+  cacheTag('place-'+heading)
+  cacheLife('days')
 
   const data: BSPRender | null = await getPlaceByHeading(decodeURIComponent(heading))
 
   if (data === null) notFound();
   return (
     <section>
-      <h1>Places</h1>
+      <h1 className="mt-10">Places</h1>
       <div className="lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2"></div>
     </section>
   )
