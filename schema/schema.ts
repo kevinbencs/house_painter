@@ -107,5 +107,6 @@ export const updatePriceSchema = z.object({
 export const messageSchema = z.object({
     email: z.email({message: "Email-t kötelező megadni"}),
     name: z.string().min(1,{message: 'Nevet kötelezó megadni'}),
-    message: z.string().min(1,{message: 'Üzenetet kötelezó megadni'})
+    message: z.string().min(1,{message: 'Üzenetet kötelezó megadni'}),
+    privacy: z.string({message: 'A felhasználói feltételek elfogadása kötelező'}).refine((data) => {return data === 'on'}, {message: 'A felhasználói feltételek elfogadása kötelező'})
 })

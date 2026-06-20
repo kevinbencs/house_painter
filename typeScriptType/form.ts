@@ -1,1 +1,1 @@
-export type ActionState = null | { message: string } | { error: string, fieldData:(FormDataEntryValue | null)[]} | undefined | { failed: string[], fieldData: (FormDataEntryValue | null)[]};
+export type ActionState = null | { message: string } | { error: string, fieldData:(FormDataEntryValue | null | boolean)[]} | undefined | { failed: string[], fieldData: (FormDataEntryValue | null | boolean)[]};

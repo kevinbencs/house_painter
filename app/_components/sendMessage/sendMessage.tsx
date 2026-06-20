@@ -17,6 +17,7 @@ const SendMessageForm = () => {
   const { ref } = useForm()
   const [state, action, isPending] = useActionState(sendMessage, null)
   const [shown, setShown] = useState(false)
+  const [checked, setChecked] = useState(false)
 
   useEffect(() => {
     setShown(true);
@@ -26,6 +27,14 @@ const SendMessageForm = () => {
 
     return () => clearTimeout(id);
   }, [state])
+
+  useEffect(() => {
+
+    if (state && state.fieldData && typeof state.fieldData[3] === 'boolean') setChecked(state.fieldData[3])
+    else setChecked(false)
+  }, [state?.fieldData])
+
+
 
   return (
 
@@ -50,21 +59,21 @@ const SendMessageForm = () => {
             required
             disabled={isPending}
             defaultValue={state && state.fieldData && typeof state.fieldData[1] === 'string'
-            ? state.fieldData[1]
-            : ''}
+              ? state.fieldData[1]
+              : ''}
           />
 
         </Field>
         <FieldLabel htmlFor="message">Üzenet</FieldLabel>
-        <Textarea id="message" placeholder="Írja ide az üzenetét." required name="message" disabled={isPending} 
+        <Textarea id="message" placeholder="Írja ide az üzenetét." name="message" disabled={isPending}
           defaultValue={state && state.fieldData && typeof state.fieldData[2] === 'string'
             ? state.fieldData[2]
             : ''}
         />
         <Field orientation="horizontal">
-          <Checkbox id="terms-checkbox" name="terms-checkbox" required />
+          <Checkbox id="privacy" name="privacy" disabled={isPending} checked={checked} onCheckedChange={(e) => { setChecked(!checked); }} />
           <FieldContent>
-            <FieldLabel htmlFor="terms-checkbox">Felhasználási feltételek elfogadása</FieldLabel>
+            <FieldLabel htmlFor="privacy">Felhasználási feltételek elfogadása</FieldLabel>
             <FieldDescription>
               A checkbox bejelölésével elfogadja a felhasználási feltételeket.
             </FieldDescription>

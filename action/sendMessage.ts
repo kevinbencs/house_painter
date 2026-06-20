@@ -9,20 +9,25 @@ const resend = new Resend(process.env.RESEND);
 
 
 export const sendMessage = async (_prevState: ActionState, formData: FormData) => {
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const message = formData.get("message");
+    const privacy = formData.get("privacy")
+
+    
     try {
-        const name = formData.get("name") ;
-        const email = formData.get("email") ;
-        const message = formData.get("message");
+
 
         const res = messageSchema.safeParse({
             name,
             email,
-            message
+            message,
+            privacy
         });
 
         if (res.error?.issues) {
             console.log(res.error.issues)
-            return { failed: res.error.issues.map((item) => item.message), fieldData: [name, email, message] }
+            return { failed: res.error.issues.map((item) => item.message), fieldData: [name, email, message, privacy === 'on' ? true: false] }
         }
 
         const { data, error } = await resend.emails.send({
@@ -34,19 +39,16 @@ export const sendMessage = async (_prevState: ActionState, formData: FormData) =
 
         if (error) {
             console.log(error)
-            return {error: 'Hiba, próbáld újra', fieldData: [name, email, message]};
+            return { error: 'Hiba, próbáld újra', fieldData: [name, email, message, privacy] };
         }
 
-        return {message: "Üzenet elküldve"}
+        return { message: "Üzenet elküldve" }
 
 
     } catch (error) {
         console.log(error)
-        const name = formData.get("name");
-        const email = formData.get("email");
-        const message = formData.get("message");
-        
-        return { error: 'Hiba, próbáld újra',  fieldData: [name, email, message] }
+
+        return { error: 'Hiba, próbáld újra', fieldData: [name, email, message, privacy] }
     }
 
 }
