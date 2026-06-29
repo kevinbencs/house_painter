@@ -140,7 +140,7 @@ const Page = async () => {
 
   return (
     <>
-      <h1 className="text-3xl mb-10 text-center">Szobafestés árak</h1>
+      <h1 className="text-3xl mb-10 text-center mt-10">Szobafestés árak</h1>
       <div className="mb-40 lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2">
         {data.map((item) => <Section key={'price-cat-' + item[0].category} arrOfEl={item} />)}
       </div>

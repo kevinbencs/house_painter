@@ -18,7 +18,7 @@ const page = async() => {
 
   return (
     <section className='mb-10'>
-      <h1 className='text-3xl mb-20 text-center'>Blogok</h1>
+      <h1 className='text-3xl mb-20 text-center mt-10'>Blogok</h1>
       <ul className='flex gap-4 flex-wrap justify-between lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2'>
         {data.map((item, i) => <li key={"blog-"+String(item._id)}>
           <Link className="hover:text-gray-100 flex flex-col gap-2 bg-gray-500" href={`blog/${item.heading.replaceAll(" ","-")}`}>

@@ -87,7 +87,7 @@ const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
 
   if (data === null) notFound();
   return (
-    <section className='mb-10'>
+    <section className='mb-10 mt-10'>
       <h1 className='text-3xl mb-20 text-center'>Szobafestési szolgáltatásaim</h1>
       <ul className='flex gap-4 flex-wrap justify-between lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2'>
         {data.map((item, i) => <li key={"blog-" + String(item._id)}>

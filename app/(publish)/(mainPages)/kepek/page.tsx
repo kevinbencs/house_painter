@@ -36,7 +36,7 @@ const Page = async () => {
   return (
     <>
       <section className='mb-40'>
-        <h1 className='text-3xl mb-20 text-center'>Képek szobafestésről, felújításról</h1>
+        <h1 className='text-3xl mb-20 text-center mt-10'>Képek szobafestésről, felújításról</h1>
         <div className='lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2'>
           <ImagePage img={Img} />
           <Pagination pageNumber={pageNumb} currentPage={1} />
