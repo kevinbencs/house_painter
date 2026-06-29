@@ -8,14 +8,16 @@ import Prices from "./_components/mainPage/prices";
 import Services from "./_components/mainPage/services";
 import Blogs from "./_components/mainPage/blogs";
 import GoogleReviews from "./_components/mainPage/googleReviews";
+import { getImagesMainPage } from "@/lib/data";
 
-export default function Home() {
+export default async function Home() {
+  const images =  await getImagesMainPage()
   return (
     <>
       <div className="mt-10 lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2">
         <Header />
         <About />
-        <Images />
+        <Images data={images}/>
         <Contact />
         <Services />
         <Prices />

@@ -1,8 +1,11 @@
 import React from 'react'
+import Heading from './heading'
 
 const GoogleReviews = () => {
   return (
-    <div>GoogleReviews</div>
+    <section>
+      <Heading text='Néhány vélemény rólam'/>
+    </section>
   )
 }
 

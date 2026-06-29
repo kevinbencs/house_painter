@@ -4,6 +4,7 @@ import { typeBlogMainPage } from '@/typeScriptType/blogServPlace'
 import Link from 'next/link'
 import { Img } from '@/typeScriptType/img'
 import ImgBSP from '../bsp/img';
+import Heading from './heading';
 
 
 const Blogs = async () => {
@@ -12,7 +13,7 @@ const Blogs = async () => {
   const imgData: (Img | null)[] = await Promise.all(data.map((item) => Image.findById(item.image)))
   return (
     <section className='mb-40 '>
-      <h2 className='mb-10 text-center text-xl'>Blogok</h2>
+      <Heading text='Blogok'/>
       <section className='mb-10 flex flex-wrap gap-5'>
       </section>
       {data.map((item, i) => <Link key={`main-page-${item._id}`} href={`/blog/${item.heading.replaceAll(' ', '-')}`}>

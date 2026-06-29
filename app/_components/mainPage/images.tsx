@@ -1,14 +1,19 @@
-import { getImagesMainPage } from "@/lib/data"
+'use client'
 import Image from "next/image"
 import Link from "next/link"
+import { useScrollReveal } from "./useScrollReveal"
+import { ImgWithoutBlob } from "@/typeScriptType/img"
+import Heading from "./heading"
 
 
-const Images = async () => {
-  const data= await getImagesMainPage()
+const Images = ({data} : {data: ImgWithoutBlob[]}) => {
+  
+  const {ref, isVisible} = useScrollReveal();
   
   return (
-    <section className='mb-40'>
-      <h2 className="mb-10 text-center text-xl">Néhány kép a munkáimról</h2>
+    <section 
+      className={`  mb-40`}>
+      <Heading text="Néhány kép a munkáimról"/>
       <section className='mb-10 flex flex-wrap gap-5 justify-center'>
         {data.map((item) => <div className="w-full max-w-[400px]" key={`main-page-${item._id}`} >
          <Image className="w-full" src={'/api/images/'+item.newUrl} alt={item.detail} width={200} height={100} />
