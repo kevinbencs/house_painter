@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Img } from '@/typeScriptType/img'
 import ImgBSP from '../bsp/img';
 import Heading from './heading';
+import Paragraph from './paragraph';
 
 
 
@@ -23,8 +24,7 @@ const Services = async () => {
         </div>
       </Link>)}
       </section>
-      
-      <p className='text-center'>Szolgáltatásokról az alábbi <Link href={'/szolgaltatasok'} className='bg-mauve-900 text-white p-1 hover:underline rounded-md'>linken</Link> többet megtudhat.</p>
+      <Paragraph text1='Szolgáltatásokról az alábbi ' text2=' többet megtudhat.' linkHref='/szolgaltatasok' linkText='linken'/>
     </section>
   )
 }
