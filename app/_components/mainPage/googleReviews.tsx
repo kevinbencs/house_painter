@@ -1,9 +1,9 @@
-import React from 'react'
+
 import Heading from './heading'
 
 const GoogleReviews = () => {
   return (
-    <section>
+    <section >
       <Heading text='Néhány vélemény rólam'/>
     </section>
   )

@@ -16,8 +16,9 @@ export default async function Home() {
   const images = await getImagesMainPage()
   return (
     <>
-      <div className="mt-10 lg:pl-[calc(50%-550px)] lg:pr-[calc(50%-550px)] pl-2 pr-2">
-        <Header />
+      <Header />
+      <div className="pt-10 lg:pl-[calc(50%-550px)] lg:pr-[calc(50%-550px)] pl-2 pr-2 bg-white pb-10">
+
         <About />
         <WhyMe />
         <Images data={images} />
