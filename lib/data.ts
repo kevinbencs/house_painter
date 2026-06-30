@@ -189,7 +189,7 @@ export const getImagesMainPage = async () => {
 
     await connectToMongo()
 
-    const imgs: ImgWithoutBlob[]  = await Image.find({},{_id: 1, newUrl: 1, detail: 1, show: 1}).limit(4).lean();
+    const imgs: ImgWithoutBlob[]  = await Image.find({},{_id: 1, newUrl: 1, detail: 1, show: 1}).limit(5).lean();
 
     return imgs.map(img => ({
         ...img,

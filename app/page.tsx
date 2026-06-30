@@ -9,15 +9,19 @@ import Services from "./_components/mainPage/services";
 import Blogs from "./_components/mainPage/blogs";
 import GoogleReviews from "./_components/mainPage/googleReviews";
 import { getImagesMainPage } from "@/lib/data";
+import WhyMe from "./_components/mainPage/whyMe";
+import Guarantee from "./_components/mainPage/guarantee";
 
 export default async function Home() {
-  const images =  await getImagesMainPage()
+  const images = await getImagesMainPage()
   return (
     <>
-      <div className="mt-10 lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2">
+      <div className="mt-10 lg:pl-[calc(50%-550px)] lg:pr-[calc(50%-550px)] pl-2 pr-2">
         <Header />
         <About />
-        <Images data={images}/>
+        <WhyMe />
+        <Images data={images} />
+        <Guarantee />
         <Contact />
         <Services />
         <Prices />

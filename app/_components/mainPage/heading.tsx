@@ -7,7 +7,7 @@ const Heading = ({ text }: { text: string }) => {
     const { ref, isVisible } = useScrollReveal();
 
     return (
-        <h2 ref={ref} className={`mb-10 text-center text-xl reveal ${isVisible ? 'active' : ''}`}>{text}</h2>
+        <h2 ref={ref} className={`mb-10 text-center text-3xl reveal ${isVisible ? 'active' : ''}`}>{text}</h2>
     )
 }
 

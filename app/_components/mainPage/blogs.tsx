@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Img } from '@/typeScriptType/img'
 import ImgBSP from '../bsp/img';
 import Heading from './heading';
+import Paraghrape from './paragraph';
 
 
 const Blogs = async () => {
@@ -22,7 +23,7 @@ const Blogs = async () => {
           <h3>{item.heading}</h3>
         </div>
       </Link>)}
-      <p className='text-center'>Amennyiben többet szeretne tudni, az alábbi <Link href={'/szolgaltatasok'} className='bg-mauve-900 text-white p-1 hover:underline rounded-md'>linken</Link> többet megtudhat.</p>
+      <Paraghrape text1='Amennyiben többet szeretne tudni, az alábbi ' text2=' többet megtudhat.' linkHref='/szolgaltatasok' linkText='linken' />
     </section>
   )
 }
