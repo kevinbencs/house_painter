@@ -1,11 +1,14 @@
 "use client"
 
+import { useState } from "react";
 import { useScrollReveal } from "./useScrollReveal";
 
 export default function Guarantee() {
+    const [visible, setVisible] = useState<string>('')
+
     const { ref, isVisible } = useScrollReveal();
     return (
-        <section className={`mb-40  p-5 pt-20 bg-mist-900 text-white  pb-10 rounded-2xl  reveal ${isVisible ? 'active' : ''}`} ref={ref}>
+        <section className={`mb-40  p-5 pt-20  pb-10  reveal ${isVisible ? 'active' : ''}`} ref={ref}>
             <h2 className="mb-10 text-3xl">Amit garantálok</h2>
             <div>
                 <ul>
