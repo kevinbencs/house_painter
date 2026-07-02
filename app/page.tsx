@@ -11,6 +11,7 @@ import GoogleReviews from "./_components/mainPage/googleReviews";
 import { getImagesMainPage } from "@/lib/data";
 import WhyMe from "./_components/mainPage/whyMe";
 import Guarantee from "./_components/mainPage/guarantee";
+import { Suspense } from "react";
 
 export default async function Home() {
   const images = await getImagesMainPage()
@@ -27,7 +28,10 @@ export default async function Home() {
         <Services />
         <Prices />
         <Blogs />
-        <GoogleReviews />
+        <Suspense fallback={'...'}>
+          <GoogleReviews />
+        </Suspense>
+        
       </div>
       <SendMessageContainer />
       <SideBar />
