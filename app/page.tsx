@@ -17,7 +17,7 @@ export default async function Home() {
   return (
     <>
       <Header />
-      <div className="pt-10 lg:pl-[calc(50%-550px)] lg:pr-[calc(50%-550px)] pl-2 pr-2 bg-white pb-10">
+      <div className="pt-10 lg:pl-[calc(50%-600px)] lg:pr-[calc(50%-600px)] pl-2 pr-2 bg-white pb-10">
 
         <About />
         <WhyMe />
