@@ -197,3 +197,15 @@ export const getImagesMainPage = async () => {
     }))
  
 }
+
+
+export const getGoogleReview = async () => {
+    'use cache'
+  cacheLife('max')
+  const placeId = process.env.PLACE_ID;
+  const apiKey = process.env.GOOGLE_PLACE_API;
+  const res = await fetch(
+    `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews,rating,user_ratings_total&key=${apiKey}&language=hu`
+  );
+  return res.json();
+}

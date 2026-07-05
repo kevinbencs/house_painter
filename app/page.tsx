@@ -28,10 +28,12 @@ export default async function Home() {
         <Services />
         <Prices />
         <Blogs />
-        <Suspense fallback={'...'}>
-          <GoogleReviews />
-        </Suspense>
-        
+        {/*
+        <GoogleReviews />
+        */}
+
+
+
       </div>
       <SendMessageContainer />
       <SideBar />

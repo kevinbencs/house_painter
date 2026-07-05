@@ -39,7 +39,7 @@ const SendMessageForm = () => {
   return (
 
     <form className="w-full lg:w-[60%] lg:max-w-[800px] " action={action}>
-      <div className="text-4xl mb-10">Írjon bizalommal</div>
+      <div className="text-4xl mb-10 text-center 2xl:text-start">Írjon bizalommal</div>
       {state?.error && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
       {state?.failed && <div className="mb-2 mt-2 text-red-600">{state.failed.map((item) => <div key={item}>{item}</div>)}</div>}
       {(shown && state?.message) && <div className="mb-2 mt-2 text-green-600">{state?.message}</div>}

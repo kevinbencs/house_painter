@@ -1,22 +1,16 @@
 
-import { cacheLife } from 'next/cache';
+
+import { getGoogleReview } from '@/lib/data';
 import Heading from './heading'
 import Reviews from './reviews';
-import {  ReviewType } from '@/typeScriptType/review';
+import { ReviewType } from '@/typeScriptType/review';
 import { Suspense } from 'react';
 
 
 const GoogleReviews = async () => {
-  'use cache'
-  cacheLife('days')
-  const placeId = process.env.PLACE_ID;
-  const apiKey = process.env.GOOGLE_PLACE_API;
-  const res = await fetch(
-    `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews,rating,user_ratings_total&key=${apiKey}&language=hu`
-  );
-  const data = await res.json();
+  const data = await getGoogleReview()
 
-  const reviews:  ReviewType[] = data.result?.reviews || [];
+  const reviews: ReviewType[] = data.result?.reviews || [];
   return (
     <section >
       <Heading text='Néhány vélemény rólam' />
