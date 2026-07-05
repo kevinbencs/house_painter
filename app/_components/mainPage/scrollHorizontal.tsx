@@ -2,48 +2,82 @@
 
 import { ImgWithoutBlob } from "@/typeScriptType/img"
 import { motion, useScroll, useTransform } from "motion/react"
-import { useRef } from "react"
+import { useRef, useState, type MouseEvent, useEffect } from "react"
+import { FaWindowClose } from "react-icons/fa";
+import { IconContext } from "react-icons";
+import Image from "next/image";
+import { createPortal } from "react-dom"
 
-export default function ScrollHorizontal({data} : {data: ImgWithoutBlob[]}) {
+export default function ScrollHorizontal({ data }: { data: ImgWithoutBlob[] }) {
     const containerRef = useRef(null)
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start start", "end end"],
     })
 
-    // Move from first item centered to last item centered
-    const totalDistance = (items.length - 1) * (ITEM_WIDTH + GAP)
+
+    const totalDistance = (5 - 1) * (ITEM_WIDTH + GAP)
     const x = useTransform(scrollYProgress, [0, 1], [0, -totalDistance])
-    
+
+    const [lightBox, setLightBox] = useState<ImgWithoutBlob>({ newUrl: "", detail: '', _id: "", show: true })
+
+    const clickOnImage = async (newUrl: string, detail: string, _id: string, show: boolean) => {
+        setLightBox({ newUrl, detail, _id, show });
+        document.body.style.overflow = "hidden"
+    }
+
+
+    const closeLightBox = async (e: MouseEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        setLightBox({ newUrl: "", detail: "", _id: "", show: true });
+        document.body.style.overflow = ""
+    }
+
 
     return (
-        <div id="example" className="mb-40">
+        <>
+            <div id="example" className="mb-40">
 
-            <div ref={containerRef} className="scroll-container">
-                <div className="sticky-wrapper">
-                    <motion.div className="gallery" style={{ x }}>
-                        {data.map((item) => (
-                            <div
-                                key={item._id}
-                                className="gallery-item"
-                                style={
-                                    {
-                                        "--item-color": "var(--hue-1)",
-                                        "--item-image": `url(/api/images/${item.newUrl})`,
-                                    } as React.CSSProperties
-                                }
-                            >
-                                <div className="item-content">
-                                    <h2>{item.detail}</h2>
+                <div ref={containerRef} className="scroll-container">
+                    <div className="sticky-wrapper">
+                        <motion.div className="gallery" style={{ x }}>
+                            {data.map((item) => (
+                                <div
+                                    key={item._id}
+                                    className="gallery-item"
+                                    onClick={(e) => { e.preventDefault(); clickOnImage(item.newUrl, item.detail, item._id, item.show) }}
+                                    style={
+                                        {
+                                            "--item-color": "var(--hue-1)",
+                                            "--item-image": `url(/api/images/${item.newUrl})`,
+                                        } as React.CSSProperties
+                                    }
+                                >
                                 </div>
-                            </div>
-                        ))}
-                    </motion.div>
+                            ))}
+                        </motion.div>
+                    </div>
                 </div>
+
+                <StyleSheet />
             </div>
 
-            <StyleSheet />
-        </div>
+            {( lightBox._id !== "") && createPortal(
+                <div className="fixed w-screen h-screen top-0 left-0 z-20 bg-gray-400/75 " onClick={closeLightBox}>
+                    <IconContext.Provider value={{ size: "2em" }}>
+                        <div className="fixed top-5 right-5 m-2 p-4 cursor-pointer" ><FaWindowClose /></div>
+                    </IconContext.Provider>
+
+                    <div className="flex justify-center items-center h-screen">
+                        <Image src={'/api/images/' + lightBox.newUrl} alt={lightBox.detail} width={1000} height={100} className="w-auto h-auto" />
+                    </div>
+
+                </div>,
+                document.body)
+            }
+
+        </>
+
     )
 }
 
@@ -63,22 +97,6 @@ function StyleSheet() {
                 overflow: visible;
             }
 
-            .intro-section {
-                height: 50vh;
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-end;
-                align-items: center;
-                text-align: center;
-                padding-bottom: 40px;
-            }
-
-            .intro-section h1 {
-                font-size: clamp(36px, 8vw, 72px);
-                color: var(--white);
-                margin: 0;
-                text-transform: uppercase;
-            }
 
             .scroll-container {
                 height: 300vh;
@@ -127,34 +145,8 @@ function StyleSheet() {
                 mix-blend-mode: multiply;
             }
 
-            .item-content {
-                position: absolute;
-                bottom: 30px;
-                left: 30px;
-                z-index: 1;
-            }
 
-            .item-number {
-                font-size: 14px;
-                color: var(--item-color);
-                font-family: "Geist Mono", monospace;
-                display: block;
-                margin-bottom: 8px;
-            }
 
-            .gallery-item h2 {
-                font-size: 28px;
-                font-weight: 600;
-                color: var(--white);
-                margin: 0;
-            }
-
-            .outro-section {
-                height: 100vh;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
 
             @media (max-width: 600px) {
                 .sticky-wrapper {
@@ -190,18 +182,6 @@ function StyleSheet() {
         `}</style>
     )
 }
-
-/**
- * ==============   Data   ================
- */
-
-const items = [
-    { id: 1, color: "var(--hue-1)", label: "Night One", image: "/photos/tokyo-shinjuku-2/image-1.jpg" },
-    { id: 2, color: "var(--hue-2)", label: "Night Two", image: "/photos/tokyo-shinjuku-2/image-2.jpg" },
-    { id: 3, color: "var(--hue-3)", label: "Night Three", image: "/photos/tokyo-shinjuku-2/image-3.jpg" },
-    { id: 4, color: "var(--hue-4)", label: "Night Four", image: "/photos/tokyo-shinjuku-2/image-4.jpg" },
-    { id: 5, color: "var(--hue-5)", label: "Night Five", image: "/photos/tokyo-shinjuku-2/image-8.jpg" },
-]
 
 const ITEM_WIDTH = 400
 const GAP = 30
