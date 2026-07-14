@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/dashboard/', '/login/','/forgotpassword/'],
+      disallow: ['/dashboard/*', '/login/*','/forgotpassword/', '/new2fa'],
     },
     sitemap: 'https://acme.com/sitemap.xml',
   }
