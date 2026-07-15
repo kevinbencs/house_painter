@@ -341,7 +341,7 @@ const createImg = (s: string, setTextError: Dispatch<SetStateAction<string>>) =>
         return <div key={uuid()}></div>;
     }
 
-    return <div key={uuid()} className='w-[550px] block mb-10 max-w-full'>
+    return <div key={uuid()} className='w-[850px] block mb-10 max-w-full'>
         <Img id={id} />
     </div>
 }
