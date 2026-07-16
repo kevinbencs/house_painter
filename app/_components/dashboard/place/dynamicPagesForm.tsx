@@ -18,6 +18,7 @@ import {
     QueryClientProvider,
 } from '@tanstack/react-query'
 import HeadingImg from "./headingImg";
+import Services from "../../services/services";
 
 const queryClient = new QueryClient()
 
@@ -232,6 +233,7 @@ const DynamicPagesForm = (props: {
                 <div className="lg:flex mt-10 mb-10 lg:gap-32 lg:flex-wrap">
                     <div className="lg:w-[calc(100%-450px)] mb-8 flex flex-col items-center">
                         {text}
+                        <Services />
                     </div>
                 </div>
             </div>
