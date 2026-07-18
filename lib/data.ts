@@ -5,7 +5,7 @@ import Image from '@/models/Image'
 import { Img, ImgWithoutBlob } from '@/typeScriptType/img'
 import { MongoData } from '@/typeScriptType/price'
 import { Categories } from '@/typeScriptType/price'
-import { BSPRender } from '@/typeScriptType/blogServPlace'
+import { BSPHeading, BSPRender } from '@/typeScriptType/blogServPlace'
 import Blog from '@/models/Blog'
 import Place from '@/models/Place'
 import Service from '@/models/Service'
@@ -19,7 +19,7 @@ export const getPriceData = async () => {
 
     await connectToMongo()
 
-    const docs: MongoData[] = await Price.find({}, { _id: 1, name: 1, price: 1, category: 1, unitOfMea: 1 })
+    const docs: MongoData[] = await Price.find({}, { _id: 1, name: 1, price: 1, category: 1, unitOfMea: 1 }).lean()
         .sort({ category: 1 })
         .lean()
 
@@ -96,7 +96,7 @@ export const getBlogByHeading = async (heading: string): Promise<BSPRender | nul
 
     return Blog.findOne({
         heading: heading.replaceAll('-', ' ')
-    })
+    }).lean()
 }
 
 
@@ -110,7 +110,7 @@ export const getPlaceByHeading = async (heading: string): Promise<BSPRender | nu
 
     return Place.findOne({
         heading: heading.replaceAll('-', ' ')
-    })
+    }).lean()
 }
 
 export const getServiceByHeading = async (heading: string): Promise<BSPRender | null> => {
@@ -123,7 +123,7 @@ export const getServiceByHeading = async (heading: string): Promise<BSPRender | 
 
     return Service.findOne({
         heading: heading.replaceAll('-', ' ')
-    })
+    }).lean()
 }
 
 
@@ -134,7 +134,12 @@ export const getPlaceFooter = async () => {
 
     await connectToMongo()
 
-    return Place.find({visibility: true}, {_id: 1, heading: 1, visibility: 1})
+    const data: BSPHeading[] = await Place.find({visibility: true}, {_id: 1, heading: 1, visibility: 1}).lean()
+    
+    return data.map(item=> ({
+        ...item,
+        _id: String(item._id)
+    }))
 }
 
 
@@ -145,7 +150,7 @@ export const getServiceFooter = async () => {
 
     await connectToMongo()
 
-    return Service.find({visibility: true}, {_id: 1, heading: 1, visibility: 1}).limit(10)
+    return Service.find({visibility: true}, {_id: 1, heading: 1, visibility: 1}).limit(10).lean()
 }
 
 export const getServiceTopBar = async() => {
@@ -155,7 +160,7 @@ export const getServiceTopBar = async() => {
 
     await connectToMongo()
 
-    return Service.find({visibility: true}, {_id: 1, heading: 1, visibility: 1}).limit(4)
+    return Service.find({visibility: true}, {_id: 1, heading: 1, visibility: 1}).limit(4).lean()
 }
 
 
@@ -166,7 +171,7 @@ export const getBlogMainPage = async () => {
 
     await connectToMongo()
 
-    return Blog.find({visibility: true},{_id:1, heading:1, visibility:1, image: 1}).limit(5)
+    return Blog.find({visibility: true},{_id:1, heading:1, visibility:1, image: 1}).limit(5).lean()
 
 }
 
@@ -178,7 +183,7 @@ export const getServiceMainPage = async () => {
 
     await connectToMongo()
 
-    return Service.find({visibility: true},{_id:1, heading:1, visibility:1, image: 1}).limit(5)
+    return Service.find({visibility: true},{_id:1, heading:1, visibility:1, image: 1}).limit(5).lean()
 
 }
 

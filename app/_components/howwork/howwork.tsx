@@ -43,8 +43,8 @@ const HowWork = () => {
     }
   }
   return (
-    <section className={`mb-40 `}>
-      <h2 className="mb-5 text-4xl font-bold">Hogyan zajlik a munka?</h2>
+    <section className={`mb-40 w-full mt-40`}>
+      <h2 className="mb-10 text-center text-3xl font-bold">Hogyan zajlik a munkafolyamat?</h2>
       <ul>
         {data.map((item) => <li className="bg-mist-900 text-white mb-1 ">
           <button className="flex w-full justify-between cursor-pointer p-4 lg:p-6 hover:bg-mist-500 focus-visible:outline-4 focus-visible:outline-gray-500" onClick={() => handleClick(item.id)} >

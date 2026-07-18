@@ -295,7 +295,7 @@ const createList = (s: string) => {
 const createTitlte = (s: string) => {
     const index1 = s.indexOf('<title>');
     const index2 = s.indexOf('</title>');
-
+    
     if (index1 !== 0 || index2 === -1 || s.length !== index2 + 8) {
         return 'Error in title'
     }

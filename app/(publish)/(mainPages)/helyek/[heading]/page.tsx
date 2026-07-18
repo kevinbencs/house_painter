@@ -7,6 +7,8 @@ import type { Metadata, ResolvingMetadata } from 'next';
 import { Img } from '@/typeScriptType/img';
 import { getPlaceByHeading } from "@/lib/data"
 import { cacheLife, cacheTag } from "next/cache"
+import Services from "@/app/_components/services/services"
+import HowWork from "@/app/_components/howwork/howwork"
 
 export async function generateMetadata(
   { params }: { params: Promise<{ heading: string }> },
@@ -85,7 +87,11 @@ const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
   return (
     <section>
       <h1 className="mt-10">Places</h1>
-      <div className="lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2"></div>
+      <div className="lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2">
+
+        <Services/>
+        <HowWork/>
+      </div>
     </section>
   )
 }

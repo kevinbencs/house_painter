@@ -1,6 +1,6 @@
 import ImgBSP from '@/app/_components/bsp/img'
 import Image from '@/models/Image'
-import Service from '@/models/Service'
+import Place from '@/models/Place'
 import { BSPPublicPagesList } from '@/typeScriptType/blogServPlace'
 import { Img } from '@/typeScriptType/img'
 import { cacheLife, cacheTag } from 'next/cache'
@@ -9,9 +9,9 @@ import Link from 'next/link'
 const page = async () => {
   "use cache"
   cacheTag("place-list");
-  cacheLife("hours")
+  cacheLife('days')
 
-  const data: BSPPublicPagesList[] = await Service.find({ visibility: false }, { id: 1, heading: 1, image: 1, visibility: 1 })
+  const data: BSPPublicPagesList[] = await Place.find({ visibility: true }, { id: 1, heading: 1, image: 1, visibility: 1 }).sort('heading')
 
   const imgData: (Img | null)[] = await Promise.all(data.map((item) => Image.findById(item.image)))
 
@@ -21,7 +21,7 @@ const page = async () => {
       <h1 className='text-3xl mb-20 text-center mt-10'>Ahol jelen vagyok szobafestőként</h1>
       <ul className='lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2'>
         {data.map((item, i) => <li key={"blog-" + String(item._id)}>
-          <Link className="hover:text-gray-500 flex gap-2 pb-2 border-black w-full border-b mb-6" href={`blog/${item.heading.replaceAll(" ", "-")}`}>
+          <Link className="hover:text-gray-500 flex gap-2 pb-2 border-black w-full border-b mb-6" href={`helyek/${item.heading.slice(0,item.heading.indexOf('.')+9).replaceAll(" ", "-")}`}>
             <div className="max-w-20 min-w-20 overflow-hidden">
               {imgData[i] !== null && <ImgBSP url={imgData[i].newUrl} detail={imgData[i].detail} />}
             </div>

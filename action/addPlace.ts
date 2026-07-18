@@ -14,20 +14,20 @@ export const addPlace = async ( formData: FormData) => {
         if (auth.error) return { error: "Kérlek jelentkezz be." };*/
         
 
-        const heading = formData.get('heading') as string;
-        const text = formData.get('text') as string;
-        const detail = formData.get('detail') as string;
-        const keywords = formData.get('keywords') as string;
-        const image = formData.get('image') as string;
-        const paragh = formData.get('paragh') as string;
-
+        const heading = (formData.get('heading') as string).replaceAll('\r','');
+        const text = (formData.get('text') as string).replaceAll('\r','');
+        const detail = (formData.get('detail') as string).replaceAll('\r','');
+        const keywords = (formData.get('keywords') as string).replaceAll('\r','');
+        const image = (formData.get('image') as string).replaceAll('\r','');
+        const headingParahg = (formData.get('paragh') as string).replaceAll('\r','');
+       
         const res = PlaceSchema.safeParse({
             heading,
             text,
             detail,
             keywords,
             image,
-            paragh
+            paragh: headingParahg
         })
 
         if (res.error) {
@@ -38,7 +38,9 @@ export const addPlace = async ( formData: FormData) => {
         const textArr = text.split("\n")
         for (let i = 0; i < textArr.length; i++) {
             const mess = chooseTypeOfTextItem(textArr[i])
-            if (mess.indexOf('Error') > -1) return { error: mess }
+            if (mess.indexOf('Error') > -1) {
+                console.log(mess)
+                return { error: mess }}
         }
 
         const place= new Place({
@@ -47,13 +49,14 @@ export const addPlace = async ( formData: FormData) => {
             detail,
             image,
             keywords,
-            visibility: false,
-            paragh
+            visibility: true,
+            headingParahg
         });
 
         await place.save();
 
         updateTag('place-list')
+        updateTag('place-footer')
 
 
         return {message: "Új hely hozzáadva"}

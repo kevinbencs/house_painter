@@ -152,6 +152,7 @@ const DynamicPagesForm = (props: {
             form.append("detail", detail)
             form.append("keywords", themes.join(';'))
             form.append("image", coverImageId)
+            form.append("paragh",titleParaghInput)
             const res = await props.serverAction(form)
 
             if (res.error) setError(res.error);
@@ -231,8 +232,8 @@ const DynamicPagesForm = (props: {
                     </section>
                 </div>
                 
-                <div className="lg:flex mt-10 mb-10 lg:gap-32 lg:flex-wrap">
-                    <div className="lg:w-[calc(100%-450px)] mb-8 flex flex-col items-center">
+                <div className=" mt-10 mb-10 ">
+                    <div className=" mb-8 flex flex-col items-center">
                         {text}
                         <Services />
                         <HowWork/>

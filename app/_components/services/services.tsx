@@ -41,9 +41,9 @@ const data = [
 const Services = () => {
     return (
         <section >
-            <h2 className="text-2xl mb-10 mt-20 ">Szolgáltatásaim</h2>
+            <h2 className="text-3xl mb-10 mt-20 text-center font-bold">Szolgáltatásaim</h2>
             <ul className="flex flex-wrap gap-10 justify-center">
-                {data.map((item) => <li key={item.id} className="w-[600px] mb-10 flex items-center flex-col text-white bg-mist-900 p-5 rounded-lg">
+                {data.map((item) => <li key={item.id} className="w-[600px] mb-10 flex items-center flex-col text-white bg-gray-900 p-5 rounded-lg">
                     <h3 className="text-xl mb-5">{item.title}</h3>
                     <div className="text-2xl">{item.icon}</div>
                     <p className="mt-5">{item.text}</p>
