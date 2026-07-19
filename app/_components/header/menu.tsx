@@ -32,7 +32,7 @@ const Menu = () => {
             <div >
                 <label htmlFor="hamburger-menu" className="lg:hidden text-center text-black p-2 rounded bg-gray-50">Menu </label>
 
-                <input type="checkbox" name="hamburger-menu" className="fixed -right-64 lg:invisible" id="hamburger-menu" checked={isOpen} onChange={() => setIsOpen(!isOpen)} />
+                <input type="checkbox" name="hamburger-menu" className="fixed -right-64 lg:invisible hidden" id="hamburger-menu" checked={isOpen} onChange={() => setIsOpen(!isOpen)} />
                 <div className='fixed z-50 duration-100 inset-0 lg:translate-y-0 -translate-y-[100vh]  lg:static'>
                     <div className="h-screen w-full bg-black p-2 z-20 lg:z-0 lg:h-auto lg:bg-gray-900 lg:static lg:w-auto">
                         <label htmlFor="hamburger-menu" className="text-black lg:hidden p-2 rounded bg-gray-50">X</label>

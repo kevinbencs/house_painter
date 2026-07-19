@@ -20,7 +20,7 @@ export default function ChooseTypeOfTextItem(props: { s: string }) {
 
 const createParagh = (s: string) => {
     return (
-        <p  className="mb-10">
+        <p  className="mb-10 text-center">
             {jsxInText(s)}
         </p>
     )
@@ -365,7 +365,7 @@ const createTitlte = (s: string) => {
     const title = s.slice(7, index2);
 
     return (
-        <h2 className="mb-10 text-3xl font-bold" >{title}</h2>
+        <h2 className="mb-10 mt-40 text-3xl font-bold text-center" >{title}</h2>
     )
 }
 
@@ -381,6 +381,6 @@ const createHighlight = (s: string) => {
     const text = s.slice(11, index2);
 
     return (
-        <p className="mb-10 font-bold pl-4 border-l-4 dark:border-slate-50 border-zinc-800" ><span className="bg-zinc-800 text-white dark:bg-slate-50 dark:text-black inline-block p-1 font-bold">{text}</span></p>
+        <p className="mb-40 font-bold pl-4 border-l-4  border-zinc-800 mt-40" ><span className="bg-zinc-800 text-white inline-block p-1 font-bold text-xl">{text}</span></p>
     )
 }

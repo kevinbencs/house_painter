@@ -5,7 +5,7 @@ import Image from '@/models/Image'
 import { Img, ImgWithoutBlob } from '@/typeScriptType/img'
 import { MongoData } from '@/typeScriptType/price'
 import { Categories } from '@/typeScriptType/price'
-import { BSPHeading, BSPRender } from '@/typeScriptType/blogServPlace'
+import { BSPHeading, BSPRender, PlaceRender } from '@/typeScriptType/blogServPlace'
 import Blog from '@/models/Blog'
 import Place from '@/models/Place'
 import Service from '@/models/Service'
@@ -107,10 +107,15 @@ export const getPlaceByHeading = async (heading: string): Promise<BSPRender | nu
 
     await connectToMongo()
 
+    const data: PlaceRender[] = await Place.find({
+        heading: { $regex: heading.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), $options: "i"}
+    }).lean();
 
-    return Place.findOne({
-        heading: heading.replaceAll('-', ' ')
-    }).lean()
+    
+    return data.map(item=> ({
+        ...item,
+        _id: String(item._id)
+    }))[0]
 }
 
 export const getServiceByHeading = async (heading: string): Promise<BSPRender | null> => {

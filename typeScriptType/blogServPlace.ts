@@ -17,6 +17,17 @@ export interface BSPRender {
     _id: string
 }
 
+export interface PlaceRender {
+    heading: string,
+    text: string, 
+    keywords: string,
+    detail: string,
+    image: string,
+    visibility: boolean,
+    _id: string,
+    headingParahg: string
+}
+
 
 
 export interface BSPHeading {

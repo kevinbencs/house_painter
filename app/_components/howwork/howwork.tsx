@@ -6,12 +6,12 @@ const data = [
   {
     id: 'work-1',
     title: "Kapcsolatfelvétel",
-    text: "Röviden elmondja, mire van szüksége (mekkora terület, milyen jellegű munka)"
+    text: "Röviden elmondja, mire van szüksége (milyen jellegű munka)"
   },
   {
     id: 'work-2',
     title: "Ingyenes helyszíni felmérés",
-    text: "Megnézzük a helyszínt, felmérjük az állapotot, pontos árajánlatot adunk."
+    text: "Megnézem a helyszínt, felmérem az állapotot, pontos árajánlatot adok."
   },
   {
     id: 'work-3',
@@ -26,7 +26,7 @@ const data = [
   {
     id: 'work-5',
     title: "Átadás",
-    text: "Közösen ellenőrizzük az elkészült munkát, majd elvégezzük a takarítást."
+    text: "Közösen ellenőrizzük az elkészült munkát, majd elvégezem a takarítást."
   },
 ]
 
@@ -44,9 +44,9 @@ const HowWork = () => {
   }
   return (
     <section className={`mb-40 w-full mt-40`}>
-      <h2 className="mb-10 text-center text-3xl font-bold">Hogyan zajlik a munkafolyamat?</h2>
+      <h2 className="mb-10 text-center text-3xl font-bold">Hogyan zajlik a munkavégzés?</h2>
       <ul>
-        {data.map((item) => <li className="bg-mist-900 text-white mb-1 ">
+        {data.map((item) => <li key={item.id} className="bg-mist-900 text-white mb-1 ">
           <button className="flex w-full justify-between cursor-pointer p-4 lg:p-6 hover:bg-mist-500 focus-visible:outline-4 focus-visible:outline-gray-500" onClick={() => handleClick(item.id)} >
             <h3 className="font-bold text-lg ">{item.title}</h3>
             <div className={`${item.id === id ? '-rotate-45' : ''} duration-150`}><FaPlus size={30} /></div>
