@@ -1,19 +1,18 @@
 import { connectToMongo } from "@/lib/mongo"
-import Image from "@/models/Image"
 import Place from "@/models/Place"
-import { BSPRender, PlaceRender } from "@/typeScriptType/blogServPlace"
+import { PlaceRender } from "@/typeScriptType/blogServPlace"
 import { notFound } from "next/navigation"
 import type { Metadata, ResolvingMetadata } from 'next';
 import { Img } from '@/typeScriptType/img';
-import { getPlaceByHeading } from "@/lib/data"
+import { getImgById, getPlaceByHeading } from "@/lib/data"
 import { cacheLife, cacheTag } from "next/cache"
 import Services from "@/app/_components/services/services"
 import HowWork from "@/app/_components/howwork/howwork"
-import HeadingImg from "@/app/_components/dashboard/place/headingImg"
-import { Suspense } from "react"
 import ChooseTypeOfTextItem from "@/app/_components/bsp/placeRender"
+import HeadingImgServerCompt from "@/app/_components/dashboard/place/headingImgServerComp"
 
-/*export async function generateMetadata(
+
+export async function generateMetadata(
   { params }: { params: Promise<{ heading: string }> },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
@@ -22,38 +21,38 @@ import ChooseTypeOfTextItem from "@/app/_components/bsp/placeRender"
   cacheLife('days')
 
 
-  const data: BSPRender | null = await getPlaceByHeading(decodeURIComponent(heading))
+  const data: PlaceRender | null = await getPlaceByHeading(decodeURIComponent(heading.replaceAll('-', ' ')))
 
   if (data === null) return {}
 
-  const imgData: (Img | null) = await Image.findById(data.image)
+  const imgData: (Img | null) = await getImgById(data.image)
 
 
 
   return {
-    title: decodeURIComponent(heading.replaceAll('-', ' ')),
+    title: data.heading,
     keywords: data.keywords.split(';'),
     description: data.detail,
     openGraph: {
       locale: 'hu_HU',
-      title: decodeURIComponent(heading.replaceAll('-', ' ')),
+      title: data.heading,
       description: data.detail,
       type: 'website',
       url: `${process.env.URL}/blog/${heading}`,
       images: [
         {
-          url: process.env.URL + '/api/images' + imgData?.newUrl,
+          url: '/api/images/' + imgData?.newUrl,
           alt: imgData?.detail
         }
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: decodeURIComponent(heading.replaceAll('-', ' ')),
+      title: data.heading,
       description: data.detail,
       images: [
         {
-          url: process.env.URL + '/api/images' + imgData?.newUrl,
+          url: '/api/images/' + imgData?.newUrl,
           alt: imgData?.detail
         }
       ],
@@ -61,7 +60,7 @@ import ChooseTypeOfTextItem from "@/app/_components/bsp/placeRender"
 
   }
 }
-*/
+
 export async function generateStaticParams() {
 
   await connectToMongo()
@@ -93,7 +92,7 @@ const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
       <div className="lg:flex gap-10 lg:justify-center bg-mist-900  text-white lg:content-center m-5 mb-20 p-10">
         <div className="hidden lg:block lg:max-w-[30%] ">
 
-          <HeadingImg id={data.image} />
+          <HeadingImgServerCompt id={data.image} />
 
         </div>
 

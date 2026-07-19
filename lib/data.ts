@@ -219,3 +219,14 @@ export const getGoogleReview = async () => {
   );
   return res.json();
 }
+
+
+export const getImgById = async (id: string) => {
+    'use cache'
+    cacheLife('max')
+    cacheTag('img-id-'+id)
+
+    const image = await Image.findById(id).lean();
+    image['_id'] = String(image._id)
+    return image
+}
