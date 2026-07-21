@@ -30,6 +30,7 @@ const NewImageForm = () => {
                             Válassz ki egy képet
                         </CardDescription>
                         {state?.error && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
+                        {state?.failed &&  state.failed.map((item) => <div key={item[8]} className="mb-2 mt-2 text-red-600">{item}</div>)  }
                         {state?.message && <div className="mb-2 mt-2 text-green-600">{state?.message}</div>}
                     </CardHeader>
                     <CardContent>

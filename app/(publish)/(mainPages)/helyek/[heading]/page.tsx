@@ -34,10 +34,8 @@ export async function generateMetadata(
     keywords: data.keywords.split(';'),
     description: data.detail,
     openGraph: {
-      locale: 'hu_HU',
       title: data.heading,
       description: data.detail,
-      type: 'website',
       url: `${process.env.URL}/blog/${heading}`,
       images: [
         {

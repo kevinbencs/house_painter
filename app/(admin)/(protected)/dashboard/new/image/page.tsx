@@ -9,7 +9,7 @@ const Page = async () => {
   if (auth.error) redirect('/');*/
   return (
     <>
-      <h1 className="text-3xl mb-2">Új kép</h1>
+      <h1 className="text-3xl mb-2 w-40">Új kép</h1>
       <NewImageForm />
     </>
   )

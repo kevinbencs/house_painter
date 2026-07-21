@@ -7,7 +7,7 @@ const Header = () => {
     {
       id: "A",
       image:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ffarmvilag.hu%2Fwp-content%2Fuploads%2F2025%2F03%2Fdominans-kutya.jpg&f=1&nofb=1&ipt=4fa64bda97c6249bf3816252a51c54ec9b6728800b3b05169c7b6b0a86dace18",
+        "api/images/home.jpg",
     },
     {
       id: "B",

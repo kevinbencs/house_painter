@@ -8,15 +8,15 @@ import { imageIdSchema } from "@/schema/schema";
 
 
 export const updateImage = async (_prevState: ActionState, formData: FormData) => {
-    const _id = formData.get('image-id');
-    const detail = formData.get('image-alt');
-    const newUrl = formData.get('image-url');
+    const _id = formData.get('_id');
+    const detail = formData.get('detail');
+    const newUrl = formData.get('newUrl');
     const show = formData.get('image-visibility');
     try {
 
-        const authRes = await checkAuth();
+        /*const authRes = await checkAuth();
 
-        if (authRes.error) return { error: "Kérlek jelentkezz be.", fieldData: [_id, detail, newUrl, show] };
+        if (authRes.error) return { error: "Kérlek jelentkezz be.", fieldData: [_id, detail, newUrl, show] };*/
 
 
 
@@ -35,7 +35,7 @@ export const updateImage = async (_prevState: ActionState, formData: FormData) =
         await Image.findByIdAndUpdate(_id, {
             detail,
             newUrl,
-            show
+            show: show === 'on' ? true : false
         })
 
         return { message: "Kép adatai módosítva" }

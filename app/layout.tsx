@@ -25,14 +25,17 @@ export const metadata: Metadata = {
     template: '%s | Budapesten szobafestés',
     default: "Budapesten szobafestés",
   },
-  description: "Megbízható, precíz szobafestés Budapesten és környékén",
+  description: "Megbízható, precíz szobafestő Budapesten és környékén",
   alternates: {
-    canonical: 'https://your-budapest-painter.hu',
+    canonical: 'https://budapest-painter.hu',
   },
   category: 'Szobafestés',
   pinterest: {
     richPin: true,
   },
+  authors: [ { name: 'Kevin Bencs', url: 'https://bencskevin.hu' }],
+  creator: 'Kevin Bencs',
+  publisher: 'Kevin Bencs',
   openGraph: {
     siteName: 'Budafestő',
     locale: 'hu_HU',
@@ -42,6 +45,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: "Képek",
+    
     description: 'Megbízható, precíz szobafestés Budapesten és környékén',
     images: [{ url: "/api/images", alt: 'Budafestő - Képek' }],
   },

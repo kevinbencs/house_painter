@@ -8,9 +8,9 @@ import { Suspense } from "react";
 
 const Page = async () => {
   await connection()
-  const auth = await checkAuth()
+  /*const auth = await checkAuth()
 
-  if (auth.error) redirect('/');
+  if (auth.error) redirect('/');*/
 
   const imgs = await getAllImg()
 

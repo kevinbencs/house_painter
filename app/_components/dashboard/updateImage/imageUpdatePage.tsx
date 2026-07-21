@@ -107,6 +107,7 @@ const ImageUpdatePage = (props: { img: Img[] }) => {
                                         <CardHeader>
                                             <CardTitle>Kéd adatainak megváltoztatása</CardTitle>
                                             {state?.error && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
+                                            {state?.failed &&  state.failed.map((item) => <div key={item[8]} className="mb-2 mt-2 text-red-600">{item}</div>)  }
                                             {state?.message && <div className="mb-2 mt-2 text-green-600">{state?.message}</div>}
                                         </CardHeader>
                                         <CardContent>
@@ -114,22 +115,16 @@ const ImageUpdatePage = (props: { img: Img[] }) => {
                                             <div className="flex flex-col gap-6">
                                                 <div className="mb-5">
                                                     <Label htmlFor="picture-url" className="mb-2">Kép url-je</Label>
-                                                    <Input id="picture-url" name="newUrl" type="text" disabled={isPending} required value={lightBox.newUrl} onChange={inputChangeHandle} defaultValue={state && state.fieldData && typeof state.fieldData[2] === 'string'
-                                                        ? state.fieldData[2]
-                                                        : ''} />
+                                                    <Input id="picture-url" name="newUrl" type="text" disabled={isPending} required value={lightBox.newUrl} onChange={inputChangeHandle}  />
                                                 </div>
                                                 <div>
                                                     <Label htmlFor="picture-alt" className="mb-2">Kép leírása</Label>
-                                                    <Input id="picture-alt" name="detail" type="text" disabled={isPending} required value={lightBox.detail} onChange={inputChangeHandle} defaultValue={state && state.fieldData && typeof state.fieldData[1] === 'string'
-                                                        ? state.fieldData[1]
-                                                        : ''} />
+                                                    <Input id="picture-alt" name="detail" type="text" disabled={isPending} required value={lightBox.detail} onChange={inputChangeHandle} />
                                                 </div>
 
                                                 <div>
                                                     <Label htmlFor="picture-visibility" className="mb-2">Megjelenjen a kép?</Label>
-                                                    <Checkbox id="picture-visibility" name="show" disabled={isPending} required checked={lightBox.show} onCheckedChange={(e) => setLightBox({ ...lightBox, show: Boolean(e) })} defaultChecked={state && state.fieldData && typeof state.fieldData[3] === 'boolean'
-                                                        ? state.fieldData[3]
-                                                        : true} />
+                                                    <Checkbox id="picture-visibility" name="image-visibility" disabled={isPending} checked={lightBox.show} onCheckedChange={(e) => setLightBox({ ...lightBox, show: Boolean(e) })}  />
                                                 </div>
 
                                                 <div className="hidden">

@@ -63,15 +63,15 @@ export const placeSchemaId = z.object({
 
 export const imageIdSchema = z.object({
     newUrl:  z.string().min(1,{message: 'Az url megadása kötelező'}),
-    show: z.string().min(1,{message: "Láthatóság megadása kötelező"}),
+    show: z.refine(item =>  item === 'on' || item === null, {message: "Láthatóság megadása kötelező"}),
     detail: z.string().min(1,{message: "A leírás megadása kötelező"}),
     _id: z.string().min(1,{message: "Az oldal id-jének megadása kötelező"}),
 })
 
 export const imageSchema = z.object({
     newUrl:  z.string().min(1,{message: 'Az url megadása kötelező'}),
-    file: z.string().min(1,{message: "Láthatóság megadása kötelező"}),
-    detail: z.file({message: "A kép megadása kötelező"}),
+    file: z.file({message: "A kép megadása kötelező"}),
+    detail: z.string().min(1, {message: "A leírásának megadása kötelező"}),
 })
 
 export const deleteSchema = z.string({message: "_id megadása kötelező"})
