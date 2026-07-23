@@ -12,7 +12,7 @@ const Header = () => {
     {
       id: "B",
       image:
-        "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fkutyanev.hu%2Fwp-content%2Fuploads%2F2026%2F02%2Fgpt-tobb-kutya-egyutt-tartasa-mire-figyelj-1771755076.png&f=1&nofb=1&ipt=13a2218ee6fef0f74b18ccf67d3c3914f7a005af059781649b42b852fd22ad9c",
+        "api/images/zold-fal.jpeg",
     },
 
   ]);

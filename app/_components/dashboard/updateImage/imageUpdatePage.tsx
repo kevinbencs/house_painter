@@ -88,7 +88,7 @@ const ImageUpdatePage = (props: { img: Img[] }) => {
             {mess !== "" &&
                 <div className="fixed top-0 pt-2 bg-white text-green-600 text-2xl text-center">{mess}</div>
             }
-            <section>
+            <section className="flex gap-3 flex-wrap">
                 {props.img.map((item) => <Image className="w-auto h-auto" key={'imageId' + item._id} width={200} height={100} alt={item.detail} src={'/api/images/' + item.newUrl} onClick={() => clickOnImage(item.newUrl, item.detail, item._id, item.show)} />)}
             </section>
             {lightBox._id !== "" &&
