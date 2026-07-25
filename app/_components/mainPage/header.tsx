@@ -89,17 +89,12 @@ const Header = () => {
 
           </div>
 
-          <h1 className="text-6xl text-center left-0 w-screen"
-            style={{
-              position: "absolute",
-              top: "10%",
-              color: "white",
-            }}
+          <h1 className="text-6xl text-center left-0 w-screen text-shadow-lg text-shadow-gray-700 text-white top-10 absolute"
           >
             Szobafestés, mázolás Budapesten és környékén
           </h1>
         </div>
-        <p className="text-6xl text-center left-0 w-screen absolute top-[70%] text-white">efewfew</p>
+        <p className="text-6xl text-center left-0 w-screen absolute top-[70%] text-white text-shadow-lg text-shadow-gray-700">efewfew</p>
         
       </div>
 

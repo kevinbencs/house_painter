@@ -5,6 +5,8 @@ import Image from "@/models/Image";
 import { del } from "@vercel/blob";
 import { deleteSchema } from "@/schema/schema";
 import * as z from "zod"
+import { updateTag } from "next/cache";
+import { getNumbOfImag } from "@/lib/data";
 
 interface Img {
     blobUrl: string,
@@ -22,11 +24,11 @@ export const deleteImage = async (_id: string) => {
         if (auth.error) return { error: "Kérlek jelentkezz be." };*/
 
         const res = deleteSchema.safeParse(_id);
-        if(res.error?.issues) {
+        if (res.error?.issues) {
             console.log(res.error.issues)
-            return {failed: res.error.issues.map((item) => item.message)}
+            return { failed: res.error.issues.map((item) => item.message) }
         }
-       
+
         if (!process.env.BLOB_READ_WRITE_TOKEN) {
             return { error: "BLOB_READ_WRITE_TOKEN is missed." };
         }
@@ -37,10 +39,20 @@ export const deleteImage = async (_id: string) => {
 
         const blob = await del(img.blobUrl)
 
-        return {message: "Kép törölve."}
+        updateTag('main-page-images')
+        updateTag('img-numb')
+
+        const numbOfImg = await getNumbOfImag()
+        const numbOfPage = Math.ceil(numbOfImg / 20)
+
+        for (let i = 1; i <= numbOfPage; i++) {
+            updateTag('img-data-' + String(i))
+        }
+
+        return { message: "Kép törölve." }
 
     } catch (error) {
-        
+
         const Error = await handleMongooseError(error);
         return { error: Error }
     }

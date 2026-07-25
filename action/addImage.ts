@@ -6,6 +6,8 @@ import { handleMongooseError } from "@/lib/mongo";
 import { ActionState } from "@/typeScriptType/form";
 import { checkAuth } from "@/lib/checkAuth";
 import { imageSchema } from "@/schema/schema";
+import { updateTag } from "next/cache";
+import { getNumbOfImag } from "@/lib/data";
 
 
 export const AddImage = async (_prevState: ActionState, formData: FormData) => {
@@ -48,7 +50,17 @@ export const AddImage = async (_prevState: ActionState, formData: FormData) => {
             })
 
             await img.save()
+            updateTag('main-page-images')
+            updateTag('img-numb')
 
+            const numbOfImg = await getNumbOfImag()
+            const numbOfPage = Math.ceil(numbOfImg / 20)
+
+            for(let i = 1; i <= numbOfPage; i++){
+                updateTag('img-data-'+String(i))
+            }
+            
+            
 
             return { message: "Kép feltöltve" }
         }

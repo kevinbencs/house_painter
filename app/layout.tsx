@@ -107,9 +107,9 @@ export default function RootLayout({
         />
         <FormProvided>
           <IsLoggedProvider>
-            <HeaderContainer>{children}</HeaderContainer>
-          </IsLoggedProvider>
-          <Footer />
+            {/*<HeaderContainer>*/}{children}{/* </HeaderContainer>*/}
+         </IsLoggedProvider>
+          {/*<Footer />*/}
         </FormProvided>
       </body>
     </html>
