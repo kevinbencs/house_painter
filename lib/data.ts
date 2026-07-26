@@ -100,7 +100,7 @@ export const getBlogByHeading = async (heading: string): Promise<BSPRender | nul
 }
 
 
-export const getPlaceByHeading = async (heading: string): Promise<BSPRender | null> => {
+export const getPlaceByHeading = async (heading: string): Promise<PlaceRender | null> => {
     'use cache'
     cacheTag(`place-${heading}`)
     cacheLife('days')

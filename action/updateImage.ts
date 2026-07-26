@@ -5,6 +5,7 @@ import { handleMongooseError } from "@/lib/mongo";
 import { ActionState } from "@/typeScriptType/form";
 import { checkAuth } from "@/lib/checkAuth";
 import { imageIdSchema } from "@/schema/schema";
+import { updateTag } from "next/cache";
 
 
 export const updateImage = async (_prevState: ActionState, formData: FormData) => {
@@ -37,6 +38,9 @@ export const updateImage = async (_prevState: ActionState, formData: FormData) =
             newUrl,
             show: show === 'on' ? true : false
         })
+
+        updateTag('img-id-'+_id)
+        updateTag('main-page-images')
 
         return { message: "Kép adatai módosítva" }
     } catch (error) {

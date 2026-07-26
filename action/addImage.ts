@@ -58,6 +58,7 @@ export const AddImage = async (_prevState: ActionState, formData: FormData) => {
 
             for(let i = 1; i <= numbOfPage; i++){
                 updateTag('img-data-'+String(i))
+                updateTag('image-site-' + String(i))
             }
             
             

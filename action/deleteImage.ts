@@ -41,12 +41,14 @@ export const deleteImage = async (_id: string) => {
 
         updateTag('main-page-images')
         updateTag('img-numb')
+        updateTag('img-id-'+_id)
 
         const numbOfImg = await getNumbOfImag()
         const numbOfPage = Math.ceil(numbOfImg / 20)
 
         for (let i = 1; i <= numbOfPage; i++) {
             updateTag('img-data-' + String(i))
+            updateTag('image-site-' + String(i))
         }
 
         return { message: "Kép törölve." }
