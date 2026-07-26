@@ -65,8 +65,11 @@ export async function generateStaticParams() {
   const data = await Blog.find({}, { heading: 1 })
 
   if (data.length === 0) return ([{ heading: '__placeholder__' }])
-  return data.map((item) => ({ heading: item.heading }))
+  return data.map((item) => ({ heading: item.heading.replaceAll(" ", "-") }))
 }
+
+
+
 
 const Page = async ({ params }: { params: Promise<{ heading: string }> }) => {
   'use cache'

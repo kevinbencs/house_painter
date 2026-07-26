@@ -64,7 +64,7 @@ export async function generateStaticParams() {
   const data = await Service.find({}, { heading: 1 })
 
   if (data.length === 0) return ([{ heading: '__placeholder__' }])
-  return data.map((item) => ({ heading: item.heading }))
+  return data.map((item) => ({ heading: item.heading.replaceAll(" ", "-") }))
 }
 
 
