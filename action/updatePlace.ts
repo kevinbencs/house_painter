@@ -5,6 +5,7 @@ import { chooseTypeOfTextItem } from "@/lib/checkTextBSP";
 import { handleMongooseError } from "@/lib/mongo";
 import Place from "@/models/Place";
 import {  placeSchemaId } from "@/schema/schema";
+import { updateTag } from "next/cache";
 
 
 export const updateImage = async ( formData: FormData) => {
@@ -40,6 +41,8 @@ export const updateImage = async ( formData: FormData) => {
             if (mess.indexOf('Error') > -1) return { error: mess }
         }
 
+        const old = await Place.findById(_id)
+
         await Place.findByIdAndUpdate(_id, {
             detail,
             heading,
@@ -47,6 +50,10 @@ export const updateImage = async ( formData: FormData) => {
             keywords,
             image
         })
+
+        updateTag('place-list')
+        updateTag('place-footer')
+        updateTag('place-' + old.heading.slice(0,old.heading.indexOf('.')+9).replaceAll(" ", "-"))
 
         return { message: "A település módosítva" }
     } catch (error) {

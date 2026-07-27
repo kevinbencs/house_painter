@@ -20,10 +20,14 @@ export const deletePlace = async (_id: string) => {
             return { failed: res.error.issues.map((item) => item.message) }
         }
 
+        const old = await Place.findById(_id)
+
         await Place.findByIdAndUpdate(_id,{
-            visibility: true
+            visibility: false
         })
         updateTag('place-list')
+        updateTag('place-footer')
+        updateTag('place-' + old.heading.slice(0,old.heading.indexOf('.')+9).replaceAll(" ", "-"))
 
         return {message: "Hely törölve."}
 
