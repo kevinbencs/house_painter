@@ -19,11 +19,16 @@ export const deleteService = async (_id: string) => {
             return { failed: res.error.issues.map((item) => item.message) }
         }
 
-        await Service.findByIdAndUpdate(_id,{
+        const serv = await Service.findByIdAndUpdate(_id,{
             visibility: true
         })
 
-        updateTag('service-list')
+        updateTag('service-list');
+        updateTag('main-page-services');
+        updateTag('service-page-'+serv.heading.replaceAll(" ", "-"))
+        updateTag('service-topbar')
+        updateTag('service-footer')
+        updateTag(`service-${serv.heading.replaceAll(" ", "-")}`)
 
         return { message: "Szolgáltatás törölve." }
 

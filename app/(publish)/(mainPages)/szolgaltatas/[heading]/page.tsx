@@ -78,7 +78,7 @@ const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
 
 
  
-  cacheTag("service-list-"+heading);
+  cacheTag("service-page-"+decodeURIComponent(heading));
   cacheLife("hours")
 
   const data: BSPPublicPagesList[] = await Service.find({visibility: false},{id: 1, heading: 1, image: 1, visibility: 1})

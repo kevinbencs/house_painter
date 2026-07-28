@@ -76,7 +76,7 @@ const Page = async ({ params }: { params: Promise<{ heading: string }> }) => {
   const { heading } = await params;
 
   if (heading === '__placeholder__') notFound()
-  cacheTag('blog-'+heading)
+  cacheTag('blog-page-'+decodeURIComponent(heading))
   cacheLife('days')
 
 

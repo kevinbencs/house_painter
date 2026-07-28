@@ -51,6 +51,8 @@ export const updateImage = async ( formData: FormData) => {
         updateTag('blog-list');
         updateTag('main-page-blogs');
         updateTag('blog-'+heading.replaceAll(" ", "-"))
+        updateTag('blog-page-'+heading.replaceAll(" ", "-"))
+        
 
         return { message: "Blog módosítva" }
     } catch (error) {

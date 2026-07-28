@@ -48,7 +48,10 @@ export const addService= async ( formData: FormData) => {
             visibility: false
         });
 
-        updateTag('service-list')
+        updateTag('service-list');
+        updateTag('main-page-services');
+        updateTag('service-topbar')
+        updateTag('service-footer')
 
         await service.save();
 

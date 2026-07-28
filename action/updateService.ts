@@ -5,6 +5,7 @@ import { chooseTypeOfTextItem } from "@/lib/checkTextBSP";
 import { handleMongooseError } from "@/lib/mongo";
 import Service from "@/models/Service";
 import { blogServPlaceSchemaId } from "@/schema/schema";
+import { updateTag } from "next/cache";
 
 
 export const updateImage = async ( formData: FormData) => {
@@ -47,6 +48,13 @@ export const updateImage = async ( formData: FormData) => {
             keywords,
             image
         })
+
+        updateTag('service-list');
+        updateTag('main-page-services');
+        updateTag('service-page-'+heading.replaceAll(" ", "-"))
+        updateTag('service-topbar')
+        updateTag('service-footer')
+        updateTag(`service-${heading.replaceAll(" ", "-")}`)
 
         return { message: "A szolgáltatás módosítva" }
     } catch (error) {

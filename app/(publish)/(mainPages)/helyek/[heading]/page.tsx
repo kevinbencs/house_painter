@@ -81,7 +81,7 @@ const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
   cacheTag('place-' + heading)
   cacheLife('days')
 
-  const data: PlaceRender | null = await getPlaceByHeading(decodeURIComponent(heading.replaceAll('-', ' ')))
+  const data: PlaceRender | null = await getPlaceByHeading(decodeURIComponent(heading))
 
 
   if (data === null) notFound();
