@@ -7,7 +7,7 @@ import { ActionState } from "@/typeScriptType/form";
 import { checkAuth } from "@/lib/checkAuth";
 import { imageSchema } from "@/schema/schema";
 import { updateTag } from "next/cache";
-import { getNumbOfImag } from "@/lib/data";
+import { getNumbOfImagPage } from "@/lib/data";
 
 
 export const AddImage = async (_prevState: ActionState, formData: FormData) => {
@@ -32,16 +32,27 @@ export const AddImage = async (_prevState: ActionState, formData: FormData) => {
             console.log(res.error.issues)
             return { failed: res.error.issues.map((item) => item.message), fieldData: [file, alt, url] }
         }
+
+
         if (file instanceof File) {
+
+            const index = file?.name.lastIndexOf(".")
+
+            const typeOfImage = file.name.slice(index, file.name.length)
+
+            const isImg = await Image.find({
+                newUrl: url + typeOfImage
+            })
+
+            if(isImg.length > 0) return {error: "Az url-t már használja egy másik kép.", fieldData: [file, alt, url]}
+
             const blob = await put(file.name, file, {
                 access: 'public',
                 token: process.env.BLOB_READ_WRITE_TOKEN,
                 addRandomSuffix: true,
             });
 
-            const index = blob.pathname.lastIndexOf(".")
 
-            const typeOfImage = blob.pathname.slice(index, blob.pathname.length)
 
             const img = await new Image({
                 newUrl: url + typeOfImage,
@@ -53,15 +64,14 @@ export const AddImage = async (_prevState: ActionState, formData: FormData) => {
             updateTag('main-page-images')
             updateTag('img-numb')
 
-            const numbOfImg = await getNumbOfImag()
-            const numbOfPage = Math.ceil(numbOfImg / 20)
+            const numbOfPage = await getNumbOfImagPage()
 
-            for(let i = 1; i <= numbOfPage; i++){
-                updateTag('img-data-'+String(i))
+            for (let i = 1; i <= numbOfPage; i++) {
+                updateTag('img-data-' + String(i))
                 updateTag('image-site-' + String(i))
             }
-            
-            
+
+
 
             return { message: "Kép feltöltve" }
         }

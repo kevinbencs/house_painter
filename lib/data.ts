@@ -57,7 +57,7 @@ export const getAllImg = async () => {
 }
 
 
-export const getNumbOfImag = async () => {
+export const getNumbOfImagPage = async () => {
     'use cache'
     cacheLife('hours')
     cacheTag('img-numb')

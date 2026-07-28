@@ -6,7 +6,7 @@ import { del } from "@vercel/blob";
 import { deleteSchema } from "@/schema/schema";
 import * as z from "zod"
 import { updateTag } from "next/cache";
-import { getNumbOfImag } from "@/lib/data";
+import { getNumbOfImagPage } from "@/lib/data";
 
 interface Img {
     blobUrl: string,
@@ -43,8 +43,8 @@ export const deleteImage = async (_id: string) => {
         updateTag('img-numb')
         updateTag('img-id-'+_id)
 
-        const numbOfImg = await getNumbOfImag()
-        const numbOfPage = Math.ceil(numbOfImg / 20)
+  
+        const numbOfPage = await getNumbOfImagPage()
 
         for (let i = 1; i <= numbOfPage; i++) {
             updateTag('img-data-' + String(i))

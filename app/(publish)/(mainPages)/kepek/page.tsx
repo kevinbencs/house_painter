@@ -1,6 +1,6 @@
 import ImagePage from '@/app/_components/image/imageContent'
 import Pagination from '@/app/_components/image/pagination'
-import { getNumbOfImag, getTwentyImg } from '@/lib/data'
+import {  getNumbOfImagPage, getTwentyImg } from '@/lib/data'
 import { Metadata } from 'next'
 import { cacheLife, cacheTag } from 'next/cache'
 
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 const Page = async () => {
 
   const [pageNumb, Img] = await Promise.all([
-    getNumbOfImag(),
+   getNumbOfImagPage(),
     getTwentyImg(1)
   ])
 

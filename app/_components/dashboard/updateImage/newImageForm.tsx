@@ -1,6 +1,6 @@
 "use client"
 
-import { DragEvent, useActionState, useRef, useState } from "react"
+import { DragEvent, useActionState, useEffect, useRef, useState } from "react"
 import { AddImage } from "@/action/addImage"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -28,6 +28,10 @@ const NewImageForm = () => {
         if(inputRef.current && inputRef.current.files) inputRef.current.files = dataTransfer.files
         setFile(files[0])
     }
+
+    useEffect(() => {
+        setFile(null)
+    },[state])
 
     const handleDragOver = (e: DragEvent<HTMLButtonElement>) => {
         e.preventDefault()
