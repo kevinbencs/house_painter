@@ -51,7 +51,8 @@ export const addBlog = async ( formData: FormData) => {
 
         await blog.save();
 
-        updateTag('blog-list')
+        updateTag('blog-list');
+        updateTag('main-page-blogs');
 
         return {message: "Blog létrehozva"}
     } catch (error) {

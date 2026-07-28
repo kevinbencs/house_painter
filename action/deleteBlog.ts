@@ -18,11 +18,13 @@ export const deleteBlog = async (_id: string) => {
             return { failed: res.error.issues.map((item) => item.message) }
         }
 
-        await Blog.findByIdAndUpdate(_id,{
+        const blog = await Blog.findByIdAndUpdate(_id,{
             visibility: true
         })
 
-        updateTag('blog-list')
+        updateTag('blog-list');
+        updateTag('main-page-blogs');
+        updateTag('blog-'+blog.heading.replaceAll(" ", "-"))
 
         return {message: "Blog törölve."}
 

@@ -5,6 +5,7 @@ import { chooseTypeOfTextItem } from "@/lib/checkTextBSP";
 import { handleMongooseError } from "@/lib/mongo";
 import Blog from "@/models/Blog";
 import { blogServPlaceSchemaId } from "@/schema/schema";
+import { updateTag } from "next/cache";
 
 export const updateImage = async ( formData: FormData) => {
     try {
@@ -39,13 +40,17 @@ export const updateImage = async ( formData: FormData) => {
             if (mess.indexOf('Error') > -1) return { error: mess }
         }
 
-        await Blog.findByIdAndUpdate(_id, {
+        const blog = await Blog.findByIdAndUpdate(_id, {
             detail,
             heading,
             text,
             keywords,
             image
         })
+
+        updateTag('blog-list');
+        updateTag('main-page-blogs');
+        updateTag('blog-'+heading.replaceAll(" ", "-"))
 
         return { message: "Blog módosítva" }
     } catch (error) {
