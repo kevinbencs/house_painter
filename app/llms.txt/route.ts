@@ -1,15 +1,15 @@
-import { getNumbOfImag } from '@/lib/data'
+import { getNumbOfImagPage } from '@/lib/data'
 import Blog from '@/models/Blog';
 import Place from '@/models/Place';
 import Service from '@/models/Service';
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-    const [numOfImg, blogs, services, places] = await Promise.all([getNumbOfImag(),Blog.find({},{heading: 1, detail: 1}), Service.find({},{heading: 1, detail: 1}), Place.find({},{heading: 1, detail: 1}) ]);
+    const [numOfImg, blogs, services, places] = await Promise.all([getNumbOfImagPage(),Blog.find({},{heading: 1, detail: 1}), Service.find({},{heading: 1, detail: 1}), Place.find({},{heading: 1, detail: 1}) ]);
 
-    const placesContent = places.map((item) => `- [${item.heading}](${item.heading.slice(0,item.heading.indexOf('.')+9).replaceAll(" ", "-")}): ${item.detail}`)
-    const blogsContent = blogs.map((item) => `- [${item.heading}](${item.heading.replaceAll(" ", "-")}): ${item.detail}`)
-    const servicesContent = services.map((item) => `- [${item.heading}](${item.heading.replaceAll(" ", "-")}): ${item.detail}`)
+    const placesContent = places.map((item: {heading: string, detail: string}) => `- [${item.heading}](${item.heading.slice(0,item.heading.indexOf('.')+9).replaceAll(" ", "-")}): ${item.detail}`)
+    const blogsContent = blogs.map((item: {heading: string, detail: string}) => `- [${item.heading}](${item.heading.replaceAll(" ", "-")}): ${item.detail}`)
+    const servicesContent = services.map((item: {heading: string, detail: string}) => `- [${item.heading}](${item.heading.replaceAll(" ", "-")}): ${item.detail}`)
     
     const pageOfImg: string[] = [];
     for(let i=1; i<= Math.ceil(numOfImg/20); i++){

@@ -6,6 +6,7 @@ import { ActionState } from "@/typeScriptType/form";
 import { checkAuth } from "@/lib/checkAuth";
 import { imageIdSchema } from "@/schema/schema";
 import { updateTag } from "next/cache";
+import { getNumbOfImagPage } from "@/lib/data";
 
 
 export const updateImage = async (_prevState: ActionState, formData: FormData) => {
@@ -39,8 +40,16 @@ export const updateImage = async (_prevState: ActionState, formData: FormData) =
             show: show === 'on' ? true : false
         })
 
-        updateTag('img-id-'+_id)
+        updateTag('img-id-' + _id)
         updateTag('main-page-images')
+
+        const numbOfPage = await getNumbOfImagPage()
+
+        for (let i = 1; i <= numbOfPage; i++) {
+            updateTag('img-data-' + String(i))
+            updateTag('image-site-' + String(i))
+        }
+
 
         return { message: "Kép adatai módosítva" }
     } catch (error) {
