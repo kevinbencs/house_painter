@@ -66,7 +66,7 @@ export async function generateStaticParams() {
   const data = await Place.find({}, { heading: 1 })
 
   if (data.length === 0) return ([{ heading: '__placeholder__' }])
-  return data.map((item) => ({ heading: item.heading.slice(0,item.heading.indexOf('.')+9).replaceAll(" ", "-") }))
+  return data.map((item) => ({ heading: item.heading.slice(0, item.heading.indexOf('.') + 9).replaceAll(" ", "-") }))
 }
 
 
@@ -83,38 +83,55 @@ const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
 
   const data: PlaceRender | null = await getPlaceByHeading(decodeURIComponent(heading))
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    'serviceType': 'Szobafestés',
+    'areaServed': {
+      '@type': 'AdministrativeArea',
+      'name': `Budapest ${data?.heading.slice(12, data.heading.indexOf('.') + 9)}`,
+    },
+    'provider': { '@id': 'https://your-budapest-painter.hu/#business' },
+  }
 
   if (data === null) notFound();
   return (
-    <section>
-      <div className="lg:flex gap-10 lg:justify-center bg-mist-900  text-white lg:content-center m-5 mb-20 p-10">
-        <div className="hidden lg:block lg:max-w-[30%] ">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <section>
+        <div className="lg:flex gap-10 lg:justify-center bg-mist-900  text-white lg:content-center m-5 mb-20 p-10">
+          <div className="hidden lg:block lg:max-w-[30%] ">
 
-          <HeadingImgServerCompt id={data.image} />
+            <HeadingImgServerCompt id={data.image} />
 
+          </div>
+
+          <section className="lg:max-w-[40%]">
+            <h1 className=' text-5xl mb-10 text-center lg:text-left font-bold leading-normal'>{data.heading}</h1>
+            <p>{data.headingParahg}</p>
+          </section>
         </div>
 
-        <section className="lg:max-w-[40%]">
-          <h1 className=' text-5xl mb-10 text-center lg:text-left font-bold leading-normal'>{data.heading}</h1>
-          <p>{data.headingParahg}</p>
-        </section>
-      </div>
-
-      <div className="lg:pl-[calc(50%-600px)] lg:pr-[calc(50%-600px)] pl-2 pr-2">
+        <div className="lg:pl-[calc(50%-600px)] lg:pr-[calc(50%-600px)] pl-2 pr-2">
 
 
-        {data.text.split('\n').filter((item: string) => item !== '' && item !== null && typeof(item) !== undefined).map((item: string) => <ChooseTypeOfTextItem key={'place-'+item[10]} s={item}/>)}  
+          {data.text.split('\n').filter((item: string) => item !== '' && item !== null && typeof (item) !== undefined).map((item: string) => <ChooseTypeOfTextItem key={'place-' + item[10]} s={item} />)}
 
-      </div>
-      <div className="m-2 lg:ml-[30px] lg:mr-[30px]">
-        <Services />
-      </div>
+        </div>
+        <div className="m-2 lg:ml-7.5 lg:mr-7.5">
+          <Services />
+        </div>
 
-      <div className="m-2 lg:ml-[10%] lg:mr-[10%] xl:ml-[20%] xl:mr-[20%]">
-        <HowWork />
-      </div>
+        <div className="m-2 lg:ml-[10%] lg:mr-[10%] xl:ml-[20%] xl:mr-[20%]">
+          <HowWork />
+        </div>
 
-    </section >
+      </section >
+    </>
+
   )
 }
 
