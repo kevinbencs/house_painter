@@ -94,7 +94,9 @@ const Header = () => {
             Szobafestés, mázolás Budapesten és környékén
           </h1>
         </div>
-        <p className="text-6xl text-center left-0 w-screen absolute top-[70%] text-white text-shadow-lg text-shadow-gray-700">efewfew</p>
+        <p className="text-6xl text-center left-0 w-screen absolute top-[70%] text-white text-shadow-lg text-shadow-gray-700">
+          Budapest teljes területén minden munka FELMÉRÉSE és az ÁRAJÁNLAT KÉSZÍTÉSE <span className="text-red-700">DÍJTALAN!</span>
+        </p>
         
       </div>
 

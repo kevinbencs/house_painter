@@ -77,7 +77,7 @@ export const getTwentyImg = async (page: number) => {
 
     await connectToMongo()
 
-    const imgs: ImgWithoutBlob[] = await Image.find({show: true}, { _id: 1, show: 1, newUrl: 1, detail: 1 }).skip((page - 1) * 20).limit(20).lean();
+    const imgs: ImgWithoutBlob[] = await Image.find({show: true}, { _id: 1, show: 1, newUrl: 1, detail: 1,  createdAt: 1 }).sort({  createdAt: -1 }).skip((page - 1) * 20).limit(20).lean();
 
     return imgs.map(img => ({
         ...img,
