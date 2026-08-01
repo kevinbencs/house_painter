@@ -14,7 +14,7 @@ const GuaranteeElement = (props: { title: string, text: string, id: string, setV
     }
     return (
         <>
-            <button  className="flex w-full justify-between cursor-pointer p-4 lg:p-6 hover:bg-mist-500 focus-visible:outline-4 focus-visible:outline-gray-500" onClick={handleClick} >
+            <button  className="flex w-full justify-between items-center cursor-pointer p-4 lg:p-6 hover:bg-mist-500 focus-visible:outline-4 focus-visible:outline-gray-500" onClick={handleClick} >
                 <h3 className="font-bold text-lg ">{props.title}</h3>
                 <div className={`${props.id === props.visible ? '-rotate-45' : ''} duration-150`}><FaPlus size={30}/></div>
             </button>
