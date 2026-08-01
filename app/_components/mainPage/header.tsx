@@ -38,48 +38,23 @@ const Header = () => {
   return (
     <section>
       <div>
-        <div
-          style={{
-            position: "relative",
-            height: "100vh",
-            width: "100%",
-            margin: "0 auto",
-            overflow: "hidden",
-          }}
+        <div className="md: relative md:h-screen md:w-full md:m-0 mt-auto mb-auto"
+          
         >
-          <div className={`flex absolute top-0 left-0 `}
+          <div className={`flex  md:absolute md:top-0 md:left-0`}
           >
 
-            <div
+            <div className={`md:w-screen md:h-screen -z-20 bg-fixed bg-cover bg-center bg-no-repeat shrink-0 min-w-screen md:min-w-auto min-h-200 md:min-h-auto`}
               key={cards[0].id}
               style={{
-                width: "100vw",
-                height: "100vh",
-                flexShrink: 0,
                 backgroundImage: `url(${cards[0].image})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundAttachment: "fixed",
-                backgroundRepeat: "no-repeat",
-                zIndex: -12,
               }}
             />
 
-            <div
+            <div className={`md:w-screen md:h-screen -z-10 fixed top-0 left-0 bg-fixed bg-cover bg-center bg-no-repeat shrink-0 min-w-screen md:min-w-auto min-h-200 md:min-h-auto`}
               key={cards[1].id}
-              style={{
-                width: "100vw",
-                height: "100vh",
-                flexShrink: 0,
-                position: "fixed",
-                top: 0,
-                left: 0,
+              style={{ 
                 backgroundImage: `url(${cards[1].image})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                backgroundAttachment: "fixed",
-                backgroundRepeat: "no-repeat",
-                zIndex: -11,
                 clipPath: animate
                   ? "inset(0 0% 0 0)"      
                   : "inset(0 100% 0 0)",  
@@ -94,7 +69,7 @@ const Header = () => {
             Szobafestés, mázolás Budapesten és környékén
           </h1>
         </div>
-        <p className="text-6xl text-center left-0 w-screen absolute top-[70%] text-white text-shadow-lg text-shadow-gray-700">
+        <p className="text-3xl md:text-6xl text-center left-0 w-screen absolute top-[70%] text-white text-shadow-lg text-shadow-gray-700">
           Budapest teljes területén minden munka FELMÉRÉSE és az ÁRAJÁNLAT KÉSZÍTÉSE <span className="text-red-700">DÍJTALAN!</span>
         </p>
         

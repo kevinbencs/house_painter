@@ -36,7 +36,17 @@ export default function ScrollHorizontal({ data }: { data: ImgWithoutBlob[] }) {
 
     return (
         <>
-            <div id="example" className="mb-40">
+            <div className="md:hidden">
+                {data.map((item) => (
+                    <div key={item._id}>
+                        <Image src={'/api/images/' + item.newUrl} alt={item.detail} width={1000} height={100} className="w-full h-auto mb-2"
+                        />
+                    </div>
+                ))}
+            </div>
+
+
+            <div id="example" className="mb-40 hidden md:block">
 
                 <div ref={containerRef} className="scroll-container">
                     <div className="sticky-wrapper">
@@ -62,7 +72,7 @@ export default function ScrollHorizontal({ data }: { data: ImgWithoutBlob[] }) {
                 <StyleSheet />
             </div>
 
-            {( lightBox._id !== "") && createPortal(
+            {(lightBox._id !== "") && createPortal(
                 <div className="fixed w-screen h-screen top-0 left-0 z-20 bg-gray-400/75 " onClick={closeLightBox}>
                     <IconContext.Provider value={{ size: "2em" }}>
                         <div className="fixed top-5 right-5 m-2 p-4 cursor-pointer" ><FaWindowClose /></div>
