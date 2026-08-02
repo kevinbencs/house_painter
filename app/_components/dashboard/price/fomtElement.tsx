@@ -63,9 +63,9 @@ const FormElement = () => {
                                 <div className="flex items-center">
                                     <Label htmlFor="price">Ár</Label>
                                 </div>
-                                <Input id="price" name="price" type="text" required disabled={isPending} onChange={e => { setPrice(formatChange(e.target.value)) }} value={price} defaultValue={state && state.fieldData && typeof state.fieldData[0] === 'string'
+                                <Input id="price" name="price" type="text" required disabled={isPending} onChange={e => { setPrice(formatChange(e.target.value)) }} value={state && state.fieldData && typeof state.fieldData[0] === 'string'
                                         ? state.fieldData[0]
-                                        : ''}/>
+                                        : price}/>
                             </div>
                             <div className="grid gap-2">
                                 <div className="flex items-center">

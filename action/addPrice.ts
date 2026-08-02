@@ -44,7 +44,7 @@ export const addPrice = async (_prevState: ActionState, formData: FormData) => {
         updateTag('price-data');
         updateTag('price-cat')
 
-        return { message: "Ár hozzáadva" }
+        return { message: "Ár hozzáadva", fieldData: ['', '',  '', ''] }
 
     } catch (error) {
 
