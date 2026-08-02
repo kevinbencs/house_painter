@@ -21,7 +21,7 @@ export async function generateMetadata(
   cacheLife('days')
 
 
-  const data: PlaceRender | null = await getPlaceByHeading(decodeURIComponent(heading.replaceAll('-', ' ')))
+  const data: PlaceRender | null = await getPlaceByHeading(decodeURIComponent(heading))
 
   if (data === null) return {}
 
@@ -78,7 +78,7 @@ const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
 
   if (heading === '__placeholder__') notFound()
 
-  cacheTag('place-' + heading)
+  cacheTag('place-page-' + decodeURIComponent(heading))
   cacheLife('days')
 
   const data: PlaceRender | null = await getPlaceByHeading(decodeURIComponent(heading))

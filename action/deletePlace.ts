@@ -28,6 +28,7 @@ export const deletePlace = async (_id: string) => {
         updateTag('place-list')
         updateTag('place-footer')
         updateTag('place-' + old.heading.slice(0,old.heading.indexOf('.')+9).replaceAll(" ", "-"))
+        updateTag('place-page-' + old.heading.slice(0,old.heading.indexOf('.')+9).replaceAll(" ", "-"))
 
         return {message: "Hely törölve."}
 

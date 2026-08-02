@@ -36,7 +36,7 @@ const Header = () => {
 
 
   return (
-    <>
+    <div>
       <div className="md: relative md:h-screen md:w-full md:m-0 mt-auto mb-auto"
 
       >
@@ -73,7 +73,7 @@ const Header = () => {
           Budapest teljes területén minden munka FELMÉRÉSE és az ÁRAJÁNLAT KÉSZÍTÉSE <span className="text-red-700">DÍJTALAN!</span>
         </p>
       </section>
-    </>
+    </div>
 
   )
 }

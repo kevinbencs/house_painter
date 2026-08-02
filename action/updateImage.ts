@@ -6,7 +6,7 @@ import { ActionState } from "@/typeScriptType/form";
 import { checkAuth } from "@/lib/checkAuth";
 import { imageIdSchema } from "@/schema/schema";
 import { updateTag } from "next/cache";
-import { getNumbOfImagPage } from "@/lib/data";
+import { getAllImg, getNumbOfImagPage } from "@/lib/data";
 
 
 export const updateImage = async (_prevState: ActionState, formData: FormData) => {
@@ -43,11 +43,15 @@ export const updateImage = async (_prevState: ActionState, formData: FormData) =
         updateTag('img-id-' + _id)
         updateTag('main-page-images')
 
-        const numbOfPage = await getNumbOfImagPage()
 
-        for (let i = 1; i <= numbOfPage; i++) {
-            updateTag('img-data-' + String(i))
-            updateTag('image-site-' + String(i))
+        const allImg = await getAllImg()
+
+        for (let i = 0; i <= allImg.length; i++) {
+            if (_id === allImg[i]._id) {
+                const page = Math.ceil(i / 20);
+                updateTag('img-data-' + String(page))
+                updateTag('image-site-' + String(page))
+            }
         }
 
 
