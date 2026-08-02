@@ -41,20 +41,13 @@ export const metadata: Metadata = {
 }
 
 const Page = async () => {
-  'use cache'
-  cacheTag('price-page')
-  cacheLife('hours')
-
 
   const [res, cat] = await Promise.all([
     getPriceData(),
     getCategory()
   ])
 
-
   const catArr = cat.map((i) => i._id)
-
-
 
   const data: MongoData[][] = [];
 

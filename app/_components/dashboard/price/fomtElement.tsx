@@ -1,6 +1,6 @@
 "use client"
 
-import { useActionState, useState } from "react"
+import { useActionState, useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -23,6 +23,10 @@ const FormElement = () => {
 
     const [state, action, isPending] = useActionState(addPrice, null)
     const [price, setPrice] = useState(formatChange(""))
+
+    useEffect(() => {
+        setPrice('')
+    },[state?.message])
 
     return (
         <div className='flex justify-center'>
@@ -63,9 +67,7 @@ const FormElement = () => {
                                 <div className="flex items-center">
                                     <Label htmlFor="price">Ár</Label>
                                 </div>
-                                <Input id="price" name="price" type="text" required disabled={isPending} onChange={e => { setPrice(formatChange(e.target.value)) }} value={state && state.fieldData && typeof state.fieldData[0] === 'string'
-                                        ? state.fieldData[0]
-                                        : price}/>
+                                <Input id="price" name="price" type="text" required disabled={isPending} onChange={e => { setPrice(formatChange(e.target.value)) }} value={price}/>
                             </div>
                             <div className="grid gap-2">
                                 <div className="flex items-center">

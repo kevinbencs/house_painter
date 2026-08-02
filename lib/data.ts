@@ -19,9 +19,7 @@ export const getPriceData = async () => {
 
     await connectToMongo()
 
-    const docs: MongoData[] = await Price.find({}, { _id: 1, name: 1, price: 1, category: 1, unitOfMea: 1 }).lean()
-        .sort({ category: 1 })
-        .lean()
+    const docs: MongoData[] = await Price.find({}, { _id: 1, name: 1, price: 1, category: 1, unitOfMea: 1 }).sort({category: -1}).lean()
 
     return docs.map(doc => ({
         ...doc,
@@ -40,8 +38,7 @@ export const getCategory = async () => {
 
     const docs: Categories[] = await Price.aggregate([
         { $group: { _id: "$category" } }
-    ])
-
+    ]).sort({_id: -1})
 
     return docs.map(doc => ({ _id: String(doc._id) }))
 }
