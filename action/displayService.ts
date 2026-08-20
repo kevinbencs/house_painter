@@ -6,7 +6,7 @@ import Service from "@/models/Service";
 import { deleteSchema } from "@/schema/schema";
 import { updateTag } from "next/cache";
 
-export const deleteService = async (_id: string) => {
+export const displayService = async (_id: string) => {
     try {
 
         const authRes = await checkAuth();
@@ -20,7 +20,7 @@ export const deleteService = async (_id: string) => {
         }
 
         const serv = await Service.findByIdAndUpdate(_id,{
-            visibility: false
+            visibility: true
         })
 
         updateTag('service-list');

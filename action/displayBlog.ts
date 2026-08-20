@@ -6,7 +6,7 @@ import Blog from "@/models/Blog";
 import { deleteSchema } from "@/schema/schema";
 import { updateTag } from "next/cache";
 
-export const deleteBlog = async (_id: string) => {
+export const displayBlog = async (_id: string) => {
     try {
         const authRes = await checkAuth();
 
@@ -19,7 +19,7 @@ export const deleteBlog = async (_id: string) => {
         }
 
         const blog = await Blog.findByIdAndUpdate(_id,{
-            visibility: false
+            visibility: true
         })
 
         updateTag('blog-list');
