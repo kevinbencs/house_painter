@@ -1,6 +1,6 @@
 import ImagePage from '@/app/_components/image/imageContent'
 import Pagination from '@/app/_components/image/pagination'
-import { getNumbOfImag, getTwentyImg } from '@/lib/data'
+import { getNumbOfImagPage, getTwentyImg } from '@/lib/data'
 import { notFound } from 'next/navigation'
 
 const Main = async ({ params }: { params: Promise<{ page: string }> }) => {
@@ -10,7 +10,7 @@ const Main = async ({ params }: { params: Promise<{ page: string }> }) => {
     if (isNaN(Number(page)) || Number(page) <= 0) notFound()
 
     const [pageNumb, Img] = await Promise.all([
-        getNumbOfImag(),
+        getNumbOfImagPage(),
         getTwentyImg(Number(page))
     ])
 
