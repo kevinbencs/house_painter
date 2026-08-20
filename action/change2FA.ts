@@ -86,8 +86,8 @@ export const setNewTwoFA = async ( otp: string, secret: string) => {
             return { redirect: '/login' }
         }
 
-        const Error = await handleMongooseError(error)
-        return { error: Error }
+        const err = await handleMongooseError(error)
+        return { error: err }
     }
 
 }

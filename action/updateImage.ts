@@ -58,7 +58,7 @@ export const updateImage = async (_prevState: ActionState, formData: FormData) =
         return { message: "Kép adatai módosítva" }
     } catch (error) {
 
-        const Error = await handleMongooseError(error)
-        return { error: Error, fieldData: [_id, detail, newUrl, show] }
+        const err = await handleMongooseError(error)
+        return { error: err, fieldData: [_id, detail, newUrl, show] }
     }
 }

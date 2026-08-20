@@ -53,8 +53,8 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
         })
 
     } catch (error) {
-        const Error = await handleMongooseError(error)
-        return { error: Error, fieldData: [email, password] }
+        const err = await handleMongooseError(error)
+        return { error: err, fieldData: [email, password] }
     }
     if (secret === "") redirect("/new2fa")
     redirect('/login/2fa')
@@ -128,8 +128,8 @@ export const loginTwoFAAction = async (otp: string) => {
             return { redirect: '/login' };
         }
 
-        const Error = await handleMongooseError(error)
-        return { error: Error }
+        const err = await handleMongooseError(error)
+        return { error: err }
     }
 
 

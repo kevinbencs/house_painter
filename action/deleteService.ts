@@ -33,8 +33,8 @@ export const deleteService = async (_id: string) => {
         return { message: "Szolgáltatás törölve." }
 
     } catch (error) {
-        const Error = await handleMongooseError(error);
+        const err= await handleMongooseError(error);
 
-        return { error: Error }
+        return { error: err }
     }
 }

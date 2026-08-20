@@ -55,7 +55,7 @@ export const deleteImage = async (_id: string) => {
 
     } catch (error) {
 
-        const Error = await handleMongooseError(error);
-        return { error: Error }
+        const err = await handleMongooseError(error);
+        return { error: err }
     }
 }

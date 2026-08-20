@@ -1,3 +1,5 @@
+import { type Instrumentation } from 'next'
+
 const REQUIRED_ENV_VARS = [
     'BLOB_READ_WRITE_TOKEN',
     'MONGODB_URI',
@@ -7,7 +9,8 @@ const REQUIRED_ENV_VARS = [
     'JWT_SECRET_URL',
     'JWT_SECRET_TWOFA',
     'URL',
-    'RESEND'
+    'RESEND',
+    'DISCORD'
 ] as const;
 
 
@@ -55,3 +58,28 @@ export const register = async () => {
 
 }
 
+
+export const onRequestError: Instrumentation.onRequestError = async (
+    err,
+    request,
+    context
+) => {
+
+    console.error(err)
+    const message = err instanceof Error ? err.message : String(err)
+    const digest =
+        typeof err === 'object' && err !== null && 'digest' in err
+            ? String(err.digest)
+            : undefined
+
+    await fetch(process.env.DISCORD!, {
+        method: 'POST',
+        body: JSON.stringify({
+            content: `🚨 Server error on ${request.path}\n\`\`\`${message}\`\`\`\n${digest}\n${context}`,
+            
+        }),
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }).catch(() => {}) 
+}

@@ -79,7 +79,7 @@ export const AddImage = async (_prevState: ActionState, formData: FormData) => {
         return { error: "Hiányzik a kép", fieldData: [file, alt, url] }
 
     } catch (error) {
-        const Error = await handleMongooseError(error)
-        return { error: Error, fieldData: [file, alt, url] }
+        const err = await handleMongooseError(error)
+        return { error: err, fieldData: [file, alt, url] }
     }
 }

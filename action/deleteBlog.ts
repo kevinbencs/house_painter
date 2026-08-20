@@ -30,8 +30,8 @@ export const deleteBlog = async (_id: string) => {
         return {message: "Blog törölve."}
 
     } catch (error) {
-        const Error = await handleMongooseError(error);
+        const err= await handleMongooseError(error);
 
-        return { error: Error }
+        return { error: err }
     }
 }

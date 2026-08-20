@@ -62,7 +62,7 @@ export const changePassword = async (_prevState: ActionState, formData: FormData
 
         return { message: "Jelszó megváltozott" }
     } catch (error) {
-        const Error = await handleMongooseError(error)
-        return { error: Error, fieldData: [password, passwordConfirm] }
+        const err = await handleMongooseError(error)
+        return { error: err, fieldData: [password, passwordConfirm] }
     }
 }

@@ -48,7 +48,7 @@ export const addPrice = async (_prevState: ActionState, formData: FormData) => {
 
     } catch (error) {
 
-        const Error = await handleMongooseError(error)
-        return { error: Error, fieldData: [price, category, name, unitOfMea] }
+        const err = await handleMongooseError(error)
+        return { error: err, fieldData: [price, category, name, unitOfMea] }
     }
 }

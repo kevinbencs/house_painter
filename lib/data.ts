@@ -9,355 +9,321 @@ import { BSPHeading, BSPRender, PlaceRender } from '@/typeScriptType/blogServPla
 import Blog from '@/models/Blog'
 import Place from '@/models/Place'
 import Service from '@/models/Service'
-import { connectToMongo, handleMongooseError } from '@/lib/mongo'
+import { connectToMongo } from '@/lib/mongo'
 
 
 export const getPriceData = async () => {
-    try {
-        'use cache'
-        cacheLife('hours')
-        cacheTag('price-data')
 
-        await connectToMongo()
+    'use cache'
+    cacheLife('hours')
+    cacheTag('price-data')
 
-        const docs: MongoData[] = await Price.find({}, { _id: 1, name: 1, price: 1, category: 1, unitOfMea: 1 }).sort({ category: -1 }).lean()
+    await connectToMongo()
 
-        return docs.map(doc => ({
-            ...doc,
-            _id: String(doc._id),
-        }))
-    } catch (error) {
-        const err = await handleMongooseError(error);
-        return { error: err }
-    }
+    const docs: MongoData[] = await Price.find({}, { _id: 1, name: 1, price: 1, category: 1, unitOfMea: 1 }).sort({ category: -1 }).lean()
+
+    return docs.map(doc => ({
+        ...doc,
+        _id: String(doc._id),
+    }))
 
 
 }
 
 
 export const getCategory = async () => {
-    try {
-        'use cache'
-        cacheLife('hours')
-        cacheTag('price-cat')
 
-        await connectToMongo()
+    'use cache'
+    cacheLife('hours')
+    cacheTag('price-cat')
 
-        const docs: Categories[] = await Price.aggregate([
-            { $group: { _id: "$category" } }
-        ]).sort({ _id: -1 })
+    await connectToMongo()
 
-        return docs.map(doc => ({ _id: String(doc._id) }))
-    } catch (error) {
-        const err = await handleMongooseError(error);
-        return { error: err }
-    }
+    const docs: Categories[] = await Price.aggregate([
+        { $group: { _id: "$category" } }
+    ]).sort({ _id: -1 })
+
+    return docs.map(doc => ({ _id: String(doc._id) }))
+
+
 
 }
 
 export const getAllImg = async () => {
-    try {
-        const imgs: Img[] = await Image.find({}, { _id: 1, show: 1, newUrl: 1, detail: 1, createdAt: 1 }).sort({ createdAt: -1 }).lean();
 
-        return imgs.map(img => ({
-            ...img,
-            _id: String(img._id)
-        }))
-    } catch (error) {
-        const err = await handleMongooseError(error);
-        return { error: err }
-    }
+    const imgs: Img[] = await Image.find({}, { _id: 1, show: 1, newUrl: 1, detail: 1, createdAt: 1 }).sort({ createdAt: -1 }).lean();
+
+    return imgs.map(img => ({
+        ...img,
+        _id: String(img._id)
+    }))
+
+
 
 
 }
 
 
 export const getNumbOfImagPage = async () => {
-    try {
-        'use cache'
-        cacheLife('hours')
-        cacheTag('img-numb')
 
-        await connectToMongo()
+    'use cache'
+    cacheLife('hours')
+    cacheTag('img-numb')
 
-        const numb = await Image.estimatedDocumentCount();
+    await connectToMongo()
 
-        return Math.ceil(numb / 20);
-    } catch (error) {
-        const err = await handleMongooseError(error);
-        return { error: err }
-    }
+    const numb = await Image.estimatedDocumentCount();
+
+    return Math.ceil(numb / 20);
+
+
 
 }
 
 
 export const getTwentyImg = async (page: number) => {
-    try {
-        'use cache'
-        cacheLife('hours')
-        cacheTag('img-data-' + String(page))
 
-        await connectToMongo()
+    'use cache'
+    cacheLife('hours')
+    cacheTag('img-data-' + String(page))
 
-        const imgs: ImgWithoutBlob[] = await Image.find({ show: true }, { _id: 1, show: 1, newUrl: 1, detail: 1, createdAt: 1 }).sort({ createdAt: -1 }).skip((page - 1) * 20).limit(20).lean();
+    await connectToMongo()
 
-        return imgs.map(img => ({
-            ...img,
-            _id: String(img._id)
-        }))
-    } catch (error) {
-        const err = await handleMongooseError(error);
-        return { error: err }
-    }
+    const imgs: ImgWithoutBlob[] = await Image.find({ show: true }, { _id: 1, show: 1, newUrl: 1, detail: 1, createdAt: 1 }).sort({ createdAt: -1 }).skip((page - 1) * 20).limit(20).lean();
+
+    return imgs.map(img => ({
+        ...img,
+        _id: String(img._id)
+    }))
+
+
 
 }
 
 
 export const getBlogByHeading = async (heading: string): Promise<BSPRender | null> => {
-    try {
-        'use cache'
-        cacheTag(`blog-${heading}`)
-        cacheLife('days')
 
-        await connectToMongo()
+    'use cache'
+    cacheTag(`blog-${heading}`)
+    cacheLife('days')
 
-        const data: BSPRender = await Blog.findOne({
-            heading: heading.replaceAll('-', ' ')
-        }).lean()
+    await connectToMongo()
 
-        if (!data) {
-            return null
-        }
+    const data: BSPRender = await Blog.findOne({
+        heading: heading.replaceAll('-', ' ')
+    }).lean()
 
-        data._id = String(data._id)
-
-        return data;
-    } catch (error) {
-        const err = await handleMongooseError(error);
-        return { error: err }
+    if (!data) {
+        return null
     }
+
+    data._id = String(data._id)
+
+    return data;
+
+
 
 }
 
 
 export const getPlaceByHeading = async (heading: string): Promise<PlaceRender | null> => {
-    try {
-        'use cache'
-        cacheTag(`place-${heading}`)
-        cacheLife('days')
 
-        await connectToMongo()
+    'use cache'
+    cacheTag(`place-${heading}`)
+    cacheLife('days')
 
-        const data: PlaceRender = await Place.findOne({
-            heading: { $regex: heading.replaceAll('-', ' ').replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), $options: "i" }
-        }).lean();
+    await connectToMongo()
+
+    const data: PlaceRender = await Place.findOne({
+        heading: { $regex: heading.replaceAll('-', ' ').replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), $options: "i" }
+    }).lean();
 
 
-        if (!data) {
-            return null
-        }
-
-        return {
-            ...data,
-            _id: String(data._id),
-        }
-    } catch (error) {
-        const err = await handleMongooseError(error);
-        return { error: err }
+    if (!data) {
+        return null
     }
+
+    return {
+        ...data,
+        _id: String(data._id),
+    }
+
+
 
 }
 
 export const getServiceByHeading = async (heading: string): Promise<BSPRender | null> => {
-    try {
-        'use cache'
-        cacheTag(`service-${heading}`)
-        cacheLife('days')
 
-        await connectToMongo()
+    'use cache'
+    cacheTag(`service-${heading}`)
+    cacheLife('days')
 
-        const data: BSPRender = await Service.findOne({
-            heading: heading.replaceAll('-', ' ')
-        }).lean()
+    await connectToMongo()
 
-        if (!data) {
-            return null
-        }
+    const data: BSPRender = await Service.findOne({
+        heading: heading.replaceAll('-', ' ')
+    }).lean()
 
-        data._id = String(data._id)
-
-        return data
-    } catch (error) {
-        const err = await handleMongooseError(error);
-        return { error: err }
+    if (!data) {
+        return null
     }
+
+    data._id = String(data._id)
+
+    return data
+
+
 
 }
 
 
 export const getPlaceFooter = async () => {
-    try {
-        'use cache'
-        cacheTag('place-footer')
-        cacheLife('days')
 
-        await connectToMongo()
+    'use cache'
+    cacheTag('place-footer')
+    cacheLife('days')
 
-        const data: BSPHeading[] = await Place.find({ visibility: true }, { _id: 1, heading: 1, visibility: 1 }).lean()
+    await connectToMongo()
 
-        return data.map(item => ({
-            ...item,
-            _id: String(item._id)
-        }))
-    } catch (error) {
-        const err = await handleMongooseError(error);
-        return { error: err }
-    }
+    const data: BSPHeading[] = await Place.find({ visibility: true }, { _id: 1, heading: 1, visibility: 1 }).lean()
+
+    return data.map(item => ({
+        ...item,
+        _id: String(item._id)
+    }))
+
+
 
 }
 
 
 export const getServiceFooter = async () => {
-    try {
-        'use cache'
-        cacheTag('service-footer')
-        cacheLife('days')
 
-        await connectToMongo()
+    'use cache'
+    cacheTag('service-footer')
+    cacheLife('days')
 
-        const data = await Service.find({ visibility: true }, { _id: 1, heading: 1, visibility: 1 }).limit(10).lean()
+    await connectToMongo()
 
-        return data.map(item => ({
-            ...item,
-            _id: String(item._id)
-        }))
-    } catch (error) {
-        const err = await handleMongooseError(error);
-        return { error: err }
-    }
+    const data = await Service.find({ visibility: true }, { _id: 1, heading: 1, visibility: 1 }).limit(10).lean()
+
+    return data.map(item => ({
+        ...item,
+        _id: String(item._id)
+    }))
+
+
 
 }
 
 export const getServiceTopBar = async () => {
-    try {
-        'use cache'
-        cacheTag('service-topbar')
-        cacheLife('days')
 
-        await connectToMongo()
+    'use cache'
+    cacheTag('service-topbar')
+    cacheLife('days')
 
-        const data = await Service.find({ visibility: true }, { _id: 1, heading: 1, visibility: 1 }).limit(4).lean()
+    await connectToMongo()
 
-        return data.map(item => ({
-            ...item,
-            _id: String(item._id)
-        }))
-    } catch (error) {
-        const err = await handleMongooseError(error);
-        return { error: err }
-    }
+    const data = await Service.find({ visibility: true }, { _id: 1, heading: 1, visibility: 1 }).limit(4).lean()
+
+    return data.map(item => ({
+        ...item,
+        _id: String(item._id)
+    }))
+
+
 
 }
 
 
 export const getBlogMainPage = async () => {
-    try {
-        'use cache'
-        cacheTag('main-page-blogs')
-        cacheLife('days')
 
-        await connectToMongo()
+    'use cache'
+    cacheTag('main-page-blogs')
+    cacheLife('days')
 
-        const data = await Blog.find({ visibility: true }, { _id: 1, heading: 1, visibility: 1, image: 1 }).limit(5).lean()
+    await connectToMongo()
 
-        return data.map(item => ({
-            ...item,
-            _id: String(item._id)
-        }))
+    const data = await Blog.find({ visibility: true }, { _id: 1, heading: 1, visibility: 1, image: 1 }).limit(5).lean()
 
-    } catch (error) {
-        const err = await handleMongooseError(error);
-        return { error: err }
-    }
+    return data.map(item => ({
+        ...item,
+        _id: String(item._id)
+    }))
+
+
+
 
 }
 
 
 export const getServiceMainPage = async () => {
-    try {
-        'use cache'
-        cacheTag('main-page-services')
-        cacheLife('days')
 
-        await connectToMongo()
+    'use cache'
+    cacheTag('main-page-services')
+    cacheLife('days')
 
-        const data = await Service.find({ visibility: true }, { _id: 1, heading: 1, visibility: 1, image: 1 }).limit(5).lean()
+    await connectToMongo()
 
-        return data.map(item => ({
-            ...item,
-            _id: String(item._id)
-        }))
+    const data = await Service.find({ visibility: true }, { _id: 1, heading: 1, visibility: 1, image: 1 }).limit(5).lean()
 
-    } catch (error) {
-        const err = await handleMongooseError(error);
-        return { error: err }
-    }
+    return data.map(item => ({
+        ...item,
+        _id: String(item._id)
+    }))
+
+
+
 
 }
 
 export const getImagesMainPage = async () => {
-    try {
-        'use cache'
-        cacheTag('main-page-images')
-        cacheLife('days')
 
-        await connectToMongo()
+    'use cache'
+    cacheTag('main-page-images')
+    cacheLife('days')
 
-        const imgs: ImgWithoutBlob[] = await Image.find({ show: true }, { _id: 1, newUrl: 1, detail: 1, show: 1 }).limit(5).lean();
+    await connectToMongo()
 
-        return imgs.map(img => ({
-            ...img,
-            _id: String(img._id)
-        }))
-    } catch (error) {
-        const err = await handleMongooseError(error);
-        return { error: err }
-    }
+    const imgs: ImgWithoutBlob[] = await Image.find({ show: true }, { _id: 1, newUrl: 1, detail: 1, show: 1 }).limit(5).lean();
+
+    return imgs.map(img => ({
+        ...img,
+        _id: String(img._id)
+    }))
+
+
 
 
 }
 
 
 export const getGoogleReview = async () => {
-    try {
-        'use cache'
-        cacheLife('max')
-        const placeId = process.env.PLACE_ID;
-        const apiKey = process.env.GOOGLE_PLACE_API;
-        const res = await fetch(
-            `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews,rating,user_ratings_total&key=${apiKey}&language=hu`
-        );
-        return res.json();
-    } catch (error) {
-        const err = await handleMongooseError(error);
-        return { error: err }
-    }
+
+    'use cache'
+    cacheLife('max')
+    const placeId = process.env.PLACE_ID;
+    const apiKey = process.env.GOOGLE_PLACE_API;
+    const res = await fetch(
+        `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews,rating,user_ratings_total&key=${apiKey}&language=hu`
+    );
+    return res.json();
+
+
 
 }
 
 
 export const getImgById = async (id: string) => {
-    try {
-        'use cache'
-        cacheLife('max')
-        cacheTag('img-id-' + id)
 
-        const image = await Image.findById(id).lean();
-        image['_id'] = String(image._id)
-        return image
-    } catch (error) {
-        const err = await handleMongooseError(error);
-        return { error: err }
-    }
+    'use cache'
+    cacheLife('max')
+    cacheTag('img-id-' + id)
+
+    const image = await Image.findById(id).lean();
+    image['_id'] = String(image._id)
+    return image
+
+
 
 }

@@ -57,7 +57,7 @@ export const updateImage = async ( formData: FormData) => {
         return { message: "Blog módosítva" }
     } catch (error) {
 
-        const Error = await handleMongooseError(error)
-        return { error: Error }
+        const err = await handleMongooseError(error)
+        return { error: err }
     }
 }
