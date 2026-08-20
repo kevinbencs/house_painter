@@ -1,6 +1,6 @@
 "use server"
 
-import { handleMongooseError } from "@/lib/mongo";
+
 import { messageSchema } from "@/schema/schema";
 import { ActionState } from "@/typeScriptType/form"
 import { Resend } from 'resend';
@@ -29,7 +29,7 @@ export const sendMessage = async (_prevState: ActionState, formData: FormData) =
 
     const { data, error } = await resend.emails.send({
         from: 'Acme <onboarding@resend.dev>',
-        to: ['kevinbencs8@gmail.com'],
+        to: [process.env.EMAIL!],
         subject: 'Árajánlat kérés: ' + name,
         html: `<div>${message}</div><div>Név: ${name}</div><div>Email: ${email}</div>`,
     })

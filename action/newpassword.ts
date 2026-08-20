@@ -5,13 +5,37 @@ import Admin from "@/models/Admin"
 import { checkAuth, checkNewPassPageUlr } from "@/lib/checkAuth"
 import { ActionState } from "@/typeScriptType/form"
 import { handleMongooseError } from "@/lib/mongo"
+import jwt from "jsonwebtoken"
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND);
 
 export const sendEmail = async (_prevState: ActionState, formData: FormData) => {
+    const email = formData.get("email");
     try {
+        const admin = await Admin.findOne({
+            email
+        });
+
+        if (!admin) return { error: "Invalid email ", fieldData: [email] };
+
+        const token = jwt.sign({ id: String(admin._id) }, process.env.JWT_SECRET_TWOFA!, { expiresIn: "5m" });
+        const { data, error } = await resend.emails.send({
+            from: 'Acme <onboarding@resend.dev>',
+            to: [process.env.EMAIL!],
+            subject: 'Árajánlat kérés:',
+            html: `<div>Az új jelszó megadásához kattincs az alábbi linkre: https://${process.env.URL}/forgotpassword/${token}</div>`,
+        })
+
+        if (error) {
+            console.error(error)
+            return { error: 'Hiba, próbáld újra', fieldData: [email] };
+        }
+
         return { message: "success" }
     } catch (error) {
-        console.error(error)
-        return { error: "Failed login", fieldData:[''] }
+        const err = await handleMongooseError(error)
+        return { error: err, fieldData: [email] }
     }
 }
 

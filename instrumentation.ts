@@ -10,7 +10,8 @@ const REQUIRED_ENV_VARS = [
     'JWT_SECRET_TWOFA',
     'URL',
     'RESEND',
-    'DISCORD'
+    'DISCORD',
+    'EMAIL'
 ] as const;
 
 
