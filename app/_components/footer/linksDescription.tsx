@@ -2,6 +2,7 @@ import Link from "next/link"
 import SocialMeadia from "./socialMedia"
 import Services from "./services"
 import Places from "./places"
+import ErrorBoundary from "../../custom-error-boundary"
 
 
 const LinksDescription = () => {
@@ -15,15 +16,21 @@ const LinksDescription = () => {
       </section>
       <article>
         <h3 className="mb-3"><Link href='/helyek' className="hover:underline">Ahol jelen vagyok</Link></h3>
-        <Places/>
+        <ErrorBoundary title="Hiba a helyeknél">
+          <Places />
+        </ErrorBoundary>
+
       </article>
       <article>
         <h3 className="mb-3"><Link href="/szolgaltatas" className="hover:underline">Szolgáltatásaim</Link></h3>
-        <Services/>
+        <ErrorBoundary title="Hiba a szolgáltatásoknál">
+          <Services />
+        </ErrorBoundary>
+
       </article>
       <article>
         <h3 className="mb-3">Egyéb felületek</h3>
-        <SocialMeadia/>
+        <SocialMeadia />
       </article>
     </div>
   )

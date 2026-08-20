@@ -77,7 +77,7 @@ const Page = async ({ params }: { params: Promise<{ heading: string }> }) => {
 
   if (heading === '__placeholder__') notFound()
   cacheTag('blog-page-'+decodeURIComponent(heading))
-  cacheLife('days')
+  cacheLife('max')
 
 
   const data: BSPRender | null = await getBlogByHeading(decodeURIComponent(heading))

@@ -79,7 +79,7 @@ const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
   if (heading === '__placeholder__') notFound()
 
   cacheTag('place-page-' + decodeURIComponent(heading))
-  cacheLife('days')
+  cacheLife('max')
 
   const data: PlaceRender | null = await getPlaceByHeading(decodeURIComponent(heading))
 

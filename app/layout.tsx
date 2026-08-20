@@ -7,6 +7,7 @@ import HeaderContainer from "./_components/header/headerContainer";
 import TopBar from "./_components/header/topbar";
 import { IsLoggedProvider } from "./_components/loggedContext/isLoggedContext";
 import { FormProvided } from "./_components/sendMessage/formContext";
+import ErrorBoundary from "./custom-error-boundary"
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -33,7 +34,7 @@ export const metadata: Metadata = {
   pinterest: {
     richPin: true,
   },
-  authors: [ { name: 'Kevin Bencs', url: 'https://bencskevin.hu' }],
+  authors: [{ name: 'Kevin Bencs', url: 'https://bencskevin.hu' }],
   creator: 'Kevin Bencs',
   publisher: 'Kevin Bencs',
   openGraph: {
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: "Képek",
-    
+
     description: 'Megbízható, precíz szobafestés Budapesten és környékén',
     images: [{ url: "/api/images", alt: 'Budafestő - Képek' }],
   },
@@ -103,7 +104,10 @@ export default function RootLayout({
         <link rel="llms-txt" href="/llms.txt" />
       </head>
       <body className="min-h-full flex flex-col">
-        <TopBar />
+        <ErrorBoundary title="Hiba a szolgáltatásoknál">
+          <TopBar />
+        </ErrorBoundary>
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -111,7 +115,7 @@ export default function RootLayout({
         <FormProvided>
           <IsLoggedProvider>
             <HeaderContainer>{children}</HeaderContainer>
-         </IsLoggedProvider>
+          </IsLoggedProvider>
           <Footer />
         </FormProvided>
       </body>
