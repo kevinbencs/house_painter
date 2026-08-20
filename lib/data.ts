@@ -302,6 +302,7 @@ export const getGoogleReview = async () => {
 
     'use cache'
     cacheLife('max')
+    cacheTag('google-review')
     const placeId = process.env.PLACE_ID;
     const apiKey = process.env.GOOGLE_PLACE_API;
     const res = await fetch(

@@ -1,121 +1,109 @@
 import { cookies } from "next/headers"
 import jwt from "jsonwebtoken"
 import Admin from "@/models/Admin";
+import { handleMongooseError } from "./mongo";
 
 export const checkAuth = async () => {
-    try {
-        const cookie = await cookies();
 
-        const tokenShortTime = cookie.get("shortAuthToken");
+    const cookie = await cookies();
 
-        const tokenLongTime = cookie.get("longAuthToken");
+    const tokenShortTime = cookie.get("shortAuthToken");
 
-        if ((!tokenShortTime && !tokenLongTime) || (!tokenShortTime?.value && !tokenLongTime) || (!tokenShortTime && !tokenLongTime?.value) || (!tokenShortTime?.value && !tokenLongTime?.value)) return { error: "There is no token" }
+    const tokenLongTime = cookie.get("longAuthToken");
 
-        if (tokenShortTime) {
-            const resShort = await checkJWT(tokenShortTime.value, process.env.JWT_SECRET_Short!)
+    if ((!tokenShortTime && !tokenLongTime) || (!tokenShortTime?.value && !tokenLongTime) || (!tokenShortTime && !tokenLongTime?.value) || (!tokenShortTime?.value && !tokenLongTime?.value)) return { error: "There is no token" }
 
-            if (resShort.res) return { success: resShort.res };
+    if (tokenShortTime) {
+        const resShort = await checkJWT(tokenShortTime.value, process.env.JWT_SECRET_Short!)
 
-            if (resShort.error) {
-                if (tokenLongTime) {
-                    const resLong = await checkJWT(tokenLongTime.value, process.env.JWT_SECRET_Long!)
+        if (resShort.res) return { success: resShort.res };
 
-                    if (resLong.error) return { error: resLong.error };
+        if (resShort.error) {
+            if (tokenLongTime) {
+                const resLong = await checkJWT(tokenLongTime.value, process.env.JWT_SECRET_Long!)
 
-                    if (resLong.res) {
+                if (resLong.error) return { error: resLong.error };
 
-                        const tokenShortTime = jwt.sign({id: resLong.res}, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
+                if (resLong.res) {
 
-                        cookie.set("shortAuthToken", tokenShortTime,  {
-                            httpOnly: true,
-                            secure: true,
-                            maxAge: 300,
-                        })
+                    const tokenShortTime = jwt.sign({ id: resLong.res }, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
+
+                    cookie.set("shortAuthToken", tokenShortTime, {
+                        httpOnly: true,
+                        secure: true,
+                        maxAge: 300,
+                    })
 
 
-                        return { success: resLong.res };
-                    }
-
+                    return { success: resLong.res };
                 }
-                else return { error: resShort.error };
 
             }
+            else return { error: resShort.error };
 
         }
 
-        if (tokenLongTime) {
-            const resLong = await checkJWT(tokenLongTime.value, process.env.JWT_SECRET_Long!)
-
-            if (resLong.res) {
-
-                const tokenShortTime = jwt.sign({id: resLong.res}, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
-
-                cookie.set("shortAuthToken", tokenShortTime,  {
-                    httpOnly: true,
-                    secure: true,
-                    maxAge: 300,
-                })
-
-
-                return { success: resLong.res };
-            }
-
-            if (resLong.error) return { error: resLong.error }
-        }
-
-        return { error: " Error" }
-
-    } catch (error) {
-        console.log(error)
-
-        return { error: "Server error" }
     }
+
+    if (tokenLongTime) {
+        const resLong = await checkJWT(tokenLongTime.value, process.env.JWT_SECRET_Long!)
+
+        if (resLong.res) {
+
+            const tokenShortTime = jwt.sign({ id: resLong.res }, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
+
+            cookie.set("shortAuthToken", tokenShortTime, {
+                httpOnly: true,
+                secure: true,
+                maxAge: 300,
+            })
+
+
+            return { success: resLong.res };
+        }
+
+        if (resLong.error) return { error: resLong.error }
+    }
+
+    return { error: " Error" }
+
 }
 
 
 
 export const checkNewPassPageUlr = async (url: string) => {
-    try {
-        const res = await checkJWT(url, process.env.JWT_SECRET_URL!)
 
-        if (res.error) return { error: res.error }
+    const res = await checkJWT(url, process.env.JWT_SECRET_URL!)
 
-        return { res: res.res }
-    } catch (error) {
-        console.log(error)
+    if (res.error) return { error: res.error }
 
-        return { error: "Server error" }
-    }
+    return { res: res.res }
+
 }
 
 
 export const checkTwoFAToken = async () => {
-    try {
 
-        const cookie = await cookies();
 
-        const token2fa= cookie.get("2fa");
+    const cookie = await cookies();
 
-        if (!token2fa || !token2fa.value) return { error: "There is no token" }
+    const token2fa = cookie.get("2fa");
 
-        const res= await checkJWT(token2fa.value, process.env.JWT_SECRET_TWOFA!)
+    if (!token2fa || !token2fa.value) return { error: "There is no token" }
 
-        if (res.res) return { res: res.res, twofa: res.twofa };
+    const res = await checkJWT(token2fa.value, process.env.JWT_SECRET_TWOFA!)
 
-        return { error: " Error" }
-    } catch (error) {
-        console.log(error)
+    if (res.res) return { res: res.res, twofa: res.twofa };
 
-        return { error: "Server error" }
-    }
+    return { error: " Error" }
+
 }
 
 
 
 const checkJWT = async (token: string, secret: string) => {
     try {
-        const res = jwt.verify(token, secret) as {id: string}
+        const res = jwt.verify(token, secret) as { id: string }
 
         const user = await Admin.findById(res.id)
 
@@ -133,6 +121,7 @@ const checkJWT = async (token: string, secret: string) => {
             return { error: 'JWT error' };
         }
 
-        return { error: 'Server error' }
+        const err = await handleMongooseError(error)
+        return { error: err }
     }
 }

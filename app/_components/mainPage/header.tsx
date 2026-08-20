@@ -36,7 +36,7 @@ const Header = () => {
 
 
   return (
-    <div>
+    <div className="relative">
       <div className="md: relative md:h-screen md:w-full md:m-0 mt-auto mb-auto"
 
       >

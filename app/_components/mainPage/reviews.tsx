@@ -51,7 +51,7 @@ const Reviews = (props: { data: ReviewType[] }) => {
             {cards.map((review: any, i: number) => (
               <div key={'review' + i} className={`w-[${CARD_WIDTH_CLASS}] flex flex-col items-center gap-2 `} >
                 <Image src={review.profile_photo_url} width={100} height={100} alt={`${review.author_name}'s image`} />
-                <div className='font-bold'>{review.author_name}</div>
+                <div className='font-bold text-center'>{review.author_name}</div>
                 <span>{'⭐'.repeat(review.rating)}</span>
                 <p className='text-center'>{review.text}</p>
               </div>

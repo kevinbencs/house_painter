@@ -25,15 +25,12 @@ export default async function Home() {
         <Images data={images} />
         <Guarantee />
         <Contact />
-        {/*<Services />
+        <Services />
         <Prices />
-        <Blogs />*/}
-        {/*
+        <Blogs />
+        
         <GoogleReviews />
-        */}
-
-
-
+        
       </div>
       <SendMessageContainer />
       <SideBar />

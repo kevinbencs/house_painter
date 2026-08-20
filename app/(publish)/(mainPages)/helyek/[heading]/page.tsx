@@ -16,9 +16,9 @@ export async function generateMetadata(
   { params }: { params: Promise<{ heading: string }> },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  'use cache'
+ 
   const { heading } = await params
-  cacheLife('days')
+  
 
 
   const data: PlaceRender | null = await getPlaceByHeading(decodeURIComponent(heading))

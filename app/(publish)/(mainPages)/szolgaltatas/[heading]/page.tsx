@@ -14,9 +14,9 @@ export async function generateMetadata(
   { params }: { params: Promise<{ heading: string }> },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  'use cache'
+
   const { heading } = await params
-  cacheLife('days')
+
 
   const data: BSPRender | null = await getServiceByHeading(decodeURIComponent(heading))
 
@@ -79,7 +79,7 @@ const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
 
  
   cacheTag("service-page-"+decodeURIComponent(heading));
-  cacheLife("hours")
+  cacheLife("max")
 
   const data: BSPPublicPagesList[] = await Service.find({visibility: false},{id: 1, heading: 1, image: 1, visibility: 1})
 
@@ -92,7 +92,7 @@ const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
       <ul className='flex gap-4 flex-wrap justify-between lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2'>
         {data.map((item, i) => <li key={"blog-" + String(item._id)}>
           <Link className="hover:text-gray-100 flex flex-col gap-2 bg-gray-500" href={`blog/${item.heading.replaceAll(" ", "-")}`}>
-            {imgData[i] !== null && <ImgBSP url={imgData[i].newUrl} detail={imgData[i].detail} />}
+            {imgData[i] !== null && <ImgBSP url={imgData[i]!.newUrl} detail={imgData[i].detail} />}
             <h2>{item.heading}</h2>
           </Link>
         </li>)}

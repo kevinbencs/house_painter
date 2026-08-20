@@ -13,7 +13,7 @@ const Page = async () => {
       <h1 className="text-3xl mb-2">Új jelszó</h1>
       <div className="flex justify-center h-screen pt-40 w-full">
         <div className=" h-[300px] w-full flex justify-center">
-          <NewPassword url="" />
+          <NewPassword url={undefined} />
         </div>
       </div>
     </div>
