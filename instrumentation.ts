@@ -11,7 +11,8 @@ const REQUIRED_ENV_VARS = [
     'URL',
     'RESEND',
     'DISCORD',
-    'EMAIL'
+    'EMAIL',
+    'DISCORD_USER_ID'
 ] as const;
 
 
@@ -60,6 +61,7 @@ export const register = async () => {
 }
 
 
+
 export const onRequestError: Instrumentation.onRequestError = async (
     err,
     request,
@@ -68,19 +70,20 @@ export const onRequestError: Instrumentation.onRequestError = async (
 
     console.error(err)
     const message = err instanceof Error ? err.message : String(err)
-    const digest =
-        typeof err === 'object' && err !== null && 'digest' in err
-            ? String(err.digest)
-            : undefined
+    const user_id = process.env.DISCORD_USER_ID!
 
-    await fetch(process.env.DISCORD!, {
+    const res = await fetch(process.env.DISCORD!, {
         method: 'POST',
         body: JSON.stringify({
-            content: `🚨 Server error on ${request.path}\n\`\`\`${message}\`\`\`\n${digest}\n${context}`,
-            
+            content: ` <@${user_id}> 🚨 Server error on ${request.path}\n\`\`\`${message}\`\`\`\n`,
+
         }),
         headers: {
             'Content-Type': 'application/json',
         },
-    }).catch(() => {}) 
+    })
+
+    if (!res.ok) {
+        console.error('Discord webhook failed:', res.status, await res.text())
+    }
 }

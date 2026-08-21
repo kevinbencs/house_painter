@@ -8,8 +8,8 @@ import { ReviewType } from '@/typeScriptType/review';
 
 const GoogleReviews = async () => {
   const data = await getGoogleReview()
-
-  if (!data.ok) {
+  
+  if (data.error) {
     return (
       <section >
         <Heading text='Néhány vélemény rólam' />

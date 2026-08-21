@@ -104,9 +104,9 @@ export default function RootLayout({
         <link rel="llms-txt" href="/llms.txt" />
       </head>
       <body className="min-h-full flex flex-col">
-        <ErrorBoundary title="Hiba a szolgáltatásoknál">
+        {/*<ErrorBoundary title="Hiba a szolgáltatásoknál">
           <TopBar />
-        </ErrorBoundary>
+        </ErrorBoundary>*/}
 
         <script
           type="application/ld+json"
@@ -114,9 +114,9 @@ export default function RootLayout({
         />
         <FormProvided>
           <IsLoggedProvider>
-            <HeaderContainer>{children}</HeaderContainer>
+           { /*<HeaderContainer>*/}{children}{/*</HeaderContainer>*/}
           </IsLoggedProvider>
-          <Footer />
+          {/*<Footer />*/}
         </FormProvided>
       </body>
     </html>

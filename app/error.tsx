@@ -16,8 +16,8 @@ export default function ErrorPage({
  
   return (
     <div className='flex flex-col items-center'>
-      <h2 className='mb-2'>Valami hiba történt!</h2>
-      <button className='bg-mauve-900 rounded-lg'
+      <h2 className='mb-2 text-lg'>Valami hiba történt!</h2>
+      <button className='bg-mauve-900 rounded-lg text-white p-2'
         onClick={
           
           () => retry()

@@ -308,6 +308,8 @@ export const getGoogleReview = async () => {
     const res = await fetch(
         `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews,rating,user_ratings_total&key=${apiKey}&language=hu`
     );
+
+    if(!res.ok) {console.error('Google maps api error'); return {error: 'Api error'}}
     return res.json();
 
 
