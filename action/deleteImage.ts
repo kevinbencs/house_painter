@@ -7,6 +7,7 @@ import { deleteSchema } from "@/schema/schema";
 import * as z from "zod"
 import { updateTag } from "next/cache";
 import { getNumbOfImagPage } from "@/lib/data";
+import { checkAuth } from "@/lib/checkAuth";
 
 interface Img {
     blobUrl: string,
@@ -19,9 +20,9 @@ interface Img {
 export const deleteImage = async (_id: string) => {
     try {
 
-        /*const auth = await checkAuth()
+        const auth = await checkAuth()
 
-        if (auth.error) return { error: "Kérlek jelentkezz be." };*/
+        if (auth.error) return { error: "Kérlek jelentkezz be." };
 
         const res = deleteSchema.safeParse(_id);
         if (res.error?.issues) {

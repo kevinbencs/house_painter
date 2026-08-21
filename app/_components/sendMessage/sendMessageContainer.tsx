@@ -1,8 +1,12 @@
+'use client'
+
 import SendMessageForm from './sendMessage'
 import { PiPhoneOutgoingFill } from "react-icons/pi";
 import { MdEmail } from "react-icons/md";
+import { useRouter } from 'next/navigation';
 
 const SendMessageContainer = () => {
+    const router = useRouter()
     return (
         <div className="flex justify-around flex-wrap p-2  bg-mist-900 dark text-white pt-8 pb-8 gap-4">
             <section className='lg:max-w-[800px] mb-20 lg:w-[60%] '>
@@ -18,7 +22,7 @@ const SendMessageContainer = () => {
                     ben@....
                 </a>
             </section>
-            <SendMessageForm />
+            <SendMessageForm key={router.bfcacheId }/>
         </div>
     )
 }

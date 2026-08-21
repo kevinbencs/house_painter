@@ -1,5 +1,6 @@
 "use server"
 
+import { checkAuth } from "@/lib/checkAuth"
 import { handleMongooseError } from "@/lib/mongo"
 import Price from "@/models/Price"
 import { addPriceSchema } from "@/schema/schema"
@@ -14,9 +15,9 @@ export const addPrice = async (_prevState: ActionState, formData: FormData) => {
     const unitOfMea = formData.get("unitOfMea")
     try {
 
-        /*const auth = await checkAuth()
+        const auth = await checkAuth()
 
-        if (auth.error) return { error: "Kérlek jelentkezz be.", fieldData: [price, category, name, unitOfMea] };*/
+        if (auth.error) return { error: "Kérlek jelentkezz be.", fieldData: [price, category, name, unitOfMea] };
 
 
 

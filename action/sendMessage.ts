@@ -13,7 +13,7 @@ export const sendMessage = async (_prevState: ActionState, formData: FormData) =
     const email = formData.get("email");
     const message = formData.get("message");
     const privacy = formData.get("privacy")
-
+    console.log(privacy === 'on' ? true : false)
 
     const res = messageSchema.safeParse({
         name,
@@ -36,7 +36,7 @@ export const sendMessage = async (_prevState: ActionState, formData: FormData) =
 
     if (error) {
         console.error(error)
-        return { error: 'Hiba, próbáld újra', fieldData: [name, email, message, privacy] };
+        return { error: 'Hiba, próbáld újra', fieldData: [name, email, message, privacy === 'on' ? true : false] };
     }
 
     return { message: "Üzenet elküldve" }

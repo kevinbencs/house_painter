@@ -164,7 +164,7 @@ const DynamicPagesForm = (props: {
         <>
             <form action="" className='mb-20 mt-10' onSubmit={submitEvent}>
 
-                <input type="text" name='title' className='focus-within:outline-none border-b-2 input-bordered block w-full mb-8 bg-transparent pl-2 dark:text-white' placeholder='Blog címe' value={titleInput} onChange={(e) => setTitleInput(e.target.value)} />
+                <input type="text" name='title' className='focus-within:outline-none border-b-2 input-bordered block w-full mb-8 bg-transparent pl-2 dark:text-white' placeholder='Cím' value={titleInput} onChange={(e) => setTitleInput(e.target.value)} />
                 <input type="text" name='cover_image_id' className='focus-within:outline-none border-b-2 input-bordered block w-full mb-8 bg-transparent pl-2 dark:text-white' placeholder='Cover kép id' value={coverImageId} onChange={(e) => setCoverImageId(e.target.value)} />
                 <div className='max-w-96 mb-10'>
                     <Imag id={coverImageId} />

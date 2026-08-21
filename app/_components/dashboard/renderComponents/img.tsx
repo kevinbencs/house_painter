@@ -3,40 +3,41 @@
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { Img } from '@/typeScriptType/img'
+import { useTransition } from 'react'
 
 const Imag = (props: { id: string }) => {
     const [image, setImage] = useState<Img | null | undefined>(null);
     const [err, setErr] = useState<string>('')
+    const [isPending, startTransition] = useTransition()
 
 
     useEffect(() => {
         if (props.id === "" || props.id.length !== 24) setImage(null);
         else {
-            fetch(`/api/images/id/${props.id}`)
-                .then((res) => res.json())
-                .then((res) => {
+            startTransition(() => {
+                fetch(`/api/images/id/${props.id}`)
+                    .then((res) => res.json())
+                    .then((res) => {
 
-                    if (res.error) {
-                        console.error(res.error);
+                        if (res.error) {
+                            console.error(res.error);
+                            setImage(null);
+                            setErr(res.error)
+
+                        }
+
+                        if (res.success) {
+                            setImage(res.success)
+                            setErr('')
+                        }
+                    })
+                    .catch((err) => {
+                        console.error(err);
                         setImage(null);
-                        setErr(res.error)
-
-                    }
-
-                    if (res.success) {
-                        setImage(res.success)
-                        setErr('')
-                    }
-                })
-                .catch((err) => {
-                    console.error(err);
-                    setImage(null);
-                    setErr("Hiba kapcsolattal.");
-                })
+                        setErr("Hiba a kapcsolattal.");
+                    })
+            })
         }
-
-
-
 
     }, [props.id]);
 
@@ -51,7 +52,13 @@ const Imag = (props: { id: string }) => {
             }
             {!image &&
                 <>
-                    <div className='text-red text-4xl'>There is no image</div>
+                    {isPending &&
+                        <div className='text-red text-4xl'>Töltődik...</div>
+                    }
+                    {!isPending &&
+                        <div className='text-red text-4xl'>Nincs ilyen kép</div>
+                    }
+
                 </>
             }
             {err &&

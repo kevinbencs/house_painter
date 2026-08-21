@@ -1,5 +1,6 @@
 "use server"
 
+import { checkAuth } from "@/lib/checkAuth";
 import { handleMongooseError } from "@/lib/mongo"
 import Price from "@/models/Price";
 import { deleteSchema } from "@/schema/schema";
@@ -10,9 +11,9 @@ import { updateTag } from "next/cache";
 export const deletePrice = async (_id: string) => {
     try {
 
-        /*const auth = await checkAuth()
+        const auth = await checkAuth()
 
-        if (auth.error) return { error: "Kérlek jelentkezz be." };*/
+        if (auth.error) return { error: "Kérlek jelentkezz be." };
         
         const res = deleteSchema.safeParse(_id);
         if (res.error?.issues) {

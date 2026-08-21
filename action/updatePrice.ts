@@ -1,5 +1,6 @@
 "use server"
 
+import { checkAuth } from "@/lib/checkAuth"
 import { handleMongooseError } from "@/lib/mongo"
 import Price from "@/models/Price"
 import { updatePriceSchema } from "@/schema/schema"
@@ -10,9 +11,9 @@ import { updateTag } from "next/cache"
 export const updatePrice = async (_prevSate: ActionState, formData: FormData) => {
     try {
 
-        /*const auth = await checkAuth()
+        const auth = await checkAuth()
 
-        if (auth.error) return { error: "Kérlek jelentkezz be." };*/
+        if (auth.error) return { error: "Kérlek jelentkezz be." , fieldData:[''] };
 
         const arr = [];
         for (const [key, value] of formData) {

@@ -6,7 +6,7 @@ import { ActionState } from "@/typeScriptType/form";
 import { checkAuth } from "@/lib/checkAuth";
 import { imageIdSchema } from "@/schema/schema";
 import { updateTag } from "next/cache";
-import { getAllImg, getNumbOfImagPage } from "@/lib/data";
+import { getAllImg,  } from "@/lib/data";
 
 
 export const updateImage = async (_prevState: ActionState, formData: FormData) => {
@@ -16,9 +16,9 @@ export const updateImage = async (_prevState: ActionState, formData: FormData) =
     const show = formData.get('image-visibility');
     try {
 
-        /*const authRes = await checkAuth();
+        const authRes = await checkAuth();
 
-        if (authRes.error) return { error: "Kérlek jelentkezz be.", fieldData: [_id, detail, newUrl, show] };*/
+        if (authRes.error) return { error: "Kérlek jelentkezz be.", fieldData: [_id, detail, newUrl, show] };
 
 
 
