@@ -13,7 +13,6 @@ export const sendMessage = async (_prevState: ActionState, formData: FormData) =
     const email = formData.get("email");
     const message = formData.get("message");
     const privacy = formData.get("privacy")
-    console.log(privacy === 'on' ? true : false)
 
     const res = messageSchema.safeParse({
         name,

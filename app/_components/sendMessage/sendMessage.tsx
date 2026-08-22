@@ -16,15 +16,6 @@ import { sendMessage } from "@/action/sendMessage"
 const SendMessageForm = () => {
   const { ref } = useForm()
   const [state, action, isPending] = useActionState(sendMessage, null)
-  const [checked, setChecked] = useState(false)
-
- 
-
-  useEffect(() => {
-
-    if (state && state.fieldData && typeof state.fieldData[3] === 'boolean') setChecked(state.fieldData[3])
-    else setChecked(false)
-  }, [state?.fieldData])
 
 
 
@@ -63,7 +54,7 @@ const SendMessageForm = () => {
             : ''}
         />
         <Field orientation="horizontal">
-          <Checkbox id="privacy" name="privacy" disabled={isPending} checked={checked} onCheckedChange={(e) => { setChecked(!checked); }} />
+          <Checkbox id="privacy" name="privacy" disabled={isPending}  />
           <FieldContent>
             <FieldLabel htmlFor="privacy">Felhasználási feltételek elfogadása</FieldLabel>
             <FieldDescription>
