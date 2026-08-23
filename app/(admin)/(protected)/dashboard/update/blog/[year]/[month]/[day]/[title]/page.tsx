@@ -1,6 +1,6 @@
 
 import DynamicPagesForm from "@/app/_components/dashboard/dynamicPagesForm"
-import { addBlog } from "@/action/addBlog";
+import { updateBlog } from "@/action/updateBlog";
 import { checkAuth } from "@/lib/checkAuth";
 import { redirect } from "next/navigation";
 import Blog from "@/models/Blog";
@@ -32,7 +32,7 @@ const Page = async ({ params }: { params: Promise<{ year: string, month: string,
     <div className="w-full">
       <h1 className="text-3xl mb-2">Blog szerkesztése</h1>
       {data === null && <div className="text-center text-2xl">Nincs ilyen blog</div> } 
-      {data && <DynamicPagesForm res={res} serverAction={addBlog} />}
+      {data && <DynamicPagesForm res={res} serverAction={updateBlog} />}
     </div>
   )
 }

@@ -50,6 +50,8 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
             httpOnly: true,
             secure: true,
             maxAge: 600,
+            sameSite: 'lax',
+            path: '/',
         })
 
     } catch (error) {
@@ -105,12 +107,16 @@ export const loginTwoFAAction = async (otp: string) => {
             httpOnly: true,
             secure: true,
             maxAge: 3600,
+            sameSite: 'lax',
+            path: '/',
         })
 
         cookieStore.set("shortAuthToken", tokenShortTime, {
             httpOnly: true,
             secure: true,
             maxAge: 300,
+            sameSite: 'lax',
+            path: '/',
         })
 
 

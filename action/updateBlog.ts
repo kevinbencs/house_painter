@@ -7,7 +7,7 @@ import Blog from "@/models/Blog";
 import { blogServPlaceSchemaId } from "@/schema/schema";
 import { updateTag } from "next/cache";
 
-export const updateImage = async ( formData: FormData) => {
+export const updateBlog = async ( formData: FormData) => {
     try {
         const authRes = await checkAuth();
 

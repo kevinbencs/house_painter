@@ -32,6 +32,8 @@ export const checkAuth = async () => {
                         httpOnly: true,
                         secure: true,
                         maxAge: 300,
+                        sameSite: 'lax',
+                        path: '/',
                     })
 
 
@@ -56,6 +58,8 @@ export const checkAuth = async () => {
                 httpOnly: true,
                 secure: true,
                 maxAge: 300,
+                sameSite: 'lax',
+                path: '/',
             })
 
 
