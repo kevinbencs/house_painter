@@ -7,7 +7,7 @@ import { Adm } from "@/typeScriptType/admin";
 import { ActionState } from "@/typeScriptType/form";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { verify } from "otplib";
 
@@ -20,7 +20,18 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
     try {
         const cookieStore = await cookies();
 
+	const ip = headersList.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+            headersList.get("x-real-ip") ||
+            "unknown"
 
+        try {
+
+            ipLimiter.consume(ip)
+
+
+        } catch (error) {
+            return ({ error: 'Too many login attempts' });
+        }
 
         const res = loginSchema.safeParse({
             email,
