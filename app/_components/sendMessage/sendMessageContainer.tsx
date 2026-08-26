@@ -22,7 +22,10 @@ const SendMessageContainer = () => {
                     ben@....
                 </a>
             </section>
-            <SendMessageForm key={router.bfcacheId }/>
+            <div key={router.bfcacheId}>
+                <SendMessageForm />
+            </div>
+
         </div>
     )
 }

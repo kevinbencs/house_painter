@@ -1,6 +1,7 @@
 "use server"
 
 import { handleMongooseError } from "@/lib/mongo";
+import { ipLimiter } from "@/lib/rateLimit";
 import Admin from "@/models/Admin";
 import { loginSchema, otpTokenSchema2 } from "@/schema/schema";
 import { Adm } from "@/typeScriptType/admin";
@@ -19,9 +20,10 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
     const password = formData.get("password");
     try {
         const cookieStore = await cookies();
+        const header = await headers()
 
-	const ip = headersList.get("x-forwarded-for")?.split(",")[0]?.trim() ||
-            headersList.get("x-real-ip") ||
+	const ip = header.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+            header.get("x-real-ip") ||
             "unknown"
 
         try {
