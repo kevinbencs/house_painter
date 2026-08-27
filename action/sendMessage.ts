@@ -8,7 +8,7 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND);
 
 
-export const sendMessage = async (_prevState: ActionState, formData: FormData) => {
+export const sendMessage = async ( formData: FormData) => {
     const name = formData.get("name");
     const email = formData.get("email");
     const message = formData.get("message");

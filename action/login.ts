@@ -32,7 +32,7 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
 
 
         } catch (error) {
-            return ({ error: 'Too many login attempts' });
+            return ({ error: 'Too many login attempts',fieldData: [email, password] });
         }
 
         const res = loginSchema.safeParse({

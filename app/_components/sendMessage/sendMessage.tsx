@@ -8,20 +8,36 @@ import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { useForm } from "./formContext"
-import { useActionState, useEffect, useState } from "react"
+import { useActionState, useEffect, startTransition } from "react"
 import { sendMessage } from "@/action/sendMessage"
+import { ActionState } from "@/typeScriptType/form"
 
+
+async function FormAction(_prevState: ActionState, formData: FormData | 'RESET') {
+  if (formData === 'RESET') return null
+
+  const res = await sendMessage(formData)
+  return res
+}
 
 
 const SendMessageForm = () => {
   const { ref } = useForm()
-  const [state, action, isPending] = useActionState(sendMessage, null)
+  const [state, action, isPending] = useActionState(FormAction, null)
 
+  useEffect(() => {
+    const id = setTimeout(() => {
+      startTransition(() => {
+        action('RESET')
+      })
+    }, 5000)
+    return () => clearTimeout(id)
+  }, [state?.message])
 
 
   return (
 
-    <form className="w-full lg:w-[60%] lg:max-w-200 " action={action}>
+    <form className="w-full lg:w-[60%] lg:max-w-200 " action={action} >
       <div className="text-4xl mb-10 text-center 2xl:text-start">Írjon bizalommal</div>
       {state?.error && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
       {state?.failed && <div className="mb-2 mt-2 text-red-600">{state.failed.map((item) => <div key={item}>{item}</div>)}</div>}
@@ -54,7 +70,7 @@ const SendMessageForm = () => {
             : ''}
         />
         <Field orientation="horizontal">
-          <Checkbox id="privacy" name="privacy" disabled={isPending}  />
+          <Checkbox id="privacy" name="privacy" disabled={isPending} />
           <FieldContent>
             <FieldLabel htmlFor="privacy">Felhasználási feltételek elfogadása</FieldLabel>
             <FieldDescription>

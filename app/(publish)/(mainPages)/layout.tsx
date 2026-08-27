@@ -1,3 +1,4 @@
+import SendMessageContainer from "@/app/_components/sendMessage/sendMessageContainer";
 
 
 export default function Layout({
@@ -8,6 +9,7 @@ export default function Layout({
     return (
         <>
             {children}
+            <SendMessageContainer />
             
         </>
     )
