@@ -9,7 +9,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ path
     const { path } = await params;
 
     if (!process.env.BLOB_READ_WRITE_TOKEN) {
-      return NextResponse.json({ "error": "BLOB_READ_WRITE_TOKEN is missed." });
+      return NextResponse.json({ "error": "BLOB_READ_WRITE_TOKEN is missed." },{ status: 500});
     }
 
     const img: Img[] = await Image.find({
