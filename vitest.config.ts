@@ -1,7 +1,7 @@
 // vitest.config.mts
 import react from '@vitejs/plugin-react-swc' 
 import tsconfigPaths from 'vite-tsconfig-paths'
-import { defineConfig } from 'vitest/config'
+import { defineConfig, configDefaults } from 'vitest/config'
 
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
@@ -9,5 +9,6 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     setupFiles: './vitest.setup.ts',
+    exclude: [...configDefaults.exclude, 'tests/end_to_end/**'],
   },
 })
