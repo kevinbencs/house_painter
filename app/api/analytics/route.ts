@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     try {
         const body = await req.json() as {pathname: string, referrer: string | null};
 
-        const res = await PageViewSchema.safeParse({
+        const res = PageViewSchema.safeParse({
             pathname: body.pathname,
             referrer: body.referrer
         })

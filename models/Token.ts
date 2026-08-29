@@ -3,12 +3,12 @@ import mongoose from "mongoose";
 const TokenSchema = new mongoose.Schema({
     token: {
         type: String,
-        require: true,
+        required: true,
         ref: "User",
     },
     usage:{
         type: Boolean,
-        require: true
+        required: true
     }
 
 },{timestamps: true})
