@@ -19,13 +19,14 @@ export const displayService = async (_id: string) => {
             return { failed: res.error.issues.map((item) => item.message) }
         }
 
-        const serv = await Service.findByIdAndUpdate(_id,{
+        const serv = await Service.findByIdAndUpdate(_id, {
             visibility: true
         })
+        if (!serv) return { error: "A szolgáltatás nem található." };
 
         updateTag('service-list');
         updateTag('main-page-services');
-        updateTag('service-page-'+serv.heading.replaceAll(" ", "-"))
+        updateTag('service-page-' + serv.heading.replaceAll(" ", "-"))
         updateTag('service-topbar')
         updateTag('service-footer')
         updateTag(`service-${serv.heading.replaceAll(" ", "-")}`)
@@ -33,7 +34,7 @@ export const displayService = async (_id: string) => {
         return { message: "Szolgáltatás törölve." }
 
     } catch (error) {
-        const err= await handleMongooseError(error);
+        const err = await handleMongooseError(error);
 
         return { error: err }
     }

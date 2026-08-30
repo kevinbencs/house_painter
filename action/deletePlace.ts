@@ -22,9 +22,11 @@ export const deletePlace = async (_id: string) => {
 
         const old = await Place.findById(_id)
 
-        await Place.findByIdAndUpdate(_id,{
+        const place = await Place.findByIdAndUpdate(_id,{
             visibility: false
         })
+
+        if (!place) return { error: "A hely nem található." };
         updateTag('place-list')
         updateTag('place-footer')
         updateTag('place-' + old.heading.slice(0,old.heading.indexOf('.')+9).replaceAll(" ", "-"))

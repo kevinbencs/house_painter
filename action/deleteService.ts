@@ -23,6 +23,8 @@ export const deleteService = async (_id: string) => {
             visibility: false
         })
 
+        if (!serv) return { error: "A szolgáltatás nem található." };
+
         updateTag('service-list');
         updateTag('main-page-services');
         updateTag('service-page-'+serv.heading.replaceAll(" ", "-"))

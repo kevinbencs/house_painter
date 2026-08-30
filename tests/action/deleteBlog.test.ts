@@ -43,11 +43,11 @@ describe('deleteBlog', () => {
         expect(res).toEqual({ error: 'Kérlek jelentkezz be.' })
         expect(updateTag).not.toHaveBeenCalled()
         const fresh = await Blog.findById(blog._id)
-        expect(fresh?.visibility).toBe(true)   // untouched
+        expect(fresh?.visibility).toBe(true)   
     })
 
     it('returns validation messages for an invalid id', async () => {
-        const res = await deleteBlog('Bad id')   // adjust to what deleteSchema rejects
+        const res = await deleteBlog('Bad id')  
 
         expect(res).toHaveProperty('failed')
         expect(updateTag).not.toHaveBeenCalled()
@@ -61,7 +61,7 @@ describe('deleteBlog', () => {
         expect(res).toEqual({ message: 'Blog törölve.' })
 
         const fresh = await Blog.findById(blog._id)
-        expect(fresh?.visibility).toBe(false)   // the actual state change
+        expect(fresh?.visibility).toBe(false)   
 
         expect(updateTag).toHaveBeenCalledWith('blog-list')
         expect(updateTag).toHaveBeenCalledWith('main-page-blogs')
@@ -75,7 +75,7 @@ describe('deleteBlog', () => {
 
         const res = await deleteBlog(missingId)
 
-        expect(res).toHaveProperty('error')     // currently 'Server error'
+        expect(res).toHaveProperty('error')     
         expect(updateTag).not.toHaveBeenCalled()
     })
 

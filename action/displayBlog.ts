@@ -10,7 +10,7 @@ export const displayBlog = async (_id: string) => {
     try {
         const authRes = await checkAuth();
 
-        if(authRes.error) return { error: "Kérlek jelentkezz be." };
+        if (authRes.error) return { error: "Kérlek jelentkezz be." };
 
         const res = deleteSchema.safeParse(_id);
         if (res.error?.issues) {
@@ -18,19 +18,21 @@ export const displayBlog = async (_id: string) => {
             return { failed: res.error.issues.map((item) => item.message) }
         }
 
-        const blog = await Blog.findByIdAndUpdate(_id,{
+        const blog = await Blog.findByIdAndUpdate(_id, {
             visibility: true
         })
 
+        if (!blog) return { error: "A blog nem található." };
+
         updateTag('blog-list');
         updateTag('main-page-blogs');
-        updateTag('blog-'+blog.heading.replaceAll(" ", "-"))
-        updateTag('blog-page-'+blog.heading.replaceAll(" ", "-"))
+        updateTag('blog-' + blog.heading.replaceAll(" ", "-"))
+        updateTag('blog-page-' + blog.heading.replaceAll(" ", "-"))
 
-        return {message: "Blog törölve."}
+        return { message: "Blog törölve." }
 
     } catch (error) {
-        const err= await handleMongooseError(error);
+        const err = await handleMongooseError(error);
 
         return { error: err }
     }
