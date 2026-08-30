@@ -74,7 +74,9 @@ export const imageSchema = z.object({
     detail: z.string().min(1, {message: "A leírásának megadása kötelező"}),
 })
 
-export const deleteSchema = z.string({message: "_id megadása kötelező"})
+export const deleteSchema = z.string({message: "_id megadása kötelező"}).refine((val) => 
+    /^[0-9a-fA-F]{24}$/.test(val), {message: 'Érvénytele ID'})
+
 
 export const otpTokenSchema = z.object({
     secret: z.string().min(1,{message: "A secret megadása kötelező"}).min(1),

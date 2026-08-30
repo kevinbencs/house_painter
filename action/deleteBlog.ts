@@ -22,6 +22,8 @@ export const deleteBlog = async (_id: string) => {
             visibility: false
         })
 
+        if (!blog) return { error: "Blog nem található." };
+
         updateTag('blog-list');
         updateTag('main-page-blogs');
         updateTag('blog-'+blog.heading.replaceAll(" ", "-"))
