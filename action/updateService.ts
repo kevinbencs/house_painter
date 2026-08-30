@@ -8,7 +8,7 @@ import { blogServPlaceSchemaId } from "@/schema/schema";
 import { updateTag } from "next/cache";
 
 
-export const updateImage = async ( formData: FormData) => {
+export const updateService= async ( formData: FormData) => {
     try {
         const authRes = await checkAuth();
 
@@ -41,13 +41,15 @@ export const updateImage = async ( formData: FormData) => {
             if (mess.indexOf('Error') > -1) return { error: mess }
         }
 
-        await Service.findByIdAndUpdate(_id, {
+        const serv = await Service.findByIdAndUpdate(_id, {
             detail,
             heading,
             text,
             keywords,
             image
         })
+
+        if (!serv) return { error: "A szolgáltatás nem található." };
 
         updateTag('service-list');
         updateTag('main-page-services');

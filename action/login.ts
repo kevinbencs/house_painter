@@ -28,7 +28,7 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
 
         try {
 
-            ipLimiter.consume(ip)
+            await ipLimiter.consume(ip)
 
 
         } catch (error) {
@@ -55,7 +55,7 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
 
         if (!passConfirm) return { error: "Invalid email or password", fieldData: [email, password] };
 
-        secret = String(admin.twofa)
+        secret = admin.twofa
 
         const token2fa = jwt.sign({ id: String(admin._id) }, process.env.JWT_SECRET_TWOFA!, { expiresIn: "10m" });
 
@@ -71,7 +71,7 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
         const err = await handleMongooseError(error)
         return { error: err, fieldData: [email, password] }
     }
-    if (secret === "") redirect("/new2fa")
+    if (!secret) redirect("/new2fa")
     redirect('/login/2fa')
 }
 

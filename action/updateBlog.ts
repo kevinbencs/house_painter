@@ -13,12 +13,12 @@ export const updateBlog = async ( formData: FormData) => {
 
         if (authRes.error) return { error: "Kérlek jelentkezz be." };
 
-        const heading = (formData.get('heading') as string ?? '').replaceAll('\n', '');
-        const text = (formData.get('text') as string ?? '').replaceAll('\n', '');
-        const detail = (formData.get('detail') as string ?? '').replaceAll('\n', '');
-        const keywords = (formData.get('keywords') as string ?? '').replaceAll('\n', '');
-        const image = (formData.get('image') as string ?? '').replaceAll('\n', '');
-        const _id = (formData.get('_id') as string ?? '').replaceAll('\n', '');
+        const heading = (formData.get('heading') as string ?? '').replaceAll('\r', '');
+        const text = (formData.get('text') as string ?? '').replaceAll('\r', '');
+        const detail = (formData.get('detail') as string ?? '').replaceAll('\r', '');
+        const keywords = (formData.get('keywords') as string ?? '').replaceAll('\r', '');
+        const image = (formData.get('image') as string ?? '').replaceAll('\r', '');
+        const _id = (formData.get('_id') as string ?? '').replaceAll('\r', '');
 
         const res = blogServPlaceSchemaId.safeParse({
             heading,
@@ -47,6 +47,8 @@ export const updateBlog = async ( formData: FormData) => {
             keywords,
             image
         })
+
+        if (!blog) return { error: "A blog nem található." };
 
         updateTag('blog-list');
         updateTag('main-page-blogs');

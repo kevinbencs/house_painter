@@ -31,7 +31,7 @@ export const displayService = async (_id: string) => {
         updateTag('service-footer')
         updateTag(`service-${serv.heading.replaceAll(" ", "-")}`)
 
-        return { message: "Szolgáltatás törölve." }
+        return { message: "Szolgáltatás visszaállítva." }
 
     } catch (error) {
         const err = await handleMongooseError(error);

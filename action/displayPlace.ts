@@ -32,7 +32,7 @@ export const displayPlace = async (_id: string) => {
         updateTag('place-' + old.heading.slice(0,old.heading.indexOf('.')+9).replaceAll(" ", "-"))
         updateTag('place-page-' + old.heading.slice(0,old.heading.indexOf('.')+9).replaceAll(" ", "-"))
 
-        return {message: "Hely törölve."}
+        return {message: "Hely visszaállítva."}
 
     } catch (error) {
         const err = await handleMongooseError(error);

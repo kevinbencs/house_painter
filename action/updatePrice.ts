@@ -13,7 +13,7 @@ export const updatePrice = async (_prevSate: ActionState, formData: FormData) =>
 
         const auth = await checkAuth()
 
-        if (auth.error) return { error: "Kérlek jelentkezz be." , fieldData:[''] };
+        if (auth.error) return { error: "Kérlek jelentkezz be.", fieldData: [''] };
 
         const arr = [];
         for (const [key, value] of formData) {
@@ -22,10 +22,10 @@ export const updatePrice = async (_prevSate: ActionState, formData: FormData) =>
 
         for (let i = 4; i < arr.length; i += 5) {
             const _id = arr[i]
-            const name = arr[i + 1] 
-            const category = arr[i + 2] 
+            const name = arr[i + 1]
+            const category = arr[i + 2]
             const price = Number(String(arr[i + 3]).replace(/\s/g, ''))
-            const unitOfMea = arr[i+4]
+            const unitOfMea = arr[i + 4]
 
             const res = updatePriceSchema.safeParse({
                 _id,
@@ -34,17 +34,22 @@ export const updatePrice = async (_prevSate: ActionState, formData: FormData) =>
                 price,
                 unitOfMea
             })
+
+            if (res.error?.issues) {
+                console.log(res.error.issues)
+                return { failed: res.error.issues.map((item) => item.message) }
+            }
         }
 
         const newArr = []
 
         for (let i = 4; i < arr.length; i += 5) {
-            const obj: { name: string, _id: string, category: string, price: number ,unitOfMea: string} = { name: "", _id: "", category: "", price: 0, unitOfMea: "" };
+            const obj: { name: string, _id: string, category: string, price: number, unitOfMea: string } = { name: "", _id: "", category: "", price: 0, unitOfMea: "" };
             obj["_id"] = arr[i] as string;
             obj["name"] = arr[i + 1] as string;
             obj["category"] = arr[i + 2] as string;
             obj["price"] = Number(String(arr[i + 3]).replace(/\s/g, ''))
-            obj["unitOfMea"] = String(arr[i+4])
+            obj["unitOfMea"] = String(arr[i + 4])
 
             newArr.push(obj);
         }
@@ -58,11 +63,11 @@ export const updatePrice = async (_prevSate: ActionState, formData: FormData) =>
 
         updateTag('price-data');
         updateTag('price-cat')
-        
+
         return { message: "Mentve" }
 
     } catch (error) {
         const err = await handleMongooseError(error);
-        return { error: err, fieldData:[''] }
+        return { error: err, fieldData: [''] }
     }
 }

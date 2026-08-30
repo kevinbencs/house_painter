@@ -21,11 +21,12 @@ describe('Admin model test', () => {
         }).save()).rejects.toThrow()
     })
 
-    it('rejects document missing twofa', async () => {
-        await expect(new Admin({
+    it('persists a document without twofa', async () => {
+        const created = await Admin.create({
             password: 'example',
             email: 'example@example.com'
-        }).save()).rejects.toThrow()
+        })
+        expect(created.twofa).toBeUndefined()
     })
 
     it('rejects document with duplicate email', async () => {

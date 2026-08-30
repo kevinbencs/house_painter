@@ -14,7 +14,6 @@ const AdminSchema = new mongoose.Schema({
     },
     twofa: {
         type: String,
-        required: true,
     }
 }, {timestamps: true})
 

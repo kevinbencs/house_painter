@@ -8,7 +8,7 @@ import {  placeSchemaId } from "@/schema/schema";
 import { updateTag } from "next/cache";
 
 
-export const updateImage = async ( formData: FormData) => {
+export const updatePlace = async ( formData: FormData) => {
     try {
         const authRes = await checkAuth();
 
@@ -20,6 +20,7 @@ export const updateImage = async ( formData: FormData) => {
         const keywords = (formData.get('keywords') as string ?? '').replaceAll('\r','');
         const image = (formData.get('image') as string ?? '').replaceAll('\r','');
         const _id = (formData.get('_id') as string ?? '').replaceAll('\r','');
+        const headingParahg = (formData.get('paragh' ?? '') as string).replaceAll('\r','');
 
         const res = placeSchemaId.safeParse({
             heading,
@@ -27,7 +28,8 @@ export const updateImage = async ( formData: FormData) => {
             detail,
             keywords,
             image,
-            _id
+            _id,
+            paragh: headingParahg
         })
 
         if (res.error?.issues) {
@@ -43,13 +45,15 @@ export const updateImage = async ( formData: FormData) => {
 
         const old = await Place.findById(_id)
 
-        await Place.findByIdAndUpdate(_id, {
+        const place = await Place.findByIdAndUpdate(_id, {
             detail,
             heading,
             text,
             keywords,
             image
         })
+
+        if (!place) return { error: "A hely nem található." };
 
         updateTag('place-list')
         updateTag('place-footer')

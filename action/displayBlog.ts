@@ -29,7 +29,7 @@ export const displayBlog = async (_id: string) => {
         updateTag('blog-' + blog.heading.replaceAll(" ", "-"))
         updateTag('blog-page-' + blog.heading.replaceAll(" ", "-"))
 
-        return { message: "Blog törölve." }
+        return { message: "Blog visszaállítva." }
 
     } catch (error) {
         const err = await handleMongooseError(error);
