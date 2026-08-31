@@ -83,7 +83,7 @@ const SendMessageForm = () => {
 
         </Field>
         <Field  >
-          <Button type="submit" disabled={isPending} size="lg">Küld</Button>
+          <Button type="submit" name="Küld" disabled={isPending} size="lg">Küld</Button>
 
         </Field>
       </FieldGroup>
