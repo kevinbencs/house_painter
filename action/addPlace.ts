@@ -14,12 +14,12 @@ export const addPlace = async ( formData: FormData) => {
         if (auth.error) return { error: "Kérlek jelentkezz be." };*/
         
 
-        const heading = (formData.get('heading') as string ?? '').replaceAll('\r','');
-        const text = (formData.get('text' ?? '') as string).replaceAll('\r','');
-        const detail = (formData.get('detail' ?? '') as string).replaceAll('\r','');
-        const keywords = (formData.get('keywords' ?? '') as string).replaceAll('\r','');
-        const image = (formData.get('image' ?? '') as string).replaceAll('\r','');
-        const headingParahg = (formData.get('paragh' ?? '') as string).replaceAll('\r','');
+        const heading = (formData.get('heading' ) as string ?? '').replaceAll('\r','');
+        const text = (formData.get('text') as string ?? '').replaceAll('\r','');
+        const detail = (formData.get('detail') as string ?? '').replaceAll('\r','');
+        const keywords = (formData.get('keywords') as string ?? '').replaceAll('\r','');
+        const image = (formData.get('image') as string ?? '').replaceAll('\r','');
+        const headingParahg = (formData.get('paragh') as string ?? '').replaceAll('\r','');
        
         const res = PlaceSchema.safeParse({
             heading,

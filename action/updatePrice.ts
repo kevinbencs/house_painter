@@ -37,7 +37,7 @@ export const updatePrice = async (_prevSate: ActionState, formData: FormData) =>
 
             if (res.error?.issues) {
                 console.log(res.error.issues)
-                return { failed: res.error.issues.map((item) => item.message) }
+                return { failed: res.error.issues.map((item) => item.message) , fieldData: ['']}
             }
         }
 

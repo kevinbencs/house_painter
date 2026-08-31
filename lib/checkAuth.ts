@@ -11,10 +11,10 @@ export const checkAuth = async () => {
 
     const tokenLongTime = cookie.get("longAuthToken");
 
-    if ((!tokenShortTime && !tokenLongTime) || (!tokenShortTime?.value && !tokenLongTime) || (!tokenShortTime && !tokenLongTime?.value) || (!tokenShortTime?.value && !tokenLongTime?.value)) return { error: "There is no token" }
+    if (!tokenShortTime?.value && !tokenLongTime?.value) return { error: "There is no token" }
 
     if (tokenShortTime) {
-        const resShort = await checkJWT(tokenShortTime.value, process.env.JWT_SECRET_Short!)
+        const resShort = await checkJWTAccess(tokenShortTime.value, process.env.JWT_SECRET_Short!)
 
         if (resShort.res) return { success: resShort.res };
 
@@ -113,7 +113,29 @@ const checkJWT = async (token: string, secret: string) => {
 
         if (!user) return { error: "There is no admin with this id" }
 
-        return { res: res.id, twofa: user.twofa }
+        return { res: res.id, twofa: user.twofa}
+
+    } catch (error: any) {
+        console.log(error)
+        if (error.name === "TokenExpiredError") {
+            return { error: 'JWT error' };
+        } else if (error.name === "JsonWebTokenError") {
+            return { error: 'JWT error' };
+        } else if (error.name === "NotBeforeError") {
+            return { error: 'JWT error' };
+        }
+
+        const err = await handleMongooseError(error)
+        return { error: err }
+    }
+}
+
+
+const checkJWTAccess = async (token: string, secret: string) => {
+    try {
+        const res = jwt.verify(token, secret) as { id: string }
+
+        return { res: res.id}
 
     } catch (error: any) {
         console.log(error)

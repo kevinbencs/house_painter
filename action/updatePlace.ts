@@ -20,7 +20,7 @@ export const updatePlace = async ( formData: FormData) => {
         const keywords = (formData.get('keywords') as string ?? '').replaceAll('\r','');
         const image = (formData.get('image') as string ?? '').replaceAll('\r','');
         const _id = (formData.get('_id') as string ?? '').replaceAll('\r','');
-        const headingParahg = (formData.get('paragh' ?? '') as string).replaceAll('\r','');
+        const headingParahg = (formData.get('paragh') as string ?? '').replaceAll('\r','');
 
         const res = placeSchemaId.safeParse({
             heading,
