@@ -7,5 +7,5 @@ export async function proxy(request: NextRequest, event: NextFetchEvent) {
 }
  
 export const config = {
-  matcher: ['/dashboard/:path*', '/login/:path*', '/forgotpassword/:path*', '/new2fa'],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)"],
 }
