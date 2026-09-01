@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { useLogged } from "../loggedContext/isLoggedContext"
 import Image from "next/image"
 
 
@@ -10,7 +9,7 @@ import Image from "next/image"
 
 const Menu = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
-    const { IsLogged, Timer } = useLogged()
+
 
     useEffect(() => {
         if (isOpen) {
@@ -27,7 +26,7 @@ const Menu = () => {
     return (
         <div className="flex justify-between lg:justify-around items-center">
             <Link href="/">
-                <Image src="/logo.png" alt="Budapest szobafestő logó" width={102} height={102} loading="eager"/>
+                <Image src="/logo.png" alt="Budapest szobafestő logó" width={102} height={102} loading="eager" />
             </Link>
             <div >
                 <label htmlFor="hamburger-menu" className="lg:hidden text-center text-black p-2 rounded bg-gray-50">Menu </label>
@@ -43,13 +42,6 @@ const Menu = () => {
                             <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-400 p-px pl-[11px] text-sm font-medium mt-1 mb-1 pr-[11px] hover:underline" href="/kapcsolat">Kapcsolat</Link>
                             <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-300 p-px pl-[11px] text-sm font-medium mt-1 mb-1 pr-[11px] hover:underline" href="/blog">Blogok</Link>
                             <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-200 p-px pl-[11px] text-sm font-medium mt-1 mb-1 pr-[11px] hover:underline" href="/szolgaltatas">Szolgáltatások</Link>
-                            {IsLogged &&
-                                <>
-                                    <Link className="text-white ease-in-out -top-full relative duration-300 lg:static delay-200 p-px pl-[11px] text-sm font-medium mt-1 mb-1 pr-[11px] hover:underline" href="/dashboard">Dashboard</Link>
-                                    <div className=" ease-in-out -top-full relative duration-300 lg:static delay-100">{Math.floor(Timer/60)}:{String(Timer%60).padStart(2, '0')}</div>
-                                </>
-                            }
-
                         </section>
                     </div>
                 </div>

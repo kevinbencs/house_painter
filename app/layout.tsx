@@ -5,9 +5,7 @@ import { cn } from "@/lib/utils";
 import Footer from "./_components/footer/footer";
 import HeaderContainer from "./_components/header/headerContainer";
 import TopBar from "./_components/header/topbar";
-import { IsLoggedProvider } from "./_components/loggedContext/isLoggedContext";
 import { FormProvided } from "./_components/sendMessage/formContext";
-import ErrorBoundary from "./custom-error-boundary"
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -113,9 +111,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <FormProvided>
-          <IsLoggedProvider>
-           <HeaderContainer>{children}</HeaderContainer>
-          </IsLoggedProvider>
+          <HeaderContainer>{children}</HeaderContainer>
           {/*<Footer />*/}
         </FormProvided>
       </body>

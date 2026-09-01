@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { IsLoggedProvider } from "../_components/loggedContext/isLoggedContext";
 
 export async function generateMetadata(): Promise<Metadata> {
 
@@ -48,7 +49,9 @@ export default function Layout({
 }>) {
     return (
         <>
-            {children}
+            <IsLoggedProvider>
+                {children}
+            </IsLoggedProvider>
         </>
     )
 }

@@ -12,6 +12,7 @@ import { IoIosImages } from "react-icons/io";
 import { FaMap } from "react-icons/fa";
 import { FaPaintRoller } from "react-icons/fa";
 import { LuPaintBucket } from "react-icons/lu"
+import { useLogged } from "../loggedContext/isLoggedContext";
 
 
 const Links = [
@@ -30,10 +31,16 @@ const Links = [
 
 const Sidebar = () => {
   const pathname = usePathname()
+  const { Timer } = useLogged()
   return (
     <div >
       <section className="flex sticky top-0 h-[800px] flex-col items-start justify-between bg-gray-900 p-10 text-gray-400 rounded pb-4 text-sm min-w-[251px]">
         {Links.map((item) => <Link className={`hover:text-gray-200  flex items-center gap-2 w-full p-2 rounded-xs ${pathname === item.url ? 'text-white' : ''}`} key={item.url} href={item.url}>{item.img} {item.text}</Link>)}
+
+
+        <div className=" flex items-center gap-2 w-full p-2 rounded-xs">{Math.floor(Timer / 60)}:{String(Timer % 60).padStart(2, '0')}</div>
+
+
         <LogoutButton />
       </section>
     </div>
