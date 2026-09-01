@@ -25,9 +25,8 @@ test('an admin mid-2FA is redirected to /login/2fa', async ({ page, context }) =
 test('shows a validation error for an invalid email', async ({ page }) => {
     await page.goto('/login')
 
-    // required + type=email: fill a value the action's zod will reject,
-    // but that still lets the form submit (see note on native validation below)
-    await page.getByLabel('Email').fill('not-an-email@x')   // adjust so it passes HTML5 but fails zod
+    
+    await page.getByLabel('Email').fill('not-an-email@x')  
     await page.getByLabel('Jelszó').fill('whatever')
     await page.getByRole('button', { name: 'Belépés' }).click()
 
@@ -53,5 +52,16 @@ test('preserves the typed email after a failed attempt', async ({ page }) => {
     await page.getByRole('button', { name: 'Belépés' }).click()
 
     await expect(page.getByText('Invalid email or password')).toBeVisible()
-    await expect(page.getByLabel('Email')).toHaveValue('nobody@example.com')  // fieldData round-trip
+    await expect(page.getByLabel('Email')).toHaveValue('nobody@example.com')  
+})
+
+
+test('a correct login redirects to the 2FA page', async ({ page }) => {
+
+  await page.goto('/login')
+  await page.getByLabel('Email').fill('admin@test.com')
+  await page.getByLabel('Jelszó').fill('correct-horse')
+  await page.getByRole('button', { name: 'Belépés' }).click()
+
+  await expect(page).toHaveURL(/\/login\/2fa/)  
 })
