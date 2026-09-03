@@ -9,9 +9,9 @@ import { updateTag } from "next/cache";
 
 export const addService= async ( formData: FormData) => {
     try {
-        /*const auth = await checkAuth()
+        const auth = await checkAuth()
 
-        if (auth.error) return { error: "Kérlek jelentkezz be." };*/
+        if (auth.error) return { error: "Kérlek jelentkezz be." };
         
 
         const heading = (formData.get('heading') as string ?? '').replaceAll('\r','');
@@ -55,7 +55,7 @@ export const addService= async ( formData: FormData) => {
 
         await service.save();
 
-        return {message: "Új hely hozzáadva"}
+        return {message: "Szolgáltatás hozzáadva"}
     } catch (error) {
         const err = await handleMongooseError(error)
         return {error: err}
