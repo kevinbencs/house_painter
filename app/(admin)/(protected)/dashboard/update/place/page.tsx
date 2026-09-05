@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { BSPClientList, BSPGetUpdateList } from "@/typeScriptType/blogServPlace";
 import Place from "@/models/Place";
 import { connection } from "next/server";
+import { getBPlaceDashboardData } from "@/lib/data";
 
 
 const Page = async () => {
@@ -12,10 +13,8 @@ const Page = async () => {
 
   if (auth.error) redirect('/');*/
 
-  const res: BSPGetUpdateList[] = await Place.find({}, { _id: 1, heading: 1, visibility: 1, createdAt: 1 })
-
-  const list: BSPClientList[] = res.map((item) => ({ id: String(item._id), title: item.heading, visibility: item.visibility, year: new Date(item.createdAt).getFullYear(), month: new Date(item.createdAt).getMonth(), day: new Date(item.createdAt).getDay() }))
-
+  
+  const list = await getBPlaceDashboardData()
 
   return (
     <div className="w-full">

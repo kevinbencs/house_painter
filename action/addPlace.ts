@@ -57,6 +57,7 @@ export const addPlace = async ( formData: FormData) => {
 
         updateTag('place-list')
         updateTag('place-footer')
+        updateTag('placeDashboardData')
 
 
         return {message: "Új hely hozzáadva"}

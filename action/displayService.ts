@@ -30,6 +30,7 @@ export const displayService = async (_id: string) => {
         updateTag('service-topbar')
         updateTag('service-footer')
         updateTag(`service-${serv.heading.replaceAll(" ", "-")}`)
+        updateTag('serviceDashboardData')
 
         return { message: "Szolgáltatás visszaállítva." }
 

@@ -43,6 +43,7 @@ export const deleteImage = async (_id: string) => {
         updateTag('main-page-images')
         updateTag('img-numb')
         updateTag('img-id-'+_id)
+        updateTag('getAllImage')
 
   
         const numbOfPage = await getNumbOfImagPage()

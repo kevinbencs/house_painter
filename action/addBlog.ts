@@ -53,6 +53,7 @@ export const addBlog = async ( formData: FormData) => {
 
         updateTag('blog-list');
         updateTag('main-page-blogs');
+        updateTag('blogDashboardData');
 
         return {message: "Blog létrehozva"}
     } catch (error) {

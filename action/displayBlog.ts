@@ -28,6 +28,7 @@ export const displayBlog = async (_id: string) => {
         updateTag('main-page-blogs');
         updateTag('blog-' + blog.heading.replaceAll(" ", "-"))
         updateTag('blog-page-' + blog.heading.replaceAll(" ", "-"))
+        updateTag('blogDashboardData');
 
         return { message: "Blog visszaállítva." }
 

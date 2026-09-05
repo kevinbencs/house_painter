@@ -42,6 +42,7 @@ export const updateImage = async (_prevState: ActionState, formData: FormData) =
 
         updateTag('img-id-' + _id)
         updateTag('main-page-images')
+        updateTag('getAllImage')
 
 
         const allImg = await getAllImg()

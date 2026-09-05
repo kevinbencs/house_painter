@@ -52,6 +52,7 @@ export const addService= async ( formData: FormData) => {
         updateTag('main-page-services');
         updateTag('service-topbar')
         updateTag('service-footer')
+        updateTag('serviceDashboardData')
 
         await service.save();
 

@@ -63,6 +63,7 @@ export const AddImage = async (_prevState: ActionState, formData: FormData) => {
             await img.save()
             updateTag('main-page-images')
             updateTag('img-numb')
+            updateTag('getAllImage')
 
             const numbOfPage = await getNumbOfImagPage()
 

@@ -31,6 +31,7 @@ export const displayPlace = async (_id: string) => {
         updateTag('place-footer')
         updateTag('place-' + old.heading.slice(0,old.heading.indexOf('.')+9).replaceAll(" ", "-"))
         updateTag('place-page-' + old.heading.slice(0,old.heading.indexOf('.')+9).replaceAll(" ", "-"))
+        updateTag('placeDashboardData')
 
         return {message: "Hely visszaállítva."}
 

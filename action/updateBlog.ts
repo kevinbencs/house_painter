@@ -54,6 +54,7 @@ export const updateBlog = async ( formData: FormData) => {
         updateTag('main-page-blogs');
         updateTag('blog-'+heading.replaceAll(" ", "-"))
         updateTag('blog-page-'+heading.replaceAll(" ", "-"))
+        updateTag('blogDashboardData');
         
 
         return { message: "Blog módosítva" }

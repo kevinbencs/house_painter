@@ -57,6 +57,7 @@ export const updateService= async ( formData: FormData) => {
         updateTag('service-topbar')
         updateTag('service-footer')
         updateTag(`service-${heading.replaceAll(" ", "-")}`)
+        updateTag('serviceDashboardData')
 
         return { message: "A szolgáltatás módosítva" }
     } catch (error) {
