@@ -5,7 +5,7 @@ import Image from '@/models/Image'
 import { Img, ImgWithoutBlob } from '@/typeScriptType/img'
 import { MongoData } from '@/typeScriptType/price'
 import { Categories } from '@/typeScriptType/price'
-import { BSPHeading, BSPRender, PlaceRender } from '@/typeScriptType/blogServPlace'
+import { BSPClientList, BSPGetUpdateList, BSPHeading, BSPRender, PlaceRender } from '@/typeScriptType/blogServPlace'
 import Blog from '@/models/Blog'
 import Place from '@/models/Place'
 import Service from '@/models/Service'
@@ -51,6 +51,8 @@ export const getCategory = async () => {
 }
 
 export const getAllImg = async () => {
+    'use cache:private'
+    cacheTag('getAllImage')
 
     const imgs: Img[] = await Image.find({}, { _id: 1, show: 1, newUrl: 1, detail: 1, createdAt: 1 }).sort({ createdAt: -1 }).lean();
 
@@ -310,7 +312,7 @@ export const getGoogleReview = async () => {
         `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews,rating,user_ratings_total&key=${apiKey}&language=hu`
     );
 
-    if(!res.ok) {console.error('Google maps api error'); return {error: 'Api error'}}
+    if (!res.ok) { console.error('Google maps api error'); return { error: 'Api error' } }
     return res.json();
 
 
@@ -334,31 +336,42 @@ export const getImgById = async (id: string) => {
 
 
 
-export const getDashboardData = async() => {
+export const getDashboardData = async () => {
     'use cache: private'
     cacheLife('hours')
     const res = await Promise.all([
-    PageView.aggregate([
-      {
-        $match: {
-          createdAt: { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) }
-        }
-      },
-      {
-        $group: {
-          _id: {
-            date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
-            referrer: "$referrer"
-          },
-          count: { $sum: 1 }
-        }
-      },
-      { $sort: { _id: 1 } }
-    ]),
-    Blog.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2),
-    Place.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2),
-    Service.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2)
-  ])
+        PageView.aggregate([
+            {
+                $match: {
+                    createdAt: { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) }
+                }
+            },
+            {
+                $group: {
+                    _id: {
+                        date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+                        referrer: "$referrer"
+                    },
+                    count: { $sum: 1 }
+                }
+            },
+            { $sort: { _id: 1 } }
+        ]),
+        Blog.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2),
+        Place.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2),
+        Service.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2)
+    ])
 
-  return res
+    return res
+}
+
+export const getBlogDashboardData = async () => {
+    'use cache: private'
+    cacheTag('blogDashboardData')
+    cacheLife('hours')
+    const res: BSPGetUpdateList[] = await Blog.find({}, { _id: 1, heading: 1, visibility: 1, createdAt: 1 })
+
+
+    const list: BSPClientList[] = res.map((item) => ({ id: String(item._id), title: item.heading, visibility: item.visibility, year: new Date(item.createdAt).getFullYear() + 1, month: new Date(item.createdAt).getMonth(), day: new Date(item.createdAt).getDate() }))
+    return list
 }
