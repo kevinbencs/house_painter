@@ -84,7 +84,7 @@ export const loginTwoFAAction = async (otp: string) => {
 
         if (!logCookie) return { redirect: '/login' };
 
-        const decoded = jwt.verify(logCookie.value, process.env.JWT_SECRET_URL!) as { id: string }
+        const decoded = jwt.verify(logCookie.value, process.env.JWT_SECRET_TWOFA!) as { id: string }
 
         const user = await Admin.findById(decoded.id) as Adm
 

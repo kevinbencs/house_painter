@@ -10,6 +10,7 @@ import Blog from '@/models/Blog'
 import Place from '@/models/Place'
 import Service from '@/models/Service'
 import { connectToMongo } from '@/lib/mongo'
+import PageView from '@/models/PageView'
 
 
 export const getPriceData = async () => {
@@ -329,4 +330,35 @@ export const getImgById = async (id: string) => {
 
 
 
+}
+
+
+
+export const getDashboardData = async() => {
+    'use cache: private'
+    cacheLife('hours')
+    const res = await Promise.all([
+    PageView.aggregate([
+      {
+        $match: {
+          createdAt: { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) }
+        }
+      },
+      {
+        $group: {
+          _id: {
+            date: { $dateToString: { format: "%Y-%m-%d", date: "$createdAt" } },
+            referrer: "$referrer"
+          },
+          count: { $sum: 1 }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ]),
+    Blog.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2),
+    Place.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2),
+    Service.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2)
+  ])
+
+  return res
 }
