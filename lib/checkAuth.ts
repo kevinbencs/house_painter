@@ -7,61 +7,15 @@ export const checkAuth = async () => {
 
     const cookie = await cookies();
 
-    const tokenShortTime = cookie.get("shortAuthToken");
-
-    const tokenLongTime = cookie.get("longAuthToken");
-
-    if (!tokenShortTime?.value && !tokenLongTime?.value) return { error: "There is no token" }
-
-    if (tokenShortTime) {
-        const resShort = await checkJWTAccess(tokenShortTime.value, process.env.JWT_SECRET_Short!)
-
-        if (resShort.res) return { success: resShort.res };
-
-        if (resShort.error) {
-            if (tokenLongTime) {
-                const resLong = await checkJWT(tokenLongTime.value, process.env.JWT_SECRET_Long!)
-
-                if (resLong.error) return { error: resLong.error };
-
-                if (resLong.res) {
-
-                    const tokenShortTime = jwt.sign({ id: resLong.res }, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
-
-                    cookie.set("shortAuthToken", tokenShortTime, {
-                        httpOnly: true,
-                        secure: true,
-                        maxAge: 300,
-                        sameSite: 'lax',
-                        path: '/',
-                    })
+    const token = cookie.get("AuthToken");
 
 
-                    return { success: resLong.res };
-                }
-
-            }
-            else return { error: resShort.error };
-
-        }
-
-    }
-
-    if (tokenLongTime) {
-        const resLong = await checkJWT(tokenLongTime.value, process.env.JWT_SECRET_Long!)
+    if (token) {
+        const resLong = await checkJWT(token.value, process.env.JWT_SECRET_Long!)
 
         if (resLong.res) {
 
-            const tokenShortTime = jwt.sign({ id: resLong.res }, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
-
-            cookie.set("shortAuthToken", tokenShortTime, {
-                httpOnly: true,
-                secure: true,
-                maxAge: 300,
-                sameSite: 'lax',
-                path: '/',
-            })
-
+            
 
             return { success: resLong.res };
         }

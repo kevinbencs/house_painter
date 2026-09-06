@@ -110,13 +110,11 @@ export const loginTwoFAAction = async (otp: string) => {
 
         if (!res.valid) return { error: "Hiba, próbáld újra." }
 
-        const tokenLongTime = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_Long!, { expiresIn: "1h" });
-
-        const tokenShortTime = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
+        const tokenJWT = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET!, { expiresIn: "1h" });
 
         cookieStore.delete("2fa")
 
-        cookieStore.set("longAuthToken", tokenLongTime, {
+        cookieStore.set("AuthToken", tokenJWT, {
             httpOnly: true,
             secure: true,
             maxAge: 3600,
@@ -124,16 +122,10 @@ export const loginTwoFAAction = async (otp: string) => {
             path: '/',
         })
 
-        cookieStore.set("shortAuthToken", tokenShortTime, {
-            httpOnly: true,
-            secure: true,
-            maxAge: 300,
-            sameSite: 'lax',
-            path: '/',
-        })
 
 
-        return { redirect: '/dashboard' };
+
+
 
     } catch (error: any) {
         if (error.name === "TokenExpiredError") {
@@ -150,6 +142,6 @@ export const loginTwoFAAction = async (otp: string) => {
         const err = await handleMongooseError(error)
         return { error: err }
     }
-
+    redirect('/dashboard')
 
 }
