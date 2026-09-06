@@ -2,12 +2,12 @@
 
 import { handleMongooseError } from "@/lib/mongo";
 import { ipLimiter } from "@/lib/rateLimit";
+import { decryptTwoFA, encryptTwoFA } from "@/lib/session";
 import Admin from "@/models/Admin";
 import { loginSchema, otpTokenSchema2 } from "@/schema/schema";
 import { Adm } from "@/typeScriptType/admin";
 import { ActionState } from "@/typeScriptType/form";
 import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { verify } from "otplib";
@@ -22,7 +22,7 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
         const cookieStore = await cookies();
         const header = await headers()
 
-	const ip = header.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+        const ip = header.get("x-forwarded-for")?.split(",")[0]?.trim() ||
             header.get("x-real-ip") ||
             "unknown"
 
@@ -32,7 +32,7 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
 
 
         } catch (error) {
-            return ({ error: 'Too many login attempts',fieldData: [email, password] });
+            return ({ error: 'Too many login attempts', fieldData: [email, password] });
         }
 
         const res = loginSchema.safeParse({
@@ -57,7 +57,9 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
 
         secret = admin.twofa
 
-        const token2fa = jwt.sign({ id: String(admin._id) }, process.env.JWT_SECRET_TWOFA!, { expiresIn: "10m" });
+        const expires = new Date(Date.now() + 1000 * 60 * 10)
+
+        const token2fa = await encryptTwoFA({ id: String(admin._id), expiresAt: expires })
 
         cookieStore.set("2fa", token2fa, {
             httpOnly: true,
@@ -84,9 +86,10 @@ export const loginTwoFAAction = async (otp: string) => {
 
         if (!logCookie) return { redirect: '/login' };
 
-        const decoded = jwt.verify(logCookie.value, process.env.JWT_SECRET_TWOFA!) as { id: string }
 
-        const user = await Admin.findById(decoded.id) as Adm
+        const decoded = await decryptTwoFA(logCookie.value)
+
+        const user = await Admin.findById(decoded?.id) as Adm
 
         if (!user) return { redirect: '/login' };
 
@@ -102,7 +105,7 @@ export const loginTwoFAAction = async (otp: string) => {
         const secret = user.twofa
 
         if (token === secret) {
-            await Admin.findByIdAndUpdate(decoded.id, { twofa: "" })
+            await Admin.findByIdAndUpdate(decoded?.id, { twofa: "" })
             return { redirect: "/new2fa" }
         }
 
@@ -110,11 +113,13 @@ export const loginTwoFAAction = async (otp: string) => {
 
         if (!res.valid) return { error: "Hiba, próbáld újra." }
 
-        const tokenJWT = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET!, { expiresIn: "1h" });
+        const expires = new Date(Date.now() + 1000 * 60 * 60)
+
+        const jwtToken = await encryptTwoFA({ id: String(user._id), expiresAt: expires })
 
         cookieStore.delete("2fa")
 
-        cookieStore.set("AuthToken", tokenJWT, {
+        cookieStore.set("AuthToken", jwtToken, {
             httpOnly: true,
             secure: true,
             maxAge: 3600,
