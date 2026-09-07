@@ -77,76 +77,71 @@ export const loginAction = async (_prevState: ActionState, formData: FormData) =
     redirect('/login/2fa')
 }
 
-export const loginTwoFAAction = async (otp: string) => {
+export const loginTwoFAAction = async (_prevState: ActionState, formData: FormData) => {
+    const cookieStore = await cookies();
+
+    const logCookie = cookieStore.get("2fa")
+
+    if (!logCookie) redirect('/');
+
+    const otp = formData.get('optName')
+
+    let errR: string = "";
+
     try {
-
-        const cookieStore = await cookies();
-
-        const logCookie = cookieStore.get("2fa")
-
-        if (!logCookie) return { redirect: '/login' };
 
 
         const decoded = await decryptTwoFA(logCookie.value)
 
         const user = await Admin.findById(decoded?.id) as Adm
+        const token = String(otp)
 
-        if (!user) return { redirect: '/login' };
+        if (!user) errR = "/";
 
-        const token = otp;
 
-        const valid = otpTokenSchema2.safeParse(token);
+        else {
+            const valid = otpTokenSchema2.safeParse(otp);
 
-        if (valid.error) {
-            console.log(valid.error.issues);
-            return { failed: valid.error.issues.map((item) => item.message) }
+            if (valid.error) {
+                console.log(valid.error.issues);
+                return { failed: valid.error.issues.map((item) => item.message), fieldData: [otp] }
+            }
+
+            const secret = user.twofa
+
+            if (otp === secret) {
+                await Admin.findByIdAndUpdate(decoded?.id, { twofa: "" })
+                errR = "/new2fa"
+            }
+
+            const res = await verify({ secret, token });
+
+            if (!res.valid) return { error: "Hiba, próbáld újra.", fieldData: [otp]  }
+
+            const expires = new Date(Date.now() + 1000 * 60 * 60)
+
+            const jwtToken = await encryptTwoFA({ id: String(user._id), expiresAt: expires })
+
+            cookieStore.delete("2fa")
+
+            cookieStore.set("AuthToken", jwtToken, {
+                httpOnly: true,
+                secure: true,
+                maxAge: 3600,
+                sameSite: 'lax',
+                path: '/',
+            })
+
         }
-
-        const secret = user.twofa
-
-        if (token === secret) {
-            await Admin.findByIdAndUpdate(decoded?.id, { twofa: "" })
-            return { redirect: "/new2fa" }
-        }
-
-        const res = await verify({ secret, token });
-
-        if (!res.valid) return { error: "Hiba, próbáld újra." }
-
-        const expires = new Date(Date.now() + 1000 * 60 * 60)
-
-        const jwtToken = await encryptTwoFA({ id: String(user._id), expiresAt: expires })
-
-        cookieStore.delete("2fa")
-
-        cookieStore.set("AuthToken", jwtToken, {
-            httpOnly: true,
-            secure: true,
-            maxAge: 3600,
-            sameSite: 'lax',
-            path: '/',
-        })
-
-
 
 
 
 
     } catch (error: any) {
-        if (error.name === "TokenExpiredError") {
-            console.error(error)
-            return { redirect: '/login' };
-        } else if (error.name === "JsonWebTokenError") {
-            console.error(error)
-            return { redirect: '/login' };
-        } else if (error.name === "NotBeforeError") {
-            console.error(error)
-            return { redirect: '/login' };
-        }
-
         const err = await handleMongooseError(error)
-        return { error: err }
+        return { error: err , fieldData: [otp] }
     }
+    if (errR) redirect(errR)
     redirect('/dashboard')
 
 }

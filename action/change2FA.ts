@@ -4,90 +4,76 @@
 import { verify } from "otplib";
 import Admin from "@/models/Admin";
 import { cookies } from "next/headers";
-import jwt from "jsonwebtoken"
 import { Adm } from "@/typeScriptType/admin";
 import { handleMongooseError } from "@/lib/mongo";
 import { otpTokenSchema } from "@/schema/schema";
+import { decryptTwoFA, encryptJWT } from "@/lib/session";
+import { redirect } from "next/navigation";
 
-export const setNewTwoFA = async ( otp: string, secret: string) => {
+export const setNewTwoFA = async (otp: string, secret: string) => {
+    const cookieStore = await cookies();
+
+    const logCookie = cookieStore.get("2fa")
+
+    if (!logCookie) redirect('/');
+
+    let errR: string = ""
+
     try {
 
-        const cookieStore = await cookies();
+        const decoded = await decryptTwoFA(logCookie.value)
 
-        const logCookie = cookieStore.get("2fa")
+        const user = await Admin.findById(decoded?.id) as Adm
 
-        if (!logCookie) return { redirect: '/login' };
+        if (!user) errR = '/'
 
-        const decoded = jwt.verify(logCookie.value, process.env.JWT_SECRET_URL!) as { id: string }
-
-        const user = await Admin.findById(decoded.id) as Adm
-
-
-
-        if (!user) return { redirect: '/login' }
-
-        const token = otp;
-
-        const valid = otpTokenSchema.safeParse({
-            otpCode: token,
-            secret: secret
-        });
-
-        if (valid.error) {
-            console.log(valid.error.issues);
-            return { failed: valid.error.issues.map((item) => item.message) }
-        }
-
-        const res = await verify({ secret, token });
-
-        if (res.valid) {
-
-            await Admin.findByIdAndUpdate(decoded.id, {
-                twofa: secret
-            })
-
-            cookieStore.delete("2fa")
-
-            const tokenLongTime = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_Long!, { expiresIn: "1h" });
-
-            const tokenShortTime = jwt.sign({ id: decoded.id }, process.env.JWT_SECRET_Short!, { expiresIn: "5m" });
-
-
-
-            cookieStore.set(tokenLongTime, "longAuthToken", {
-                httpOnly: true,
-                secure: true,
-                maxAge: 3600,
-            })
-
-            cookieStore.set(tokenShortTime, "shortAuthToken", {
-                httpOnly: true,
-                secure: true,
-                maxAge: 300,
-            })
-
-            return { redirect: '/dashboard' };
-
-        }
         else {
-            return { error: "Hiba, próbáld újra." }
-        }
 
+            const token = otp;
+
+            const valid = otpTokenSchema.safeParse({
+                otpCode: token,
+                secret: secret
+            });
+
+            if (valid.error) {
+                console.log(valid.error.issues);
+                return { failed: valid.error.issues.map((item) => item.message) }
+            }
+
+            const res = await verify({ secret, token });
+
+            if (res.valid) {
+
+                await Admin.findByIdAndUpdate(decoded?.id, {
+                    twofa: secret
+                })
+
+                cookieStore.delete("2fa")
+
+                const expires = new Date(Date.now() + 1000 * 60 * 60)
+                const tokenJWT = await encryptJWT({ id: user._id, expiresAt: expires })
+
+                cookieStore.set(tokenJWT, "AuthToken", {
+                    httpOnly: true,
+                    secure: true,
+                    maxAge: 3600,
+                })
+
+            }
+            else {
+                return { error: "Hiba, próbáld újra." }
+            }
+        }
 
     } catch (error: any) {
-        if (error.name === "TokenExpiredError") {
-            console.error(error)
-            return { redirect: '/login' }
-        } else if (error.name === "JsonWebTokenError") {
-            console.error(error)
-            return { redirect: '/login' }
-        } else if (error.name === "NotBeforeError") {
-            console.error(error)
-            return { redirect: '/login' }
-        }
 
         const err = await handleMongooseError(error)
         return { error: err }
     }
+
+    if(errR !== "") redirect(errR)
+    
+    redirect('/dashboard')
 
 }

@@ -6,14 +6,10 @@ import { Button } from "@/components/ui/button";
 import { REGEXP_ONLY_DIGITS } from "input-otp"
 import { SyntheticEvent, useState, useTransition } from "react";
 import { setNewTwoFA } from "@/action/change2FA";
-import { useLogged } from "../loggedContext/isLoggedContext";
-import { useRouter } from "next/router";
 
 
 const Form = (props: {secret: string}) => {
 
-    const { setLogged } = useLogged();
-    const router = useRouter();
     const [error, setError] = useState<string>('');
     const [failed, setFailed] = useState<string[]>([]);
     const [ isPending, startTransition] = useTransition()
@@ -29,10 +25,6 @@ const Form = (props: {secret: string}) => {
 
             if(res.failed) setFailed(res.failed);
 
-            if(res.redirect) {
-                setLogged(true);
-                router.push(res.redirect)
-            }
         })
     }
 

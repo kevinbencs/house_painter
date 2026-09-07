@@ -11,37 +11,16 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useRouter } from "next/navigation"
-import { SyntheticEvent,useState, useTransition } from "react"
-import { useLogged } from "../loggedContext/isLoggedContext"
+import { useActionState,useState,  } from "react"
 
 
 const TwoFAForm = () => {
-    const [ isPending, startTransition] = useTransition()
     const [otp, setOtp] = useState<string>("")
-    const { setLogged } = useLogged();
-    const router = useRouter();
-    const [error, setError] = useState<string>('')
-    const [failed, setFailed] = useState<string[]>([])
+    const [state, action, isPending] = useActionState(loginTwoFAAction, null)
 
    
 
-    const submit = async(e: SyntheticEvent) => {
-        e.preventDefault();
 
-        startTransition(async() => {
-            const res = await loginTwoFAAction(otp)
-
-            if(res.error) setError(res.error);
-
-            if(res.failed) setFailed(res.failed);
-
-            if(res.redirect) {
-                setLogged(true);
-                router.push(res.redirect)
-            }
-        })
-    }
 
     return (
         <Card className="w-full max-w-sm">
@@ -52,11 +31,11 @@ const TwoFAForm = () => {
                 </CardDescription>
 
             </CardHeader>
-            <form onSubmit={submit}>
+            <form action={action}>
                 <CardContent>
 
-                    {error !== "" && <div className="mb-2 mt-2 text-red-600">{error}</div>}
-                    {failed.length !== 0 && <div className="mb-2 mt-2 text-red-600">{failed.map((item) => <div key={item}>{item}</div>)}</div>}
+                    {(state && state?.error !== "") && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
+                    {(state && state.failed && state?.failed.length !== 0) && <div className="mb-2 mt-2 text-red-600">{state.failed.map((item) => <div key={item}>{item}</div>)}</div>}
                     <div className="flex flex-col gap-6">
 
                         <div className="grid gap-2">
