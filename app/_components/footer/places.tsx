@@ -3,6 +3,33 @@ import { BSPHeading } from "@/typeScriptType/blogServPlace";
 import Link from "next/link";
 
 
+const place = [
+    'I. kerület',
+    'II. kerület',
+    'III. kerület',
+    'IV. kerület',
+    'V. kerület',
+    'VI. kerület',
+    'VII. kerület',
+    'VIII. kerület',
+    'IX. kerület',
+    'X. kerület',
+    'XI. kerület',
+    'XII. kerület',
+    'XIII. kerület',
+    'XIV. kerület',
+    'XV. kerület',
+    'XVI. kerület',
+    'XVII. kerület',
+    'XVIII. kerület',
+    'XIX. kerület',
+    'XX. kerület',
+    'XI. kerület',
+    'XII. kerület',
+    'XIII. kerület',
+
+]
+
 const Places = async () => {
     let data: BSPHeading[];
 
@@ -21,6 +48,13 @@ const Places = async () => {
         <div className="flex flex-col md:flex-row gap-5">
             <section className="flex flex-col items-center">
                 {data.slice(0, data.length / 2).map((item) => <Link href={'/helyek/'+item.heading.slice(0, item.heading.indexOf('.') + 9).replaceAll(' ', '-')} className="hover:underline" key={`footer-place-${item._id}`}>{item.heading.slice(12, item.heading.indexOf('-')-12)}</Link>)}
+            </section>
+            <section className="flex flex-col items-center">
+                {place.slice(0, data.length / 2).map((item) => <li  className="hover:underline" key={`footer-place-${item+'-key'}`}>{item}</li>)}
+            </section>
+
+            <section className="flex flex-col items-center">
+                {place.slice(data.length / 2, data.length).map((item) => <li  className="hover:underline" key={`footer-place-${item+'-key'}`}>{item}</li>)}
             </section>
             <section className="flex flex-col items-center">
                 {data.slice(data.length / 2, data.length).map((item) => <Link href={'/helyek/'+item.heading.slice(0, item.heading.indexOf('.') + 9).replaceAll(' ', '-')} key={`footer-place-${item._id}`} className="hover:underline">{item.heading.slice(12, item.heading.indexOf('.') + 9)}</Link>)}
