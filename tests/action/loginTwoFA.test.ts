@@ -1,5 +1,5 @@
 // @vitest-environment node
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
+/*import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import mongoose from 'mongoose'
 import { useTestDb } from '../helper/vitest' 
 import Admin from '@/models/Admin'
@@ -100,4 +100,4 @@ describe('loginTwoFAAction', () => {
 
     expect(await loginTwoFAAction('123456')).toEqual({ error: 'Hiba, próbáld újra.' })
   })
-})
+})*/

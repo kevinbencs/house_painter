@@ -71,15 +71,12 @@ export async function generateStaticParams() {
 
 
 const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
-  "use cache"
+
   const { heading } = await params;
 
   if (heading === '__placeholder__') notFound()
 
 
- 
-  cacheTag("service-page-"+decodeURIComponent(heading));
-  cacheLife("max")
 
   const data: BSPPublicPagesList[] = await Service.find({visibility: false},{id: 1, heading: 1, image: 1, visibility: 1})
 

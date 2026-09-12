@@ -72,14 +72,13 @@ export async function generateStaticParams() {
 
 
 const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
-  'use cache'
+
 
   const { heading } = await params;
 
   if (heading === '__placeholder__') notFound()
 
-  cacheTag('place-page-' + decodeURIComponent(heading))
-  cacheLife('max')
+
 
   const data: PlaceRender | null = await getPlaceByHeading(decodeURIComponent(heading))
 

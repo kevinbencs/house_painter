@@ -9,7 +9,7 @@ const page = async() => {
     checkTwoFAToken()
   ])
 
-  if(res[0].success) redirect('/dashboard');
+  if(res[0].res) redirect('/dashboard');
 
   if (res[1].error) redirect('/');
 

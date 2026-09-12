@@ -51,7 +51,7 @@ export const getCategory = async () => {
 }
 
 export const getAllImg = async () => {
-    'use cache:private'
+    'use cache: private'
     cacheTag('getAllImage')
 
     const imgs: Img[] = await Image.find({}, { _id: 1, show: 1, newUrl: 1, detail: 1, createdAt: 1 }).sort({ createdAt: -1 }).lean();

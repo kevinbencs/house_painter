@@ -3,23 +3,15 @@
 import { logout } from "@/action/logout"
 import { useTransition } from "react"
 import { CiLogout } from "react-icons/ci";
-import { useLogged } from "../loggedContext/isLoggedContext";
-import { useRouter } from "next/navigation";
 
 const LogoutButton = () => {
 
     const [isPending, startTransition] = useTransition()
-    const { setLogged } = useLogged();
-    const router = useRouter()
     const onClick = () => {
         startTransition(async() => {
             try {
-                const res = await logout()
+                await logout()
 
-                if(res.redirect){
-                    setLogged(false);
-                    router.push("/")
-                }
             } catch (error) {
                 console.log(error)
             }

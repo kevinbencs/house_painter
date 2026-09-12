@@ -10,7 +10,7 @@ const Page = async() => {
     checkTwoFAToken()
   ])
 
-  if(res[0].success) redirect('/dashboard');
+  if(res[0].res) redirect('/dashboard');
 
   if (res[1].res && res[1].twofa !== "") redirect('/login/2fa');
 

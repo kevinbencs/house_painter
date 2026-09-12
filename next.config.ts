@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
     },
   },
   cacheComponents: true,
+  partialPrefetching: true,
    images: {
     remotePatterns: [new URL('https://lh3.googleusercontent.com/**')],
   },

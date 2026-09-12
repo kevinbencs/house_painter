@@ -1,7 +1,8 @@
 import type { NextRequest, NextFetchEvent } from 'next/server'
 import { NextResponse } from 'next/server'
 import { cookies } from 'next/headers';
-import jwt from "jsonwebtoken"
+
+
 
 export const middleware = async (req: NextRequest, event: NextFetchEvent) => {
 
@@ -45,7 +46,7 @@ export const middleware = async (req: NextRequest, event: NextFetchEvent) => {
     }*/
 
     if (pathname === "/new2fa" || pathname === "/login/2fa") {
-        try {
+        
             const cookie = await cookies();
 
             const twoFAToken = cookie.get("2fa")
@@ -55,18 +56,9 @@ export const middleware = async (req: NextRequest, event: NextFetchEvent) => {
                 return NextResponse.redirect(new URL('/', req.url))
             }
 
-            const res = jwt.verify(twoFAToken.value, process.env.JWT_SECRET_TWOFA!)
+           
 
-        } catch (error: any) {
-            console.log("Session error on dashboard");
-            if (error.name === "TokenExpiredError") {
-                return NextResponse.redirect(new URL('/', req.url))
-            } else if (error.name === "JsonWebTokenError") {
-                return NextResponse.redirect(new URL('/', req.url))
-            } else if (error.name === "NotBeforeError") {
-                return NextResponse.redirect(new URL('/', req.url))
-            }
-        }
+        
     }
 
 
