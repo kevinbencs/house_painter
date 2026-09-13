@@ -43,21 +43,24 @@ const Places = async () => {
         )
     }
     
+    const name = data.map(item => item.heading.slice(12, item.heading.indexOf('-')-12))
+
+
+    const city = place.map((item) => {
+        if(name.indexOf(item) > -1)  {let p = data[name.indexOf(item)]; return <Link href={'/helyek/'+p.heading.slice(0, p.heading.indexOf('.') + 9).replaceAll(' ', '-')} className="hover:underline" key={`footer-place-${p._id}`}>{p.heading.slice(12, p.heading.indexOf('-')-12)}</Link>}
+        return  <li  className="hover:underline" key={`footer-place-${item+'-key'}`}>{item}</li>
+    })
 
     return (
         <div className="flex flex-col md:flex-row gap-5">
-            <section className="flex flex-col items-center">
-                {data.slice(0, data.length / 2).map((item) => <Link href={'/helyek/'+item.heading.slice(0, item.heading.indexOf('.') + 9).replaceAll(' ', '-')} className="hover:underline" key={`footer-place-${item._id}`}>{item.heading.slice(12, item.heading.indexOf('-')-12)}</Link>)}
-            </section>
-            <section className="flex flex-col items-center">
-                {place.slice(0, data.length / 2).map((item) => <li  className="hover:underline" key={`footer-place-${item+'-key'}`}>{item}</li>)}
-            </section>
 
             <section className="flex flex-col items-center">
-                {place.slice(data.length / 2, data.length).map((item) => <li  className="hover:underline" key={`footer-place-${item+'-key'}`}>{item}</li>)}
+                {city.slice(0, city.length / 2)}
             </section>
+
+            
             <section className="flex flex-col items-center">
-                {data.slice(data.length / 2, data.length).map((item) => <Link href={'/helyek/'+item.heading.slice(0, item.heading.indexOf('.') + 9).replaceAll(' ', '-')} key={`footer-place-${item._id}`} className="hover:underline">{item.heading.slice(12, item.heading.indexOf('.') + 9)}</Link>)}
+                {city.slice(city.length / 2, city.length)}
             </section>
         </div>
 
