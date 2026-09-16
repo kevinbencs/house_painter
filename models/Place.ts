@@ -25,7 +25,7 @@ const PlaceSchema = new mongoose.Schema({
     visibility: {
         type: Boolean,
         required: true,
-        default: false
+        default: true
     },
     headingParahg: {
         type: String,

@@ -25,7 +25,7 @@ const ServiceSchema = new mongoose.Schema({
     visibility: {
         type: Boolean,
         required: true,
-        default: false
+        default: true
     }
 }, {timestamps: true})
 

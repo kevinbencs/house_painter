@@ -46,7 +46,7 @@ export const addBlog = async ( formData: FormData) => {
             detail,
             image,
             keywords,
-            visibility: false
+            visibility: true
         });
 
         await blog.save();
