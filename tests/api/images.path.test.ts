@@ -7,7 +7,7 @@ import Image from '@/models/Image'
 // Mock the external service. vi.mock is hoisted above the imports below.
 vi.mock('@vercel/blob', () => ({ get: vi.fn() }))
 import { get } from '@vercel/blob'
-import { GET } from '@/app/api/images/[path]/route'
+import { GET } from '@/app/images/[path]/route'
 
 
 useTestDb()
