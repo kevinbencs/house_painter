@@ -89,7 +89,7 @@ const ImageUpdatePage = (props: { img: Img[] }) => {
                 <div className="fixed top-0 pt-2 bg-white text-green-600 text-2xl text-center">{mess}</div>
             }
             <section className="flex gap-3 flex-wrap">
-                {props.img.map((item) => <Image className="w-auto h-auto" key={'imageId' + item._id} width={200} height={100} alt={item.detail} src={'/api/images/' + item.newUrl} onClick={() => clickOnImage(item.newUrl, item.detail, item._id, item.show)} />)}
+                {props.img.map((item) => <Image className="w-auto h-auto" key={'imageId' + item._id} width={200} height={100} alt={item.detail} src={'/images/' + item.newUrl} onClick={() => clickOnImage(item.newUrl, item.detail, item._id, item.show)} />)}
             </section>
             {lightBox._id !== "" &&
                 <div className="fixed w-full h-screen top-0 left-0 z-20 bg-gray-400/75 " >
@@ -98,7 +98,7 @@ const ImageUpdatePage = (props: { img: Img[] }) => {
                     </IconContext.Provider>
 
                     <div className="flex justify-center gap-12 items-center" >
-                        <Image src={'/api/images/' + lightBox.newUrl} alt={lightBox.detail} width={1000} height={100} className="w-auto h-auto max-w-250 max-h-180 " />
+                        <Image src={'/images/' + lightBox.newUrl} alt={lightBox.detail} width={1000} height={100} className="w-auto h-auto max-w-250 max-h-180 " />
                         <div>
                             <Button className="text-red-700 mb-6" onClick={deleteImg}>Törlés</Button>
                             <div>
