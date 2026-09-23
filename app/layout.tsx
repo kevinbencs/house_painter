@@ -32,21 +32,21 @@ export const metadata: Metadata = {
   pinterest: {
     richPin: true,
   },
-  authors: [{ name: 'Kevin Bencs', url: 'https://bencskevin.hu' }],
+  authors: [{ name: 'Kevin Bencs', url: 'https://kevinbencs.com' }],
   creator: 'Kevin Bencs',
   publisher: 'Kevin Bencs',
   openGraph: {
     siteName: 'Budafestő',
     locale: 'hu_HU',
     type: 'website',
-    images: [{ url: "/api/images", alt: 'Budafestő - festés Budapesten' }],
+    images: [{ url: "/images/zold-fal.jpeg", alt: 'Budafestő - festés Budapesten' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: "Képek",
 
     description: 'Megbízható, precíz szobafestés Budapesten és környékén',
-    images: [{ url: "/api/images", alt: 'Budafestő - Képek' }],
+    images: [{ url: "/images/zold-fal.jpeg", alt: 'Budafestő - Képek' }],
   },
   robots: {
     index: true,
@@ -80,7 +80,7 @@ export default function RootLayout({
       '@type': 'PostalAddress',
       'addressLocality': 'Budapest',
       'addressCountry': 'HU',
-      // Add specific district if applicable
+      
     },
     'geo': {
       '@type': 'GeoCoordinates',
