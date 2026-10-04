@@ -10,6 +10,7 @@ import Services from "@/app/_components/services/services"
 import HowWork from "@/app/_components/howwork/howwork"
 import ChooseTypeOfTextItem from "@/app/_components/bsp/placeRender"
 import HeadingImgServerCompt from "@/app/_components/dashboard/place/headingImgServerComp"
+import { Suspense } from "react";
 
 
 export async function generateMetadata(
@@ -39,7 +40,7 @@ export async function generateMetadata(
       url: `${process.env.URL}/blog/${heading}`,
       images: [
         {
-          url: '/api/images/' + imgData?.newUrl,
+          url: '/img/' + imgData?.newUrl,
           alt: imgData?.detail
         }
       ],
@@ -50,7 +51,7 @@ export async function generateMetadata(
       description: data.detail,
       images: [
         {
-          url: '/api/images/' + imgData?.newUrl,
+          url: '/img/' + imgData?.newUrl,
           alt: imgData?.detail
         }
       ],
@@ -71,10 +72,8 @@ export async function generateStaticParams() {
 
 
 
-const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
-
-
-  const { heading } = await params;
+const PageContent = async ({ params }: { params: Promise<{ heading: string }> }) => {
+   const { heading } = await params;
 
   if (heading === '__placeholder__') notFound()
 
@@ -131,6 +130,19 @@ const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
       </section >
     </>
 
+  )
+}
+
+
+
+const page = ({ params }: { params: Promise<{ heading: string }> }) => {
+
+
+ 
+  return(
+    <Suspense fallback={<div className='text-center mt-10'>Töltődik...</div> }>
+      <PageContent params={params} /> 
+    </Suspense>
   )
 }
 

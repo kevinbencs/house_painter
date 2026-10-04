@@ -14,24 +14,24 @@ const LinksDescription = () => {
         <Link href="/kerdesek" className="hover:underline">GYIK</Link>
         <Link href="/adatvedelem" className="hover:underline">Adatvédelmi tájékoztató</Link>
       </section>
-      <article>
+      <section>
         <h3 className="mb-3"><Link href='/helyek' className="hover:underline">Ahol jelen vagyok</Link></h3>
         <ErrorBoundary title="Hiba a helyeknél">
           <Places />
         </ErrorBoundary>
 
-      </article>
-      <article>
+      </section>
+      <section>
         <h3 className="mb-3"><Link href="/szolgaltatas" className="hover:underline">Szolgáltatásaim</Link></h3>
         <ErrorBoundary title="Hiba a szolgáltatásoknál">
           <Services />
         </ErrorBoundary>
 
-      </article>
-      <article>
+      </section>
+      <section>
         <h3 className="mb-3">Egyéb felületek</h3>
         <SocialMeadia />
-      </article>
+      </section>
     </div>
   )
 }

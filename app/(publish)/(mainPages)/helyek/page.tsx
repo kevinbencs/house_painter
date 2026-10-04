@@ -23,7 +23,7 @@ const page = async () => {
         {data.map((item, i) => <li key={"blog-" + String(item._id)}>
           <Link className="hover:text-gray-500 flex gap-2 pb-2 border-black w-full border-b mb-6" href={`helyek/${item.heading.slice(0,item.heading.indexOf('.')+9).replaceAll(" ", "-")}`}>
             <div className="max-w-20 min-w-20 overflow-hidden">
-              {imgData[i] !== null && <ImgBSP url={imgData[i].newUrl} detail={imgData[i].detail} />}
+              {imgData[i] !== null && <ImgBSP url={imgData[i]!.newUrl} detail={imgData[i]!.detail} />}
             </div>
 
             <h2 className='font-semibold'>{item.heading}</h2>

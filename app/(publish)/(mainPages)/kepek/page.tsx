@@ -13,13 +13,13 @@ export const metadata: Metadata = {
     siteName: 'Budafestő',
     locale: 'hu_HU',
     type: 'website',
-    images: [{ url: "/api/images", alt: 'Budafestő - Képek' }],
+    images: [{ url: "/img", alt: 'Budafestő - Képek' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: "Képek",
     description: 'Képek a szobafestésről, tapétázásról és egyéb felújításai munkálatokról.',
-    images: [{ url: "/api/images", alt: 'Budafestő - Képek' }],
+    images: [{ url: "/img", alt: 'Budafestő - Képek' }],
   },
 
 }

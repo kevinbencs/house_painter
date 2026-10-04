@@ -6,7 +6,7 @@ type LoggedContextType = {
   Timer: number
 }
 
-const TIMEOUT_MS = 6 * 60 * 1000;
+const TIMEOUT_MS = 10 * 60 * 1000;
 
 const LoggedContext = createContext<undefined | LoggedContextType>(undefined)
 

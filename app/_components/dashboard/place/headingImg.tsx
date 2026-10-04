@@ -46,7 +46,7 @@ const HeadingImg = (props: { id: string }) => {
         <div>
             {image &&
                 <>
-                    <Image src={`/api/images/${image.newUrl}`} unoptimized={true} alt={image.detail} className='w-full block mb-1' width={600} height={337.5} />
+                    <Image src={`/img/${image.newUrl}`} unoptimized={true} alt={image.detail} className='w-full block mb-1' width={600} height={337.5} />
                 </>
             }
             {!image &&

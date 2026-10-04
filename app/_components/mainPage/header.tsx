@@ -7,12 +7,12 @@ const Header = () => {
     {
       id: "A",
       image:
-        "api/images/home.jpg",
+        "/img/home.jpg",
     },
     {
       id: "B",
       image:
-        "api/images/zold-fal.jpeg",
+        "/img/zold-fal.jpeg",
     },
 
   ]);

@@ -9,6 +9,7 @@ import Image from "@/models/Image"
 import { cacheLife, cacheTag } from "next/cache";
 import Link from "next/link";
 import ImgBSP from "@/app/_components/bsp/img";
+import { Suspense } from "react";
 
 export async function generateMetadata(
   { params }: { params: Promise<{ heading: string }> },
@@ -38,7 +39,7 @@ export async function generateMetadata(
       url: `${process.env.URL}/blog/${heading}`,
       images: [
         {
-          url: process.env.URL + '/api/images' + imgData?.newUrl,
+          url: process.env.URL + '/img' + imgData?.newUrl,
           alt: imgData?.detail
         }
       ],
@@ -49,7 +50,7 @@ export async function generateMetadata(
       description: data.detail,
       images: [
         {
-          url: process.env.URL + '/api/images' + imgData?.newUrl,
+          url: process.env.URL + '/img' + imgData?.newUrl,
           alt: imgData?.detail
         }
       ],
@@ -68,19 +69,16 @@ export async function generateStaticParams() {
 }
 
 
-
-
-const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
-
+const PageContent = async ({ params }: { params: Promise<{ heading: string }> }) => {
   const { heading } = await params;
 
   if (heading === '__placeholder__') notFound()
 
 
 
-  const data: BSPPublicPagesList[] = await Service.find({visibility: false},{id: 1, heading: 1, image: 1, visibility: 1})
+  const data: BSPPublicPagesList[] = await Service.find({ visibility: false }, { id: 1, heading: 1, image: 1, visibility: 1 })
 
-  const imgData:(Img | null) [] = await Promise.all(data.map( (item) => Image.findById(item.image)))
+  const imgData: (Img | null)[] = await Promise.all(data.map((item) => Image.findById(item.image)))
 
   if (data === null) notFound();
   return (
@@ -89,13 +87,26 @@ const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
       <ul className='flex gap-4 flex-wrap justify-between lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2'>
         {data.map((item, i) => <li key={"blog-" + String(item._id)}>
           <Link className="hover:text-gray-100 flex flex-col gap-2 bg-gray-500" href={`blog/${item.heading.replaceAll(" ", "-")}`}>
-            {imgData[i] !== null && <ImgBSP url={imgData[i]!.newUrl} detail={imgData[i].detail} />}
+            {imgData[i] !== null && <ImgBSP url={imgData[i]!.newUrl} detail={imgData[i]!.detail} />}
             <h2>{item.heading}</h2>
           </Link>
         </li>)}
       </ul>
     </section>
   )
+}
+
+
+
+
+const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
+
+  return (
+    <Suspense fallback={<div className='text-center mt-10'>Töltődik...</div>}>
+      <PageContent params={params} />
+    </Suspense>
+  )
+
 }
 
 export default page

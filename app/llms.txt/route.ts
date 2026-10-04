@@ -21,7 +21,7 @@ export async function GET() {
 
     const content = `# Budapesti szobafestő oldal
 
-> Rövid leírás az oldalról.
+> Rövid leírás Bencs Kornél szobafestő ${process.env.URL} oldaláról.
 
 
 Az oldal a szobafestő weboldala. Az oldalon fellelhető szolgáltatások elsősorban Budapestre és környékére koncentrálódnak.

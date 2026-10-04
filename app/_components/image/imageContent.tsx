@@ -27,7 +27,7 @@ const ImagePage = (props: { img: ImgWithoutBlob[] }) => {
     return (
         <>
             <section className="flex gap-4 flex-wrap mb-20 justify-center lg:justify-start">
-                {props.img.filter(item => item.show === true).map((item) => <Image loading="eager" className="w-full md:w-auto h-auto cursor-pointer" width={200} height={100} key={"img-key-" + item._id} alt={item.detail} src={'/api/images/' + item.newUrl} onClick={(e) => { e.preventDefault(); clickOnImage(item.newUrl, item.detail, item._id, item.show) }} />)}
+                {props.img.filter(item => item.show === true).map((item) => <Image loading="eager" className="w-full md:w-auto h-auto cursor-pointer" width={200} height={100} key={"img-key-" + item._id} alt={item.detail} src={'/img/' + item.newUrl} onClick={(e) => { e.preventDefault(); clickOnImage(item.newUrl, item.detail, item._id, item.show) }} />)}
             </section>
             {lightBox._id !== "" &&
                 <div className="fixed w-full h-screen top-0 left-0 z-20 bg-gray-400/75 " onClick={closeLightBox}>
@@ -36,7 +36,7 @@ const ImagePage = (props: { img: ImgWithoutBlob[] }) => {
                     </IconContext.Provider>
 
                     <div className="flex justify-center items-center h-screen">
-                        <Image src={'/api/images/' + lightBox.newUrl} alt={lightBox.detail} width={1000} height={100} className="w-auto h-auto" />
+                        <Image src={'/img/' + lightBox.newUrl} alt={lightBox.detail} width={1000} height={100} className="w-auto h-auto" />
                     </div>
 
                 </div>

@@ -6,6 +6,7 @@ import Footer from "./_components/footer/footer";
 import HeaderContainer from "./_components/header/headerContainer";
 import TopBar from "./_components/header/topbar";
 import { FormProvided } from "./_components/sendMessage/formContext";
+import ErrorBoundary from './custom-error-boundary'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -102,9 +103,9 @@ export default function RootLayout({
         <link rel="llms-txt" href="/llms.txt" />
       </head>
       <body className="min-h-full flex flex-col">
-        {/*<ErrorBoundary title="Hiba a szolgáltatásoknál">
+        <ErrorBoundary title="Hiba a szolgáltatásoknál">
           <TopBar />
-        </ErrorBoundary>*/}
+        </ErrorBoundary>
 
         <script
           type="application/ld+json"
@@ -112,7 +113,7 @@ export default function RootLayout({
         />
         <FormProvided>
           <HeaderContainer>{children}</HeaderContainer>
-          {/*<Footer />*/}
+          <Footer />
         </FormProvided>
       </body>
     </html>

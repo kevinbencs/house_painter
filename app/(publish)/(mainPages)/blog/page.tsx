@@ -22,7 +22,7 @@ const page = async() => {
       <ul className='flex gap-4 flex-wrap justify-between lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2'>
         {data.map((item, i) => <li key={"blog-"+String(item._id)}>
           <Link className="hover:text-gray-100 flex flex-col gap-2 bg-gray-500" href={`blog/${item.heading.replaceAll(" ","-")}`}>
-          { (imgData[i] !== undefined && imgData[i] !== null)   && <ImgBSP  url={imgData[i].newUrl} detail={imgData[i].detail}/>}
+          { (imgData[i] !== undefined && imgData[i] !== null)   && <ImgBSP  url={imgData[i]!.newUrl} detail={imgData[i]!.detail}/>}
           <h2>{item.heading}</h2>
           </Link>
         </li>)}

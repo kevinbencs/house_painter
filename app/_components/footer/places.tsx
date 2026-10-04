@@ -24,42 +24,37 @@ const place = [
     'XVIII. kerület',
     'XIX. kerület',
     'XX. kerület',
-    'XI. kerület',
-    'XII. kerület',
-    'XIII. kerület',
+    'XXI. kerület',
+    'XXII. kerület',
+    'XXIII. kerület',
 
 ]
 
 const Places = async () => {
     let data: BSPHeading[];
 
-    try {
-        data = await getPlaceFooter()
-    } catch (error) {
 
+    data = await getPlaceFooter()
 
-        return (
-            <div></div>
-        )
-    }
-
-    const name = data.map(item => item.heading.slice(12, item.heading.indexOf('-') - 12))
+    const name = data.map(item => item.heading.slice(12, item.heading.indexOf(' - ')))
 
 
     const city = place.map((item) => {
-        if (name.indexOf(item) > -1) { let p = data[name.indexOf(item)]; return <Link href={'/helyek/' + p.heading.slice(0, p.heading.indexOf('.') + 9).replaceAll(' ', '-')} className="hover:underline" key={`footer-place-${p._id}`}>{p.heading.slice(12, p.heading.indexOf('-') - 12)}</Link> }
-        return <li className="hover:underline" key={`footer-place-${item + '-key'}`}>{item}</li>
+        if (name.indexOf(item) > -1) { let p = data[name.indexOf(item)]; return <Link href={'/helyek/' + p.heading.slice(0, p.heading.indexOf('.') + 9).replaceAll(' ', '-')} className="hover:underline" key={`footer-place-${p._id}`}>{p.heading.slice(12, p.heading.indexOf(' - ') )}</Link> }
+        return <li className=" list-none" key={`footer-place-${item + '-key'}`}>{item}</li>
     })
 
-    return (
-        <div className="flex flex-col md:flex-row gap-5">
 
-            <section className="flex flex-col items-center">
+
+    return (
+        <div className="flex flex-col md:flex-row md:gap-10">
+
+            <section className="flex flex-col items-start">
                 {city.slice(0, city.length / 2)}
             </section>
 
 
-            <section className="flex flex-col items-center">
+            <section className="flex flex-col items-start">
                 {city.slice(city.length / 2, city.length)}
             </section>
         </div>

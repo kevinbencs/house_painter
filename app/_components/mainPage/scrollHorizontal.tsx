@@ -39,7 +39,7 @@ export default function ScrollHorizontal({ data }: { data: ImgWithoutBlob[] }) {
             <div className="md:hidden">
                 {data.map((item) => (
                     <div key={item._id}>
-                        <Image src={'/api/images/' + item.newUrl} alt={item.detail} width={1000} height={100} className="w-full h-auto mb-2"
+                        <Image src={'/img/' + item.newUrl} alt={item.detail} width={1000} height={100} className="w-full h-auto mb-2"
                         />
                     </div>
                 ))}
@@ -59,7 +59,7 @@ export default function ScrollHorizontal({ data }: { data: ImgWithoutBlob[] }) {
                                     style={
                                         {
                                             "--item-color": "var(--hue-1)",
-                                            "--item-image": `url(/api/images/${item.newUrl})`,
+                                            "--item-image": `url(/img/${item.newUrl})`,
                                         } as React.CSSProperties
                                     }
                                 >
@@ -79,7 +79,7 @@ export default function ScrollHorizontal({ data }: { data: ImgWithoutBlob[] }) {
                     </IconContext.Provider>
 
                     <div className="flex justify-center items-center h-screen">
-                        <Image src={'/api/images/' + lightBox.newUrl} alt={lightBox.detail} width={1000} height={100} className="w-auto h-auto" />
+                        <Image src={'/img/' + lightBox.newUrl} alt={lightBox.detail} width={1000} height={100} className="w-auto h-auto" />
                     </div>
 
                 </div>,

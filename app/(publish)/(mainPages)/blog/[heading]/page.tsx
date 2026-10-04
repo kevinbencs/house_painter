@@ -8,6 +8,7 @@ import { Img } from '@/typeScriptType/img';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { cacheLife, cacheTag } from 'next/cache';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
 
 
 
@@ -39,7 +40,7 @@ export async function generateMetadata(
       url: `${process.env.URL}/blog/${heading}`,
       images: [
         {
-          url: process.env.URL + '/api/images' + imgData?.newUrl,
+          url: process.env.URL + '/img' + imgData?.newUrl,
           alt: imgData?.detail
         }
       ],
@@ -50,7 +51,7 @@ export async function generateMetadata(
       description: data.detail,
       images: [
         {
-          url: process.env.URL + '/api/images' + imgData?.newUrl,
+          url: process.env.URL + '/img' + imgData?.newUrl,
           alt: imgData?.detail
         }
       ],
@@ -70,9 +71,7 @@ export async function generateStaticParams() {
 
 
 
-
-const Page = async ({ params }: { params: Promise<{ heading: string }> }) => {
-
+const PageContent = async ({ params }: { params: Promise<{ heading: string }> }) => {
   const { heading } = await params;
 
   if (heading === '__placeholder__') notFound()
@@ -84,13 +83,22 @@ const Page = async ({ params }: { params: Promise<{ heading: string }> }) => {
   if (data === null) notFound();
 
   return (
-    <section>
+    <article>
       <h1>{decodeURIComponent(heading.replaceAll('-', ' '))}</h1>
       <div className="lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2">
         {data.text.split('$').map((s: string) => <ChooseTypeOfTextItem key={data._id} s={s} />)}
       </div>
 
-    </section>
+    </article>
+  )
+}
+
+
+const Page =  ({ params }: { params: Promise<{ heading: string }> }) => {
+  return (
+    <Suspense fallback={<div className='text-center mt-10'>Töltődik...</div> }>
+      <PageContent params={params}/>
+    </Suspense>
   )
 }
 

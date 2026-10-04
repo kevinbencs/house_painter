@@ -1,7 +1,7 @@
 import ImagePage from '@/app/_components/image/imageContent'
 import Main from '@/app/_components/image/main'
 import Pagination from '@/app/_components/image/pagination'
-import {  getNumbOfImagPage, getTwentyImg } from '@/lib/data'
+import { getNumbOfImagPage, getTwentyImg } from '@/lib/data'
 import { connectToMongo } from '@/lib/mongo'
 import { Metadata } from 'next'
 import { cacheTag } from 'next/cache'
@@ -17,13 +17,13 @@ export const metadata: Metadata = {
     siteName: 'Budafestő',
     locale: 'hu_HU',
     type: 'website',
-    images: [{ url: "/api/images", alt: 'Budafestő - Képek' }],
+    images: [{ url: "/img", alt: 'Budafestő - Képek' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: "Képek",
     description: 'Képek a szobafestésről, tapétázásról és egyéb felújításai munkálatokról.',
-    images: [{ url: "/api/images", alt: 'Budafestő - Képek' }],
+    images: [{ url: "/img", alt: 'Budafestő - Képek' }],
   },
 
 }
@@ -48,10 +48,7 @@ export async function generateStaticParams() {
 
 
 
-
-const Page = async ({ params }: { params: Promise<{ page: string }> }) => {
-  'use cache'
-
+const PageContent = async ({ params }: { params: Promise<{ page: string }> }) => {
   const param = await params
 
   if (param.page === '__placeholder__') notFound()
@@ -61,7 +58,7 @@ const Page = async ({ params }: { params: Promise<{ page: string }> }) => {
 
   const page = Number(param.page)
 
-  
+
 
   if (page <= 0 || isNaN(page)) notFound()
 
@@ -73,20 +70,33 @@ const Page = async ({ params }: { params: Promise<{ page: string }> }) => {
   ])
 
 
-  if(page > pageNumb ) notFound()
+  if (page > pageNumb) notFound()
 
   return (
     <section className='mb-40'>
       <h1 className='text-3xl mb-20 text-center mt-10'>Képek szobafestésről, felújításról</h1>
       <div className='lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2'>
-          <ImagePage img={Img} />
-          <Pagination pageNumber={pageNumb} currentPage={page} />
+        <ImagePage img={Img} />
+        <Pagination pageNumber={pageNumb} currentPage={page} />
       </div>
 
     </section>
 
 
   )
+}
+
+
+
+
+const Page = async ({ params }: { params: Promise<{ page: string }> }) => {
+
+  return (
+    <Suspense fallback={<div className='text-center mt-10'>Töltődik...</div>}>
+      <PageContent params={params} />
+    </Suspense>
+  )
+
 }
 
 export default Page
