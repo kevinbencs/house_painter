@@ -113,11 +113,12 @@ describe('addBlog', () => {
     const docs = await Blog.find()
     expect(docs).toHaveLength(1)
     expect(docs[0].heading).toBe('My first blog')
-    expect(docs[0].visibility).toBe(false)
+    expect(docs[0].visibility).toBe(true)
 
     expect(updateTag).toHaveBeenCalledWith('blog-list')
     expect(updateTag).toHaveBeenCalledWith('main-page-blogs')
-    expect(updateTag).toHaveBeenCalledTimes(2)
+    expect(updateTag).toHaveBeenCalledWith('blogDashboardData')
+    expect(updateTag).toHaveBeenCalledTimes(3)
   })
 
   it('returns 500 on duplicate-key error', async () => {
