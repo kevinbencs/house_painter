@@ -67,7 +67,8 @@ describe('displayBlog', () => {
         expect(updateTag).toHaveBeenCalledWith('main-page-blogs')
         expect(updateTag).toHaveBeenCalledWith('blog-My-first-blog')
         expect(updateTag).toHaveBeenCalledWith('blog-page-My-first-blog')
-        expect(updateTag).toHaveBeenCalledTimes(4)
+        expect(updateTag).toHaveBeenCalledWith('blogDashboardData')
+        expect(updateTag).toHaveBeenCalledTimes(5)
     })
 
     it('errors when the id is valid but no blog exists', async () => {

@@ -46,11 +46,11 @@ describe('displayService', () => {
         expect(res).toEqual({ error: 'Kérlek jelentkezz be.' })
         expect(updateTag).not.toHaveBeenCalled()
         const fresh = await Service.findById(place._id)
-        expect(fresh?.visibility).toBe(false)   // untouched
+        expect(fresh?.visibility).toBe(false)  
     })
 
     it('returns validation messages for an invalid id', async () => {
-        const res = await displayService('Bad id')   // adjust to what deleteSchema rejects
+        const res = await displayService('Bad id')   
 
         expect(res).toHaveProperty('failed')
         expect(updateTag).not.toHaveBeenCalled()
@@ -64,7 +64,7 @@ describe('displayService', () => {
         expect(res).toEqual({ message: 'Szolgáltatás visszaállítva.' })
 
         const fresh = await Service.findById(place._id)
-        expect(fresh?.visibility).toBe(true)   // the actual state change
+        expect(fresh?.visibility).toBe(true)   
 
         expect(updateTag).toHaveBeenCalledWith('service-list')
         expect(updateTag).toHaveBeenCalledWith('main-page-services')
@@ -72,7 +72,8 @@ describe('displayService', () => {
         expect(updateTag).toHaveBeenCalledWith('service-footer')
         expect(updateTag).toHaveBeenCalledWith('service-page-'+'My first blog'.replaceAll(" ", "-"))
         expect(updateTag).toHaveBeenCalledWith(`service-${'My first blog'.replaceAll(" ", "-")}`)
-        expect(updateTag).toHaveBeenCalledTimes(6)
+        expect(updateTag).toHaveBeenCalledWith(`serviceDashboardData`)
+        expect(updateTag).toHaveBeenCalledTimes(7)
     })
 
     it('errors when the id is valid but no place exists', async () => {
@@ -80,7 +81,7 @@ describe('displayService', () => {
 
         const res = await displayService(missingId)
 
-        expect(res).toEqual({ error: 'A hely nem található.' })
+        expect(res).toEqual({ error: 'A szolgáltatás nem található.' })
         expect(updateTag).not.toHaveBeenCalled()
     })
 })
