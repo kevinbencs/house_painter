@@ -48,13 +48,15 @@ export const addService= async ( formData: FormData) => {
             visibility: true
         });
 
+        await service.save();
+
         updateTag('service-list');
         updateTag('main-page-services');
         updateTag('service-topbar')
         updateTag('service-footer')
         updateTag('serviceDashboardData')
 
-        await service.save();
+        
 
         return {message: "Szolgáltatás hozzáadva"}
     } catch (error) {

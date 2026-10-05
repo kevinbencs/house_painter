@@ -113,13 +113,14 @@ describe('addService', () => {
     const docs = await Service.find()
     expect(docs).toHaveLength(1)
     expect(docs[0].heading).toBe('My first service')
-    expect(docs[0].visibility).toBe(false)
+    expect(docs[0].visibility).toBe(true)
 
     expect(updateTag).toHaveBeenCalledWith('service-list')
     expect(updateTag).toHaveBeenCalledWith('main-page-services')
     expect(updateTag).toHaveBeenCalledWith('service-topbar')
     expect(updateTag).toHaveBeenCalledWith('service-footer')
-    expect(updateTag).toHaveBeenCalledTimes(4)
+    expect(updateTag).toHaveBeenCalledWith('serviceDashboardData')
+    expect(updateTag).toHaveBeenCalledTimes(5)
   })
 
   it('returns 500 on duplicate-key error', async () => {
