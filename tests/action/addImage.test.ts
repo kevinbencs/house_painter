@@ -83,8 +83,9 @@ describe('AddImage', () => {
     expect(updateTag).toHaveBeenCalledWith('main-page-images')
     expect(updateTag).toHaveBeenCalledWith('img-numb')
     expect(updateTag).toHaveBeenCalledWith('img-data-1')
-    expect(updateTag).toHaveBeenCalledWith('image-site-2')
-    expect(updateTag).toHaveBeenCalledTimes(6)
+    expect(updateTag).toHaveBeenCalledWith('image-site-1')
+    expect(updateTag).toHaveBeenCalledWith('getAllImage')
+    expect(updateTag).toHaveBeenCalledTimes(7)
   })
 
   it('returns "missing image" when the field is not a File', async () => {
