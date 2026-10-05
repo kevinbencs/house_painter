@@ -68,7 +68,8 @@ describe('deletePlace', () => {
         expect(updateTag).toHaveBeenCalledWith('place-footer')
         expect(updateTag).toHaveBeenCalledWith('place-My-first')
         expect(updateTag).toHaveBeenCalledWith('place-page-My-first')
-        expect(updateTag).toHaveBeenCalledTimes(4)
+        expect(updateTag).toHaveBeenCalledWith('placeDashboardData')
+        expect(updateTag).toHaveBeenCalledTimes(5)
     })
 
     it('errors when the id is valid but no place exists', async () => {
