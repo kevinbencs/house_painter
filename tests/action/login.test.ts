@@ -30,7 +30,7 @@ const prev = {} as any
 function form(email = 'admin@test.com', password = 'correct-password') {
   const fd = new FormData(); fd.set('email', email); fd.set('password', password); return fd
 }
-const seedAdmin = (twofa: string | undefined = 'SECRET') =>
+const seedAdmin = (twofa: string | undefined ) =>
   Admin.create({ email: 'admin@test.com', password: 'stored-hash', twofa })
 
 beforeEach(() => {
@@ -56,7 +56,7 @@ describe('loginAction', () => {
   })
 
   it('returns a generic error when the password is wrong', async () => {
-    await seedAdmin()
+    await seedAdmin('SECRET')
     vi.mocked(bcrypt.compare).mockResolvedValue(false as any)
     expect(await loginAction(prev, form())).toMatchObject({ error: 'Invalid email or password' })
     expect(cookieSet).not.toHaveBeenCalled()
