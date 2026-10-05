@@ -130,7 +130,8 @@ describe('addPlace', () => {
 
     expect(updateTag).toHaveBeenCalledWith('place-list')
     expect(updateTag).toHaveBeenCalledWith('place-footer')
-    expect(updateTag).toHaveBeenCalledTimes(2)
+    expect(updateTag).toHaveBeenCalledWith('placeDashboardData')
+    expect(updateTag).toHaveBeenCalledTimes(3)
   })
 
   it('returns 500 on duplicate-key error', async () => {
