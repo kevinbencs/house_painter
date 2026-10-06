@@ -12,7 +12,7 @@ import { GET } from '@/app/img/[path]/route'
 
 useTestDb()
 
-const req = () => new NextRequest('http://localhost/api/images/pic-1')
+const req = () => new NextRequest('http://localhost/img/pic-1')
 const ctx = (path: string) => ({ params: Promise.resolve({ path }) })
 
 beforeEach(() => {
@@ -23,7 +23,7 @@ afterEach(() => {
   vi.clearAllMocks()
 })
 
-describe('GET /api/images/[path]', () => {
+describe('GET /img/[path]', () => {
   it('returns 500 when the blob token is missing', async () => {
     vi.stubEnv('BLOB_READ_WRITE_TOKEN', undefined) 
     const res = await GET(req(), ctx('pic-1'))

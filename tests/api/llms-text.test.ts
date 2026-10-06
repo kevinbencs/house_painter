@@ -13,7 +13,7 @@ import { GET } from '@/app/llms.txt/route'
 useTestDb()
 
 beforeEach(() => {
-    vi.stubEnv('URL', 'example.com')
+    vi.stubEnv('URL', 'https://example.com')
     vi.mocked(getNumbOfImagPage).mockResolvedValue(45)   // ceil(45/20) = 3 image pages
 })
 afterEach(() => {
@@ -29,7 +29,7 @@ async function seed() {
     await Place.create({ heading: 'Budapest. kerület', detail: 'Hely leírás', text: 'x', image: 'i', keywords: 'k', visibility: true, headingParahg: "s" })
 }
 
-describe('GET /api/llms.txt', () => {
+describe('GET /llms.txt', () => {
     it('returns markdown', async () => {
         await seed()
         const res = await GET()

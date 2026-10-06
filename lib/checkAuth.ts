@@ -28,9 +28,9 @@ export const checkNewPassPageUlr = async (url: string) => {
 
     const res = await decryptURL(url)
 
-    if (res?.id) return { res: res.id}
+    if (res?.id) return { res: res.id }
 
-    return { error: 'Error'}
+    return { error: 'Error' }
 
 }
 
@@ -57,4 +57,26 @@ export const checkTwoFAToken = async () => {
 
 }
 
+
+
+export const checkTwoFATokenProxy = async () => {
+
+
+    const cookie = await cookies();
+
+    const token2fa = cookie.get("2fa");
+
+    if (!token2fa || !token2fa.value) return { error: "There is no token" }
+
+    const res = await decryptTwoFA(token2fa.value)
+
+    if (res && res.id) {
+
+
+        return { res: res.id }
+    }
+
+    return { error: " Error" }
+
+}
 
