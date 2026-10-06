@@ -100,7 +100,7 @@ export const loginTwoFAAction = async (_prevState: ActionState, formData: FormDa
 
 
         else {
-            const valid = otpTokenSchema2.safeParse(otp);
+            const valid = otpTokenSchema2.safeParse(Number(otp));
 
             if (valid.error) {
                 console.log(valid.error.issues);
