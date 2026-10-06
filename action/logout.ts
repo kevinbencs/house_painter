@@ -7,8 +7,8 @@ export const logout = async () => {
 
     const cookieStore = await cookies();
 
-    cookieStore.delete({name: "AuthToken", path: '/'})
+    cookieStore.delete({ name: "AuthToken", path: '/' })
 
-     redirect("/") 
+    redirect("/")
 
 }

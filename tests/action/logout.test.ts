@@ -19,7 +19,7 @@ describe('logout', () => {
   it('deletes the auth cookie and redirects home', async () => {
     await expect(logout()).rejects.toThrow('REDIRECT:/')
 
-    expect(cookieDelete).toHaveBeenCalledWith('AuthToken')
+    expect(cookieDelete).toHaveBeenCalledWith({ name: "AuthToken", path: '/' })
     expect(redirect).toHaveBeenCalledWith('/')
   })
 })
