@@ -47,11 +47,12 @@ export const updateImage = async (_prevState: ActionState, formData: FormData) =
 
         const allImg = await getAllImg()
 
-        for (let i = 0; i <= allImg.length; i++) {
+        for (let i = 0; i < allImg.length; i++) {
             if (_id === allImg[i]._id) {
-                const page = Math.ceil(i / 20);
+                const page = Math.floor(i / 20) + 1;
                 updateTag('img-data-' + String(page))
                 updateTag('image-site-' + String(page))
+                break
             }
         }
 
