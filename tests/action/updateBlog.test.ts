@@ -154,13 +154,14 @@ describe('updateBlog', () => {
 
         const fresh = await Blog.findById(blog._id)
         expect(fresh?.heading).toBe('Updated heading')
-        expect(fresh?.text).toBe('First lineSecond line')   // newlines stripped
+        expect(fresh?.text).toBe('First line\nSecond line')   // newlines stripped
 
         expect(updateTag).toHaveBeenCalledWith('blog-list')
         expect(updateTag).toHaveBeenCalledWith('main-page-blogs')
         expect(updateTag).toHaveBeenCalledWith('blog-Updated-heading')
         expect(updateTag).toHaveBeenCalledWith('blog-page-Updated-heading')
-        expect(updateTag).toHaveBeenCalledTimes(4)
+        expect(updateTag).toHaveBeenCalledWith('blogDashboardData');
+        expect(updateTag).toHaveBeenCalledTimes(5)
     })
 
     it('errors when the id is valid but no blog exists', async () => {
