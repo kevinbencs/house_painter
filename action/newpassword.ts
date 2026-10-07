@@ -1,6 +1,6 @@
 "use server"
 
-import { loginSchema } from "@/schema/schema"
+import { loginSchema, newPasswordSchema } from "@/schema/schema"
 import Admin from "@/models/Admin"
 import { checkAuth, checkNewPassPageUlr } from "@/lib/checkAuth"
 import { ActionState } from "@/typeScriptType/form"
@@ -71,7 +71,7 @@ export const changePassword = async (_prevState: ActionState, formData: FormData
 
 
 
-        const res = loginSchema.safeParse({
+        const res = newPasswordSchema.safeParse({
             password,
             passwordConfirm
         })
