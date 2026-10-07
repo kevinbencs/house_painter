@@ -319,7 +319,7 @@ const isValidUrl = (urlString: string) => {
     try {
         const url = new URL(urlString);
         if (url.hostname.includes('www.')) {
-            return url.hostname.includes('.', 3)
+            return url.hostname.includes('.', 4)
         }
         return url.hostname.includes('.');
     }
