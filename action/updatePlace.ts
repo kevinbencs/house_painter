@@ -50,7 +50,8 @@ export const updatePlace = async ( formData: FormData) => {
             heading,
             text,
             keywords,
-            image
+            image,
+            headingParahg
         })
 
         if (!place) return { error: "A hely nem található." };
