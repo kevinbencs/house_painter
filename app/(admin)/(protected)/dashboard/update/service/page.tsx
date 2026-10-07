@@ -8,9 +8,9 @@ import { getBServiceDashboardData } from "@/lib/data";
 
 const Page = async () => {
   await connection()
-  /*const auth = await checkAuth()
+  const auth = await checkAuth()
 
-  if (auth.error) redirect('/');*/
+  if (auth.error) redirect('/');
 
  
   const list: BSPClientList[] = await getBServiceDashboardData()

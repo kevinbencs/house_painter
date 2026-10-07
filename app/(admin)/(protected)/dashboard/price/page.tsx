@@ -8,9 +8,9 @@ import { connection } from 'next/server'
 
 
 const Page = async () => {
-  /*const auth = await checkAuth()
+  const auth = await checkAuth()
 
-  if (auth.error) redirect('/');*/
+  if (auth.error) redirect('/');
 
   await connection()
   const [res, cat ]: [MongoData[], Categories[]] = await Promise.all([

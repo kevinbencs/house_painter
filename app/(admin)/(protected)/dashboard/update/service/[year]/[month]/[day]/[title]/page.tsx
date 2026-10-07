@@ -7,9 +7,9 @@ import Service from "@/models/Service";
 
 const page = async ({ params }: { params: Promise<{ year: string, month: string, day: string, title: string }> }) => {
 
-  /*const auth = await checkAuth()
+  const auth = await checkAuth()
 
-  if (auth.error) redirect('/');*/
+  if (auth.error) redirect('/');
 
   await connection()
   const par = await params

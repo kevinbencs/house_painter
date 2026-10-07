@@ -58,6 +58,7 @@ export const setNewTwoFA = async (otp: string, secret: string) => {
                     httpOnly: true,
                     secure: true,
                     maxAge: 3600,
+                    path:'/'
                 })
 
             }

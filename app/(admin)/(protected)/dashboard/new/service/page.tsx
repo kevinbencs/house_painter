@@ -7,9 +7,9 @@ import { connection } from "next/server";
 
 const Page = async () => {
   await connection()
-  /*const auth = await checkAuth()
+  const auth = await checkAuth()
 
-  if (auth.error) redirect('/');*/
+  if (auth.error) redirect('/');
 
 
 

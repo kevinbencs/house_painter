@@ -14,7 +14,7 @@ vi.mock('next/headers', () => ({
 vi.mock('next/navigation', () => ({ redirect: vi.fn((u: string) => { throw new Error(`REDIRECT:${u}`) }) }))
 vi.mock('@/lib/session', () => ({
   decryptTwoFA: vi.fn(),
-  encryptTwoFA: vi.fn(async () => 'signed-auth'),
+  encryptJWT: vi.fn(async () => 'signed-auth'),
 }))
 vi.mock('@/lib/rateLimit', () => ({ ipLimiter: { consume: vi.fn() } }))
 vi.mock('otplib', () => ({ verify: vi.fn() }))

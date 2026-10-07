@@ -7,9 +7,9 @@ import Blog from "@/models/Blog";
 import { connection } from "next/server";
 
 const Page = async ({ params }: { params: Promise<{ year: string, month: string, day: string, title: string }> }) => {
-  /*const auth = await checkAuth()
+  const auth = await checkAuth()
 
-  if (auth.error) redirect('/');*/
+  if (auth.error) redirect('/');
   await connection()
   const par = await params
   const title = par.title.replaceAll('-', ' ')

@@ -2,7 +2,7 @@
 
 import { handleMongooseError } from "@/lib/mongo";
 import { ipLimiter } from "@/lib/rateLimit";
-import { decryptTwoFA, encryptTwoFA } from "@/lib/session";
+import { decryptTwoFA, encryptJWT, encryptTwoFA } from "@/lib/session";
 import Admin from "@/models/Admin";
 import { loginSchema, otpTokenSchema2 } from "@/schema/schema";
 import { Adm } from "@/typeScriptType/admin";
@@ -120,7 +120,7 @@ export const loginTwoFAAction = async (_prevState: ActionState, formData: FormDa
 
             const expires = new Date(Date.now() + 1000 * 60 * 60)
 
-            const jwtToken = await encryptTwoFA({ id: String(user._id), expiresAt: expires })
+            const jwtToken = await encryptJWT({ id: String(user._id), expiresAt: expires })
 
             cookieStore.delete("2fa")
 

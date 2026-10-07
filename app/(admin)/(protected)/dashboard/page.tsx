@@ -2,10 +2,6 @@ import Step1 from '@/app/_components/dashboard/main/chart';
 import PieChartDefaultIndex from '@/app/_components/dashboard/main/pie';
 import { checkAuth } from '@/lib/checkAuth';
 import { getDashboardData } from '@/lib/data';
-import Blog from '@/models/Blog';
-import PageView from '@/models/PageView';
-import Place from '@/models/Place';
-import Service from '@/models/Service';
 import { ChartType, ChartType2, PieType } from '@/typeScriptType/dashboard';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -13,9 +9,9 @@ import { connection } from 'next/server'
 
 const page = async () => {
   await connection();
-  /*const auth = await checkAuth()
+  const auth = await checkAuth()
 
-  if (auth.error) redirect('/');*/
+  if (auth.error) redirect('/');
 
   await connection();
 
