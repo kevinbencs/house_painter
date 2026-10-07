@@ -54,11 +54,12 @@ export const setNewTwoFA = async (otp: string, secret: string) => {
                 const expires = new Date(Date.now() + 1000 * 60 * 60)
                 const tokenJWT = await encryptJWT({ id: user._id, expiresAt: expires })
 
-                cookieStore.set(tokenJWT, "AuthToken", {
+                cookieStore.set("AuthToken", tokenJWT, {
                     httpOnly: true,
                     secure: true,
                     maxAge: 3600,
-                    path:'/'
+                    sameSite: 'lax',
+                    path: '/',
                 })
 
             }
@@ -73,8 +74,8 @@ export const setNewTwoFA = async (otp: string, secret: string) => {
         return { error: err }
     }
 
-    if(errR !== "") redirect(errR)
-    
+    if (errR !== "") redirect(errR)
+
     redirect('/dashboard')
 
 }
