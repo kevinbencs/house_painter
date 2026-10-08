@@ -36,6 +36,7 @@ jobs:
       PLACE_ID: ${{ secrets.PLACE_ID }}
       DISCORD: ${{ secrets.DISCORD }}
       DISCORD_USER_ID: ${{ secrets.DISCORD_USER_ID }}
+      BLOB_ID: ${{secrets.BLOB_ID}}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
