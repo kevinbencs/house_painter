@@ -19,6 +19,21 @@ jobs:
   e2e:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    # .env is gitignored, so the build and the e2e server get these from
+    # the repository secrets (Settings → Secrets and variables → Actions).
+    env:
+      MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      JWT_SECRET_TWOFA: ${{ secrets.JWT_SECRET_TWOFA }}
+      JWT_SECRET_URL: ${{ secrets.JWT_SECRET_URL }}
+      BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+      RESEND: ${{ secrets.RESEND }}
+      EMAIL: ${{ secrets.EMAIL }}
+      URL: ${{ secrets.URL }}
+      GOOGLE_PLACE_API: ${{ secrets.GOOGLE_PLACE_API }}
+      PLACE_ID: ${{ secrets.PLACE_ID }}
+      DISCORD: ${{ secrets.DISCORD }}
+      DISCORD_USER_ID: ${{ secrets.DISCORD_USER_ID }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
