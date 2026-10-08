@@ -76,7 +76,7 @@ export default function RootLayout({
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'HomeAndConstructionBusiness',
-    'name': 'Budapest Painter Pro',
+    'name': '',
     'address': {
       '@type': 'PostalAddress',
       'addressLocality': 'Budapest',
