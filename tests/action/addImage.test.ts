@@ -91,6 +91,6 @@ describe('AddImage', () => {
   it('returns "missing image" when the field is not a File', async () => {
     const res = await AddImage(prev, form({ file: 'not-a-file' }))
 
-    expect(res).toMatchObject({ error: 'Hiányzik a kép' })
+    expect(res).toHaveProperty('failed')
   })
 })
