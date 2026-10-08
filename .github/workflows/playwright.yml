@@ -20,7 +20,9 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     # .env is gitignored, so the build and the e2e server get these from
-    # the repository secrets (Settings → Secrets and variables → Actions).
+    # the "secrets" environment (Settings → Environments → secrets).
+    # Environment secrets are only visible to jobs that name the environment.
+    environment: secrets
     env:
       MONGODB_URI: ${{ secrets.MONGODB_URI }}
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
