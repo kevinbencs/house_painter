@@ -53,15 +53,10 @@ const PageContent = async ({ params }: { params: Promise<{ page: string }> }) =>
 
   if (param.page === '__placeholder__') notFound()
 
-  cacheTag('image-site-' + param.page)
-  cacheLife('days')
-
   const page = Number(param.page)
 
 
-
   if (page <= 0 || isNaN(page)) notFound()
-
 
 
   const [pageNumb, Img] = await Promise.all([
