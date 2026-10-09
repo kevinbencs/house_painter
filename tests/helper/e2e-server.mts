@@ -1,7 +1,9 @@
 import { MongoMemoryServer } from 'mongodb-memory-server'
 import { spawn } from 'node:child_process'
 
-const mongod = await MongoMemoryServer.create()
+// Fixed port so the Playwright tests can seed the same database
+// (see tests/end_to_end/helpers.ts).
+const mongod = await MongoMemoryServer.create({ instance: { port: Number(process.env.E2E_MONGO_PORT ?? 27027) } })
 
 const env = {
   ...process.env,
@@ -10,8 +12,9 @@ const env = {
   // server calls process.exit(1) on boot. Dummy values are fine for E2E.
   BLOB_READ_WRITE_TOKEN: 'test',
   BLOB_ID: 'test',
-  JWT_SECRET_Long: 'test-secret',
-  JWT_SECRET_Short: 'test-secret',
+  // The tests sign their own cookies with these, so they must stay in sync
+  // with tests/end_to_end/helpers.ts.
+  JWT_SECRET: 'test-secret',
   JWT_SECRET_URL: 'test-secret',
   JWT_SECRET_TWOFA: 'test-secret',
   URL: 'http://localhost:3000',

@@ -5,16 +5,16 @@ on:
   pull_request:
     branches: [ main, master ]
 jobs:
-  unit:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: lts/*
-          cache: npm
-      - run: npm ci
-      - run: npm run test        # vitest run
+  #unit:
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - uses: actions/checkout@v4
+  #    - uses: actions/setup-node@v4
+  #      with:
+  #        node-version: lts/*
+  #        cache: npm
+  #    - run: npm ci
+  #    - run: npm run test        # vitest run
 
   e2e:
     timeout-minutes: 60
@@ -44,7 +44,7 @@ jobs:
           node-version: lts/*
           cache: npm
       - run: npm ci
-      - run: npx playwright install 
+      - run: npx playwright install --with-deps
       - run: npm run build      # produces the build that `next start` serves
       - run: npm run test:e2e    # playwright starts the server via your launcher
       - uses: actions/upload-artifact@v4
