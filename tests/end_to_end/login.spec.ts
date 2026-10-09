@@ -133,11 +133,16 @@ test.describe('/login/2fa', () => {
 
     test('a wrong code shows an error and stays on the page', async ({ page }, testInfo) => {
         const email = uniqueEmail(testInfo)
-        await seedAdmin({ email, password: PASSWORD, twofa: newTwoFASecret() })
+        const secret = newTwoFASecret()
+        await seedAdmin({ email, password: PASSWORD, twofa: secret })
         await login(page, email, PASSWORD)
         await expect(page).toHaveURL(/\/login\/2fa$/)
 
-        await page.getByLabel('Kód').fill('000000')
+        // A wrong code must still pass validation (6 digits, 100000-999999),
+        // otherwise the form shows the validation message instead.
+        const valid = await totpFor(secret)
+        const wrong = valid === '123456' ? '654321' : '123456'
+        await page.getByLabel('Kód').fill(wrong)
         await page.getByRole('button', { name: 'Belépés' }).click()
 
         await expect(page.getByText('Hiba, próbáld újra.')).toBeVisible()

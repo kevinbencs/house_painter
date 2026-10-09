@@ -27,7 +27,7 @@ import { loginTwoFAAction } from '@/action/login'
 useTestDb()
 
 const prev = {} as any
-function form(otp = '123456') { const fd = new FormData(); fd.set('optName', otp); return fd }
+function form(otp = '123456') { const fd = new FormData(); fd.set('otpName', otp); return fd }
 const seedAdmin = (twofa = 'BASE32SECRET') => Admin.create({ email: 'a@test.com', password: 'h', twofa })
 
 beforeEach(() => cookieGet.mockReturnValue({ value: 'a-2fa-cookie' }))   // cookie present
@@ -49,6 +49,15 @@ describe('loginTwoFAAction', () => {
     const admin = await seedAdmin()
     vi.mocked(decryptTwoFA).mockResolvedValue({ id: admin._id.toString() } as any)
     expect(await loginTwoFAAction(prev, form('bad'))).toHaveProperty('failed')
+  })
+
+  it('accepts a valid otp that starts with 0', async () => {
+    const admin = await seedAdmin('BASE32SECRET')
+    vi.mocked(decryptTwoFA).mockResolvedValue({ id: admin._id.toString() } as any)
+    vi.mocked(otpVerify).mockResolvedValue({ valid: true } as any)
+
+    await expect(loginTwoFAAction(prev, form('053809'))).rejects.toThrow('REDIRECT:/dashboard')
+    expect(otpVerify).toHaveBeenCalledWith({ secret: 'BASE32SECRET', token: '053809' })
   })
 
   it('sets AuthToken and redirects to /dashboard on a valid otp', async () => {

@@ -84,7 +84,7 @@ export const loginTwoFAAction = async (_prevState: ActionState, formData: FormDa
 
     if (!logCookie) redirect('/');
 
-    const otp = formData.get('optName')
+    const otp = formData.get('otpName')
 
     let errR: string = "";
 
@@ -100,7 +100,7 @@ export const loginTwoFAAction = async (_prevState: ActionState, formData: FormDa
 
 
         else {
-            const valid = otpTokenSchema2.safeParse(Number(otp));
+            const valid = otpTokenSchema2.safeParse(token);
 
             if (valid.error) {
                 console.log(valid.error.issues);

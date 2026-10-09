@@ -86,7 +86,9 @@ export const otpTokenSchema = z.object({
     otpCode: z.string().min(1, { message: "A Kód megadása kötelező" }).length(6)
 })
 
-export const otpTokenSchema2 = z.number({ message: "A Kód megadása kötelező" }).min(100000,{ message: "A Kód megadása kötelező" }).max(999999,{ message: "A Kód megadása kötelező" });
+// Validated as a string: TOTP codes can start with 0 (e.g. "053809"),
+// which a numeric 100000-999999 check would reject.
+export const otpTokenSchema2 = z.string({ message: "A Kód megadása kötelező" }).regex(/^\d{6}$/, { message: "A Kód megadása kötelező" });
 
 export const PageViewSchema = z.object({
     pathname: z.string().min(1, { message: "Pathname megadása kötelező" }),
