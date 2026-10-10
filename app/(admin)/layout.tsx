@@ -1,44 +1,41 @@
 import { Metadata } from "next";
-import { IsLoggedProvider } from "../_components/loggedContext/isLoggedContext";
 
-export async function generateMetadata(): Promise<Metadata> {
 
-    return {
+export const metadata: Metadata = {
+    title: "",
+    keywords: "",
+    description: "",
+    openGraph: {
+        locale: 'hu_HU',
         title: "",
-        keywords: "",
         description: "",
-        openGraph: {
-            locale: 'hu_HU',
-            title: "",
-            description: "",
-            type: 'website',
-            url: "",
-            images: [],
-        },
-        twitter: {
-            card: 'summary_large_image',
-            title: "",
-            description: "",
-            images: [],
-        },
-        robots: {
+        type: 'website',
+        url: "",
+        images: [],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: "",
+        description: "",
+        images: [],
+    },
+    robots: {
+        index: false,
+        follow: false,
+        noarchive: true,
+        nocache: true,
+        noimageindex: true,
+        googleBot: {
             index: false,
             follow: false,
             noarchive: true,
             nocache: true,
             noimageindex: true,
-            googleBot: {
-                index: false,
-                follow: false,
-                noarchive: true,
-                nocache: true,
-                noimageindex: true,
-                'max-video-preview': -1,
-                'max-image-preview': 'large',
-                'max-snippet': -1,
-            },
+            'max-video-preview': -1,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
+        },
 
-        }
     }
 }
 
@@ -49,9 +46,7 @@ export default function Layout({
 }>) {
     return (
         <>
-            <IsLoggedProvider>
-                {children}
-            </IsLoggedProvider>
+            {children}
         </>
     )
 }

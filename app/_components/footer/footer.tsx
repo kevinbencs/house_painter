@@ -14,9 +14,7 @@ const Footer = () => {
       </div>
 
       <div className=" pt-5 ">
-        <Suspense>
           <Copyright />
-        </Suspense>
       </div>
     </footer>
   )

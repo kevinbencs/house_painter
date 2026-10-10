@@ -7,7 +7,7 @@ import ErrorBoundary from "../../custom-error-boundary"
 const LinksDescription = () => {
   return (
 
-    <div className="max-w-[1200px] w-full text-sm pb-10   flex  flex-col flex-wrap gap-10 md:gap-x-40  content-center md:flex-row  md:justify-between">
+    <div className="max-w-300 w-full text-sm pb-10   flex  flex-col flex-wrap gap-10 md:gap-x-40  content-center md:flex-row  md:justify-between">
       <section className="flex flex-col items-center md:items-start">
         <Link href="/adatvedelem" className="hover:underline">Adatvédelmi tájékoztató</Link>
         <Link href="/impresszium" className="hover:underline">Impresszium</Link>

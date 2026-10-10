@@ -49,7 +49,7 @@ const Places = async () => {
     return (
         <div className="flex pl-2 pr-2 md:pr-0 mt-4 md:pl-0 flex-col gap-5 items-center md:flex-row md:gap-10">
 
-            <section className="flex justify-center max-h-[284px] md:gap-x-5 md:justify-start  flex-wrap gap-5 md:gap-1 md:flex-col items-center md:items-start">
+            <section className="flex justify-center max-h-71 md:gap-x-5 md:justify-start  flex-wrap gap-5 md:gap-1 md:flex-col items-center md:items-start">
                 {city}
             </section>
 
