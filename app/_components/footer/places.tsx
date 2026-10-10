@@ -53,10 +53,6 @@ const Places = async () => {
                 {city}
             </section>
 
-
-            {/*<section className="flex flex-wrap gap-5 md:flex-col md:gap-1 items-center md:items-start">
-                {city.slice(city.length / 2, city.length)}
-            </section>*/}
         </div>
 
     )
