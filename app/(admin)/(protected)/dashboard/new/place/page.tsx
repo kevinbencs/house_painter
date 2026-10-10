@@ -2,11 +2,9 @@ import DynamicPagesForm from "@/app/_components/dashboard/place/dynamicPagesForm
 import { addPlace } from "@/action/addPlace"
 import { redirect } from "next/navigation";
 import { checkAuth } from "@/lib/checkAuth";
-import { connection } from "next/server";
 
 
 const Page = async () => {
-  await connection()
   const auth = await checkAuth();
 
   if (auth.error) redirect('/');

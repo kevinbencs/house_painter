@@ -11,10 +11,10 @@ const page = async ({ params }: { params: Promise<{ year: string, month: string,
 
   if (auth.error) redirect('/');
 
-  await connection()
+
   const par = await params
   const title = par.title.replaceAll('-', ' ')
-  const data = await Service.findOne({heading: title})
+  const data = await Service.findOne({heading: decodeURIComponent(title).replaceAll("-", " ")})
 
   
 

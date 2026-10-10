@@ -13,7 +13,7 @@ const Page = async ({ params }: { params: Promise<{ year: string, month: string,
   await connection()
   const par = await params
   const title = par.title.replaceAll('-', ' ')
-  const data = await Blog.findOne({heading: decodeURIComponent(title)})
+  const data = await Blog.findOne({heading: decodeURIComponent(title).replaceAll("-"," ")})
 
   const res = {
     error: undefined,

@@ -25,19 +25,21 @@ export const metadata: Metadata = {
     template: '%s | Budapesten szobafestés',
     default: "Budapesten szobafestés",
   },
+  metadataBase: process.env.URL,
   description: "Megbízható, precíz szobafestő Budapesten és környékén",
-  alternates: {
-    canonical: 'https://budapest-painter.hu',
-  },
+
   category: 'Szobafestés',
   pinterest: {
     richPin: true,
   },
   authors: [{ name: 'Kevin Bencs', url: 'https://kevinbencs.com' }],
   creator: 'Kevin Bencs',
-  publisher: 'Kevin Bencs',
+  publisher: 'Bencs Kornél',
   openGraph: {
-    siteName: 'Budafestő',
+    title: '',
+    description: '',
+    url: process.env.URL,
+    siteName: '',
     locale: 'hu_HU',
     type: 'website',
     images: [{ url: "/images/zold-fal.jpeg", alt: 'Budafestő - festés Budapesten' }],
@@ -75,23 +77,27 @@ export default function RootLayout({
 }>) {
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'HomeAndConstructionBusiness',
-    'name': '',
-    'address': {
+    '@type': 'HousePainter',
+    '@id': `${process.env.URL}/#business`,
+    name: '',
+    address: {
       '@type': 'PostalAddress',
-      'addressLocality': 'Budapest',
-      'addressCountry': 'HU',
-      
+      addressLocality: 'Budapest',
+      postalCode: '1119',
+      addressCountry: 'HU',
+
     },
-    'geo': {
-      '@type': 'GeoCoordinates',
-      'latitude': '47.4979',
-      'longitude': '19.0402'
-    },
-    'url': 'https://your-budapest-painter.hu',
-    'telephone': '+3612345678',
-    'priceRange': '$$',
-    'image': 'https://your-budapest-painter.hu/hero-painting.jpg'
+    areaServed: [{ '@type': 'City', name: 'Budapest' }, { '@type': 'AdministrativeArea', name: 'Pest megye' }],
+    url: process.env.URL,
+    telephone: '',
+    openingHoursSpecification: [{
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '08:00', closes: '17:00',
+    }],
+    image: `${process.env.URL}/img/zold-fal.jpeg`,
+
+    sameAs: ['https://facebook.com/…', 'https://instagram.com/…'],
   }
   return (
     <html

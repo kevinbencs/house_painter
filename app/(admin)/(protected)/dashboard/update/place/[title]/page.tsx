@@ -4,19 +4,19 @@ import { addPlace } from "@/action/addPlace"
 import { checkAuth } from "@/lib/checkAuth";
 import { redirect } from "next/navigation";
 import Place from "@/models/Place";
-import { connection } from "next/server";
 
-const page = async ({ params }: { params: Promise<{ year: string, month: string, day: string, title: string }> }) => {
+
+
+const page = async ({ params }: { params: Promise<{ title: string }> }) => {
   const auth = await checkAuth()
 
   if (auth.error) redirect('/');
 
-  await connection()
-  const par = await params
-  const title = par.title.replaceAll('-', ' ')
-  const data = await Place.findOne({heading: title})
 
-  
+  const par = await params
+  const title = par.title
+  const data = await Place.findOne({ heading: { $regex: decodeURIComponent(title).replaceAll('-', ' ').replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), $options: "i" }}).lean()
+
 
   const res = {
     error: undefined,

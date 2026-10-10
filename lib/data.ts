@@ -357,9 +357,9 @@ export const getDashboardData = async () => {
             },
             { $sort: { _id: 1 } }
         ]),
-        Blog.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2),
-        Place.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2),
-        Service.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2)
+        (await Blog.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2)).map(item => ({_id: String(item.id), heading: item.heading, createdAt: item.createdAt})),
+        (await Place.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2)).map(item => ({_id: String(item.id), heading: item.heading, createdAt: item.createdAt})),
+        (await Service.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2)).map(item => ({_id: String(item.id), heading: item.heading, createdAt: item.createdAt}))
     ])
 
     return res

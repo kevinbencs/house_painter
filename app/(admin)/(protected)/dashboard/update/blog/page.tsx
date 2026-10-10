@@ -3,12 +3,10 @@ import { checkAuth } from "@/lib/checkAuth";
 import { redirect } from "next/navigation";
 import { BSP, BSPClientList, BSPGetUpdateList } from "@/typeScriptType/blogServPlace";
 import Blog from "@/models/Blog";
-import { connection } from "next/server";
 import { getBlogDashboardData } from "@/lib/data";
 
 
 const Page = async () => {
-  await connection()
   const auth = await checkAuth()
 
   if (auth.error) redirect('/');

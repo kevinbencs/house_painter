@@ -8,7 +8,6 @@ import { getBPlaceDashboardData } from "@/lib/data";
 
 
 const Page = async () => {
-  await connection()
   const auth = await checkAuth()
 
   if (auth.error) redirect('/');
