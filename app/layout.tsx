@@ -23,10 +23,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     template: '%s | Budapesten szobafestés',
-    default: "Budapesten szobafestés",
+    default: "Bencsfestő",
   },
   metadataBase: process.env.URL,
-  description: "Megbízható, precíz szobafestő Budapesten és környékén",
+  description: "Újítsa fel otthonát! Szobafestés, tisztasági festés, glettelés, mázolás és tapétázás Budapesten, ingyenes felméréssel. Kérjen árajánlatot még ma!",
 
   category: 'Szobafestés',
   pinterest: {
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
   creator: 'Kevin Bencs',
   publisher: 'Bencs Kornél',
   openGraph: {
-    title: '',
-    description: '',
+    title: 'Bencsfestő',
+    description: 'Újítsa fel otthonát! Szobafestés, tisztasági festés, glettelés, mázolás és tapétázás Budapesten, ingyenes felméréssel. Kérjen árajánlatot még ma!',
     url: process.env.URL,
     siteName: '',
     locale: 'hu_HU',
@@ -46,9 +46,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Képek",
+    title: "Bencsfestő",
 
-    description: 'Megbízható, precíz szobafestés Budapesten és környékén',
+    description: 'Újítsa fel otthonát! Szobafestés, tisztasági festés, glettelés, mázolás és tapétázás Budapesten, ingyenes felméréssel. Kérjen árajánlatot még ma!',
     images: [{ url: "/images/zold-fal.jpeg", alt: 'Budafestő - Képek' }],
   },
   robots: {
@@ -79,7 +79,7 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'HousePainter',
     '@id': `${process.env.URL}/#business`,
-    name: '',
+    name: 'Bencsfestő',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Budapest',

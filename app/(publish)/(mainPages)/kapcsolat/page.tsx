@@ -11,7 +11,7 @@ const page = () => {
     <>
       <div className=" mb-20 bg-mist-900 text-white h-60 lg:h-52 flex flex-col items-center m-5 pt-10 text-center">
         <h1 className='text-3xl  mb-5'>Vegye fel velem a kapcsolatot</h1>
-        <p className="max-w-[700px] ">Kérjen ingyenes árajánlatot most, legyen szó tisztasági festésről, szobafestésről, kisebb hibák javításáról vagy akár egy egész lakás vagy ház kifestéséről. </p>
+        <p className="max-w-175 ">Kérjen ingyenes árajánlatot most, legyen szó tisztasági festésről, szobafestésről, kisebb hibák javításáról vagy akár egy egész lakás vagy ház kifestéséről. </p>
       </div>
 
       <div className="lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2 text-center">
