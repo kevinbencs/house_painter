@@ -24,6 +24,9 @@ const EmailForm = () => {
                     Add meg az email címed
                 </CardDescription>
 
+                {(state && state?.error !== "") && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
+ 
+
             </CardHeader>
             <CardContent>
                 <form action={action}>

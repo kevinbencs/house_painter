@@ -1,6 +1,6 @@
 "use client"
 
-import { changePassword} from "@/action/newpassword"
+import { changePassword } from "@/action/newpassword"
 import { Button } from "@/components/ui/button"
 import {
     Card,
@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useActionState } from "react"
 
-const NewPassword = (props: {url: string | undefined}) => {
+const NewPassword = (props: { url: string | undefined }) => {
     const [state, action, isPending] = useActionState(changePassword, null)
     return (
         <Card className="w-full max-w-sm">
@@ -23,6 +23,10 @@ const NewPassword = (props: {url: string | undefined}) => {
                 <CardDescription>
                     Add meg az új jelszót
                 </CardDescription>
+
+                {(state && state?.error !== "") && <div className="mb-2 mt-2 text-red-600">{state.error}</div>}
+                {(state && state.failed && state?.failed.length !== 0) && <div className="mb-2 mt-2 text-red-600">{state.failed.map((item) => <div key={item}>{item}</div>)}</div>}
+
 
             </CardHeader>
             <CardContent>
@@ -34,19 +38,19 @@ const NewPassword = (props: {url: string | undefined}) => {
                                 <Label htmlFor="password">Jelszó</Label>
                             </div>
                             <Input id="password" name="password" type="password" required disabled={isPending} defaultValue={state && state.fieldData && typeof state.fieldData[0] === 'string'
-            ? state.fieldData[0]
-            : ''}/>
+                                ? state.fieldData[0]
+                                : ''} />
                         </div>
                         <div className="grid gap-2">
                             <div className="flex items-center">
                                 <Label htmlFor="password_confirm">Jelszó megerősítése</Label>
                             </div>
                             <Input id="password_confirm" type="password" name="passwordConfirm" required disabled={isPending} defaultValue={state && state.fieldData && typeof state.fieldData[1] === 'string'
-            ? state.fieldData[1]
-            : ''}/>
+                                ? state.fieldData[1]
+                                : ''} />
                         </div>
                         <div className="hidden">
-                             <Input id="url" type="text" name="url" value={props.url} readOnly />
+                            <Input id="url" type="text" name="url" value={props.url} readOnly />
                         </div>
                     </div>
                 </form>
