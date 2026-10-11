@@ -10,14 +10,14 @@ test('submitting the contact form shows a success message', async ({ page }) => 
 
   await page.getByRole('button', { name: /küld/i }).click()
 
-  //await expect(page.getByText(/Üzenet elküldve/i)).toBeVisible()
+  await expect(page.getByText(/Üzenet elküldve/i)).toBeVisible()
 })
 
-/*test('an empty contact form shows validation errors', async ({ page }) => {
+test('an empty contact form shows validation errors', async ({ page }) => {
   await page.goto('/kapcsolat')
-  await page.getByRole('button', { name: /küldés/i }).click()
+  await page.getByRole('button', { name: /küld/i }).click()
 
   await expect(page.getByText(/kötelező|hib/i)).toBeVisible()
-  // and confirm it did NOT navigate away / show success
-  await expect(page.getByText(/sikeres/i)).not.toBeVisible()
-})*/
+  
+  await expect(page.getByText(/Üzenet elküldve/i)).not.toBeVisible()
+})

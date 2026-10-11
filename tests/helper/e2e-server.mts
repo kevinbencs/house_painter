@@ -18,8 +18,6 @@ const env = {
   JWT_SECRET_URL: 'test-secret',
   JWT_SECRET_TWOFA: 'test-secret',
   URL: 'http://localhost:3000',
-  RESEND: 'test',
-  EMAIL: 'test@example.com',
   DISCORD: 'http://127.0.0.1:9/noop',  // unreachable on purpose: no real webhook spam
   DISCORD_USER_ID: '0',
 }
