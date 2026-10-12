@@ -1,6 +1,8 @@
 import type { NextRequest, NextFetchEvent } from 'next/server'
 import { NextResponse } from 'next/server'
 import { checkAuth, checkTwoFATokenProxy } from './checkAuth';
+import { notFound } from 'next/navigation';
+import { getNumbOfImagPage } from './data';
 
 
 
@@ -31,12 +33,21 @@ export const middleware = async (req: NextRequest, event: NextFetchEvent) => {
     }
 
     if (pathname === "/new2fa" || pathname === "/login/2fa") {
-        
-            if (!twofaRes.res) {
+
+        if (!twofaRes.res) {
             console.log("Session error on dashboard");
             return NextResponse.redirect(new URL('/', req.url))
         }
-        
+
+    }
+
+    if (pathname.startsWith('/kepek/')) {
+        const pathArr = pathname.split('/');
+
+        if (!/^[1-9]\d*$/.test(pathArr[2])) notFound();
+        const page = Number(pathArr[2])
+
+
     }
 
 

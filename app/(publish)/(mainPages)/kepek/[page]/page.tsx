@@ -4,28 +4,46 @@ import Pagination from '@/app/_components/image/pagination'
 import { getNumbOfImagPage, getTwentyImg } from '@/lib/data'
 import { connectToMongo } from '@/lib/mongo'
 import { Metadata } from 'next'
-import { cacheTag } from 'next/cache'
-import { cacheLife } from 'next/cache'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
 
-export const metadata: Metadata = {
-  title: 'Képek',
-  description: 'Képek a szobafestésről, tapétázásról és egyéb felújításai munkálatokról.',
-  keywords: ['szobafestés', 'tapétázás', "szobafestés képek", "tapétázás képek"],
-  openGraph: {
-    siteName: 'Budafestő',
-    locale: 'hu_HU',
-    type: 'website',
-    images: [{ url: "/img", alt: 'Budafestő - Képek' }],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: "Képek",
-    description: 'Képek a szobafestésről, tapétázásról és egyéb felújításai munkálatokról.',
-    images: [{ url: "/img", alt: 'Budafestő - Képek' }],
-  },
 
+export async function generateMetadata({ params }: { params: Promise<{ page: string }> }): Promise<Metadata> {
+  const param = await params
+  const page = Number(param.page)
+  if (page <= 0 || isNaN(page)) notFound()
+
+  const pageNumb = await getNumbOfImagPage()
+
+
+  if (page > pageNumb) notFound()
+  let canonical = ''
+  if (page === 1) canonical = '/Kepek'
+  else {
+    canonical = `/kepek/${page}`
+  }
+
+  return ({
+    title: 'Képek - ' + page + ".oldal",
+    description: 'Fotók elkészült szobafestési, mázolási és tapétázási munkáimról Budapesten és környékén. Nézze meg, milyen minőségre számíthat!',
+    keywords: ['felújítás képek', 'tapétázás', "szobafestés képek", "tapétázás képek"],
+    alternates: { canonical },
+    openGraph: {
+      siteName: 'Bencsfestő',
+      url: process.env.URL + '/kepek',
+      locale: 'hu_HU',
+      type: 'website',
+      title: 'Képek - ' + page + ".oldal",
+      description: 'Fotók elkészült szobafestési, mázolási és tapétázási munkáimról Budapesten és környékén. Nézze meg, milyen minőségre számíthat!',
+      images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'Képek - ' + page + ".oldal",
+      description: 'Fotók elkészült szobafestési, mázolási és tapétázási munkáimról Budapesten és környékén. Nézze meg, milyen minőségre számíthat!',
+      images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
+    },
+  })
 }
 
 
