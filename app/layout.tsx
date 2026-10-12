@@ -39,17 +39,17 @@ export const metadata: Metadata = {
     title: 'Bencsfestő',
     description: 'Újítsa fel otthonát! Szobafestés, tisztasági festés, glettelés, mázolás és tapétázás Budapesten, ingyenes felméréssel. Kérjen árajánlatot még ma!',
     url: process.env.URL,
-    siteName: '',
+    siteName: 'Bencsfestő',
     locale: 'hu_HU',
     type: 'website',
-    images: [{ url: "/images/zold-fal.jpeg", alt: 'Budafestő - festés Budapesten' }],
+    images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: "Bencsfestő",
 
     description: 'Újítsa fel otthonát! Szobafestés, tisztasági festés, glettelés, mázolás és tapétázás Budapesten, ingyenes felméréssel. Kérjen árajánlatot még ma!',
-    images: [{ url: "/images/zold-fal.jpeg", alt: 'Budafestő - Képek' }],
+    images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
   },
   robots: {
     index: true,

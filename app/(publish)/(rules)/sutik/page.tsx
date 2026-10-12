@@ -2,33 +2,33 @@ import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Sütik",
-  metadataBase: process.env.URL,
-  description: "Sütik felhasználása az oldalon belül.",
+
+  description: "Az oldalon található sütik leírása.",
   openGraph: {
     title: 'Sütik',
-    description: 'Sütik felhasználása az oldalon belül.',
+    description: 'Az oldalon található sütik leírása.',
     url: process.env.URL,
-    siteName: '',
+    siteName: 'Bencsfestő',
     locale: 'hu_HU',
     type: 'website',
-    images: [{ url: "/images/zold-fal.jpeg", alt: 'Budafestő - festés Budapesten' }],
+    images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: "Sütik",
 
-    description: 'Sütik felhasználása az oldalon belül.',
-    images: [{ url: "/images/zold-fal.jpeg", alt: 'Budafestő - Képek' }],
+    description: 'Az oldalon található sütik leírása.',
+    images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
   },
-  
-  
+
+
 };
 
 const page = () => {
   return (
-    <div>
-    <h1 className='text-center text-2xl m-20'>Sütik</h1>
-    <div>Az oldal nem használ sütiket.</div>
+    <div className="min-h-[50vh]">
+      <h1 className=' text-2xl m-20'>Sütik</h1>
+      <div>Az oldal nem használ sütiket.</div>
     </div>
   )
 }
