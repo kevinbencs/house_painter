@@ -2,7 +2,31 @@
 import ToFormButton from "@/app/_components/sendMessage/toFormButton"
 import { PiPhoneOutgoingFill } from "react-icons/pi";
 import { MdEmail } from "react-icons/md";
+import { Metadata } from "next";
 
+
+export const metadata: Metadata = {
+  title: 'Elérhetőségek',
+  description: 'Vegye fel a kapcsolatot Bencs Kornél szobafestővel.',
+
+  keywords: ['elérhetőség Bencs Kornél', 'Bencs Kornél telefonszám', "szobafestő elérhetőség", ],
+  openGraph: {
+    siteName: 'Bencsfestő',
+    url: process.env.URL+'/kapcsolat',
+    locale: 'hu_HU',
+    type: 'website',
+    title: "Képek",
+    description: 'Elérhetőségek',
+    images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Elérhetőségek',
+    description: 'Vegye fel a kapcsolatot Bencs Kornél szobafestővel.',
+    images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
+  },
+
+}
 
 
 

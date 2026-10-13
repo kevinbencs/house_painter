@@ -44,10 +44,7 @@ export const middleware = async (req: NextRequest, event: NextFetchEvent) => {
     if (pathname.startsWith('/kepek/')) {
         const pathArr = pathname.split('/');
 
-        if (!/^[1-9]\d*$/.test(pathArr[2])) notFound();
-        const page = Number(pathArr[2])
-
-
+        if (!/^[1-9]\d*$/.test(pathArr[2])) return NextResponse.redirect(new URL('/kepek', req.url))
     }
 
 

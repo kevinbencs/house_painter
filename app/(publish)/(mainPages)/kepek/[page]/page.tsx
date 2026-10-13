@@ -11,12 +11,8 @@ import { Suspense } from 'react'
 export async function generateMetadata({ params }: { params: Promise<{ page: string }> }): Promise<Metadata> {
   const param = await params
   const page = Number(param.page)
-  if (page <= 0 || isNaN(page)) notFound()
-
-  const pageNumb = await getNumbOfImagPage()
 
 
-  if (page > pageNumb) notFound()
   let canonical = ''
   if (page === 1) canonical = '/Kepek'
   else {
@@ -105,7 +101,7 @@ const PageContent = async ({ params }: { params: Promise<{ page: string }> }) =>
 const Page = async ({ params }: { params: Promise<{ page: string }> }) => {
 
   return (
-    <Suspense fallback={<div className='text-center mt-10'>Töltődik...</div>}>
+    <Suspense fallback={<div className='text-center mt-10 min-h-[50vh]'>Töltődik...</div>}>
       <PageContent params={params} />
     </Suspense>
   )
