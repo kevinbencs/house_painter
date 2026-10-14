@@ -6,7 +6,7 @@ const Prices = (props: { name: string,  price: string, unitOfMea: string }) => {
         <div>{props.name}</div>
         <div className="flex gap-2">
             <div>{props.price}</div>
-            <div>{props.unitOfMea}</div>
+            <div>{props.unitOfMea === 'Ft/m2' ? <>Ft/m&sup2;</>  : props.unitOfMea }</div>
         </div>
         
 
