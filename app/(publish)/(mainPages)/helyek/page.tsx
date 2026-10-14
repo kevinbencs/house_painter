@@ -3,8 +3,33 @@ import Image from '@/models/Image'
 import Place from '@/models/Place'
 import { BSPPublicPagesList } from '@/typeScriptType/blogServPlace'
 import { Img } from '@/typeScriptType/img'
+import { Metadata } from 'next'
 import { cacheLife, cacheTag } from 'next/cache'
 import Link from 'next/link'
+
+
+export const metadata: Metadata = {
+title: "Szobafestés Budapest minden kerületében és a környező településeken",
+  description: "Szobafestés, mázolás, tapétázás és glettelés Budapest mind a 23 kerületében és a környező településeken. Díjtalan felmérés és árajánlat - nézze meg, hol vállalok munkát!",
+  keywords: ['budapest szobafestés ', 'tisztasági festés budapest és környéke', 'tapétázás budapest'],
+  openGraph: {
+    title: 'Szobafestés Budapest minden kerületében és a környező településeken',
+    description: 'Szobafestés, mázolás, tapétázás és glettelés Budapest mind a 23 kerületében és a környező településeken. Díjtalan felmérés és árajánlat - nézze meg, hol vállalok munkát!',
+    url: process.env.URL+"/helyek",
+    siteName: 'Bencsfestő',
+    locale: 'hu_HU',
+    type: 'website',
+    images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Szobafestés Budapest minden kerületében és a környező településeken",
+
+    description: 'Szobafestés, mázolás, tapétázás és glettelés Budapest mind a 23 kerületében és a környező településeken. Díjtalan felmérés és árajánlat - nézze meg, hol vállalok munkát!',
+    images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
+  },
+}
+
 
 const page = async () => {
   "use cache"

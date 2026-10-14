@@ -10,7 +10,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Árak - Budapest szobafestés',
     description: 'Szobafestés, mázolás, tapétázás árak Budapesten és környékén',
-    url: '',
+    url: process.env.URL+"/arak",
+    siteName: 'Bencsfestő',
+    locale: 'hu_HU',
+    type: 'website',
     images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
   },
   twitter: {
