@@ -89,7 +89,7 @@ const PageContent = async ({ params }: { params: Promise<{ heading: string }> })
       '@type': 'AdministrativeArea',
       'name': `Budapest ${data?.heading.slice(12, data.heading.indexOf('.') + 9)}`,
     },
-    'provider': { '@id': 'https://your-budapest-painter.hu/#business' },
+    'provider': { '@id': process.env.URL+'/#business' },
   }
 
   if (data === null) notFound();

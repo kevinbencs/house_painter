@@ -1,3 +1,26 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+title: "Adatvédelem",
+  description: "",
+  keywords: ['adatvédelem budapest szobafestés ', 'adatok kezelése budapest szobafestő', ],
+  openGraph: {
+    title:  "Adatvédelem",
+    description: '',
+    url: process.env.URL+"/adatvedelem",
+    siteName: 'Bencsfestő',
+    locale: 'hu_HU',
+    type: 'website',
+    images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title:  "Adatvédelem",
+
+    description: '',
+    images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
+  },
+}
 
 
 const page = () => {
@@ -41,7 +64,7 @@ const page = () => {
           <section>
             <h3 className="mb-6 font-bold">Adatkezeléssel kapcsolatos információk</h3>
             <div className="mb-6">Jelen Tájékoztatóban ismertetett adatkezelések tekintetében Bencs Kornél az adatkezelő (a továbbiakban: Adatkezelő).</div>
-            <div>Adatvédelmi eljárásainkat érintő észrevétel, kérdés vagy panasz esetén az alábbi elérhetőségeken vagyunk elérhetőek: Bencs Kornél, Budapest 1119. Vahot utca 5 3/9. vagy írjon a bencskornel@budapestiszobafesto.hu e-mail címre.</div>
+            <div>Adatvédelmi eljárásainkat érintő észrevétel, kérdés vagy panasz esetén az alábbi elérhetőségeken vagyunk elérhetőek: Bencs Kornél, Budapest 1119. Vahot utca 5 3/9. vagy írjon a bencskornel@bencsfesto.hu e-mail címre.</div>
           </section>
 
         </section>
@@ -67,10 +90,6 @@ const page = () => {
 
 
         <p className="mb-6">
-          Választásának megfelelően Ön személyes adatai megadása nélkül is jogosult hozzáférni weboldalainkhoz, viszont a böngészéshez elengedhetetlen a süti – cookie szabályzat elfogadása, hírlevél-feliratkozás esetén pedig az adatvédelmi tájékoztató és nyilatkozat jóváhagyása. Személyes adat az összes információ, amely közvetett vagy közvetlen módon, azonosító szám szerint vagy az ehhez tartozó adatok alapján azonosítható természetes személyre vonatkozik. Abban az esetben, hogyha az oldal Tulajdonosa az Ön személyes adatait gyűjti, az adatgyűjtés átlátható és bizalmas adatkezeléssel történik.
-        </p>
-
-        <p className="mb-6">
           Az Ön személyes adatai olyan információk, melyek segítségével az Ön személye beazonosítható, például: vezetéknév, utónév, állampolgárság, telefonszám, postacím, e-mail cím. Az Ön személyes adatait önkéntesen megadott módon, a tulajdonos az oldalon történő böngészéskor gyűjti, megjelölve minden esetben a cél eléréséhez szükségszerűen megadandó adatokat. Ha nem kívánja megadni ezen adatokat, akkor nem férhet hozzá a honlap egyes funkcióihoz, szolgáltatásaihoz. Az opcionálisan megadandó adatok gyűjtése a felhasználói igények megismerését, a honlap és szolgáltatások fejlesztését szolgálja.
         </p>
 
@@ -87,8 +106,7 @@ const page = () => {
           <li className="list-disc ml-4">Székhely címe (cég esetén), lakcím, levelezési cím</li>
           <li className="list-disc ml-4">E-mail cím</li>
           <li className="list-disc ml-4">Telefonszám</li>
-          <li className="list-disc ml-4">Rendszer információk (IP-cím, rendszer verzió, felbontás, statisztika a honlapon megtekintett oldalakról, böngészési szokások, viselkedési mintázat)</li>
-
+        
         </ul>
 
         <h3 className="mb-6 font-bold">Adatkezelés időtartama:</h3>
@@ -96,7 +114,6 @@ const page = () => {
         <ul className="mb-20">
           <li className="list-disc ml-4">Direkt marketing célú hozzájárulások tekintetében a felhasználó hozzájárulásának visszavonásáig</li>
           <li className="list-disc ml-4">Profiladatok tekintetében az utolsó bejelentkezéstől számított 4 év</li>
-          <li className="list-disc ml-4">Vásárlások adatai tekintetében a Számv. tv. 169. § (2) bekezdése alapján 8 év</li>
         </ul>
 
 
