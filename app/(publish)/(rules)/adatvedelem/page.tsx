@@ -1,4 +1,4 @@
-import { Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell,  TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -112,10 +112,10 @@ const page = () => {
           <h2 className="text-xl mb-6 font-bold">5. Adatfeldolgozók</h2>
 
           <Table className="mb-6">
-            <TableHeader className="bg-mist-700 hover:bg-mist-700 ">
-              <TableRow className="bg-mist-700 hover:bg-mist-700 ">
-                <TableHead className="text-white">Adatfeldolgozó</TableHead>
-                <TableHead className="text-right text-white">Feladat</TableHead>
+            <TableHeader className="bg-mist-700 hover:bg-mist-700 rounded-t-lg">
+              <TableRow className="bg-mist-700 hover:bg-mist-700 rounded-t-lg">
+                <TableHead className="text-white rounded-tl-lg">Adatfeldolgozó</TableHead>
+                <TableHead className="text-right text-white rounded-tr-lg">Feladat</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
