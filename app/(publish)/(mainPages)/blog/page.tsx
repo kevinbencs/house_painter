@@ -3,8 +3,32 @@ import Blog from '@/models/Blog'
 import Image from '@/models/Image'
 import { BSPPublicPagesList } from '@/typeScriptType/blogServPlace'
 import { Img } from '@/typeScriptType/img'
+import { Metadata } from 'next'
 import { cacheLife, cacheTag } from 'next/cache'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+title: "Blog - tippek szobafestéshez és felújításhoz",
+  description: "Hasznos tanácsok szobafestésről, glettelésről és mázolásról: színválasztás, felkészülés a festésre, árak és gyakori hibák, több, mint 20 év tapasztalatával.",
+  keywords: ['budapest szobafestés ', 'tisztasági festés budapest és környéke', 'tapétázás budapest'],
+  openGraph: {
+    title: 'Blog - tippek szobafestéshez és felújításhoz',
+    description: 'Hasznos tanácsok szobafestésről, glettelésről és mázolásról: színválasztás, felkészülés a festésre, árak és gyakori hibák, több, mint 20 év tapasztalatával.',
+    url: process.env.URL+"/helyek",
+    siteName: 'Bencsfestő',
+    locale: 'hu_HU',
+    type: 'website',
+    images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Blog - tippek szobafestéshez és felújításhoz",
+
+    description: 'Hasznos tanácsok szobafestésről, glettelésről és mázolásról: színválasztás, felkészülés a festésre, árak és gyakori hibák, több, mint 20 év tapasztalatával.',
+    images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
+  },
+}
+
 
 const page = async() => {
   "use cache"

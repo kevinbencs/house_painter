@@ -5,7 +5,6 @@ import { notFound } from "next/navigation"
 import type { Metadata, ResolvingMetadata } from 'next';
 import { Img } from '@/typeScriptType/img';
 import { getImgById, getPlaceByHeading } from "@/lib/data"
-import { cacheLife, cacheTag } from "next/cache"
 import Services from "@/app/_components/services/services"
 import HowWork from "@/app/_components/howwork/howwork"
 import ChooseTypeOfTextItem from "@/app/_components/bsp/placeRender"

@@ -3,8 +3,32 @@ import Image from '@/models/Image'
 import Service from '@/models/Service'
 import { BSPPublicPagesList } from '@/typeScriptType/blogServPlace'
 import { Img } from '@/typeScriptType/img'
+import { Metadata } from 'next'
 import { cacheLife, cacheTag } from 'next/cache'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+title: "Szolgáltatások",
+  description: "Tisztasági festés, glettelés, mázolás, tapétázás és beázás utáni helyreállítás Budapesten. Díjtalan felmérés és árajánlat, korrekt árak, rejtett költségek nélkül.",
+  keywords: ['budapest szobafestés ', 'tisztasági festés budapest és környéke', 'tapétázás budapest'],
+  openGraph: {
+    title: 'Szolgáltatások',
+    description: 'Tisztasági festés, glettelés, mázolás, tapétázás és beázás utáni helyreállítás Budapesten. Díjtalan felmérés és árajánlat, korrekt árak, rejtett költségek nélkül.',
+    url: process.env.URL+"/helyek",
+    siteName: 'Bencsfestő',
+    locale: 'hu_HU',
+    type: 'website',
+    images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Szolgáltatások",
+
+    description: 'Tisztasági festés, glettelés, mázolás, tapétázás és beázás utáni helyreállítás Budapesten. Díjtalan felmérés és árajánlat, korrekt árak, rejtett költségek nélkül.',
+    images: [{ url: "/images/zold-fal.jpeg", alt: 'Bencsfestő - zöld fal' }],
+  },
+}
+
 
 const page = async () => {
   "use cache"

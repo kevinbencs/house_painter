@@ -29,7 +29,7 @@ const data = [
   {
     id: '1',
     title: 'Tényleg ingyenes az árajánlat?',
-    text: 'Igen. Budapest teljes területén a helyszíni felmérés és az árajánlat elkészítése is díjtalan.',
+    text: 'Igen. Budapest teljes területén és környékén a helyszíni felmérés és az árajánlat elkészítése is díjtalan.',
   },
   {
     id: '2',
