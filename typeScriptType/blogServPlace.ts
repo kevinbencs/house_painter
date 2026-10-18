@@ -14,7 +14,8 @@ export interface BSPRender {
     detail: string,
     image: string,
     visibility: boolean,
-    _id: string
+    _id: string,
+    createdAt: string
 }
 
 export interface PlaceRender {

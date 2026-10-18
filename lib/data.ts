@@ -121,6 +121,8 @@ export const getBlogByHeading = async (heading: string): Promise<BSPRender | nul
     }
 
     data._id = String(data._id)
+    const date = new Date(data.createdAt)
+    data.createdAt = String(date.getFullYear()) +'/'+String(date.getMonth()+1) +'/'+String(date.getDate())
 
     return data;
 

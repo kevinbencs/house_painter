@@ -82,8 +82,49 @@ const PageContent = async ({ params }: { params: Promise<{ heading: string }> })
 
   if (data === null) notFound();
 
+  const imgData: (Img | null) = await Image.findById(data.image)
+
+  const base = process.env.URL;
+  const url = `${base}/blog/${heading}`;
+
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BlogPosting',
+        '@id': `${url}#article`,
+        headline: decodeURIComponent(heading.replaceAll('-', ' ')),
+        description: data.detail,
+        image: [base + '/img' + imgData?.newUrl,],
+        datePublished: data.createdAt,
+        dateModified: data.createdAt,
+        author: {
+          '@type': 'Person',
+          name: 'Bencs Kornél',
+          url: `${base}/#rolam`,
+        },
+        publisher: { '@id': `${base}/#business` },
+        mainEntityOfPage: url,
+        inLanguage: 'hu-HU',
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Főoldal', item: base },
+          { '@type': 'ListItem', position: 2, name: 'Blog', item: `${base}/blog` },
+          { '@type': 'ListItem', position: 3, name: decodeURIComponent(heading.replaceAll('-', ' ')), item: url },
+        ],
+      },
+    ],
+  };
+
   return (
     <article>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <h1>{decodeURIComponent(heading.replaceAll('-', ' '))}</h1>
       <div className="lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2">
         {data.text.split('$').map((s: string) => <ChooseTypeOfTextItem key={data._id} s={s} />)}
@@ -94,10 +135,10 @@ const PageContent = async ({ params }: { params: Promise<{ heading: string }> })
 }
 
 
-const Page =  ({ params }: { params: Promise<{ heading: string }> }) => {
+const Page = ({ params }: { params: Promise<{ heading: string }> }) => {
   return (
-    <Suspense fallback={<div className='text-center mt-10'>Töltődik...</div> }>
-      <PageContent params={params}/>
+    <Suspense fallback={<div className='text-center mt-10'>Töltődik...</div>}>
+      <PageContent params={params} />
     </Suspense>
   )
 }

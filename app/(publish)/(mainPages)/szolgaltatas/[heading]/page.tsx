@@ -6,10 +6,10 @@ import { connectToMongo } from "@/lib/mongo";
 import Service from "@/models/Service";
 import { getServiceByHeading } from "@/lib/data";
 import Image from "@/models/Image"
-import { cacheLife, cacheTag } from "next/cache";
 import Link from "next/link";
 import ImgBSP from "@/app/_components/bsp/img";
 import { Suspense } from "react";
+import ChooseTypeOfTextItem from "@/app/_components/bsp/blogRender";
 
 export async function generateMetadata(
   { params }: { params: Promise<{ heading: string }> },
@@ -76,23 +76,67 @@ const PageContent = async ({ params }: { params: Promise<{ heading: string }> })
 
 
 
-  const data: BSPPublicPagesList[] = await Service.find({ visibility: false }, { id: 1, heading: 1, image: 1, visibility: 1 })
-
-  const imgData: (Img | null)[] = await Promise.all(data.map((item) => Image.findById(item.image)))
+  const data= await getServiceByHeading(decodeURIComponent(heading.replaceAll('-', ' ')))
 
   if (data === null) notFound();
+
+
+
+  const base = process.env.URL;
+
+  const url = `${base}/szolgaltatas/${heading}`;
+
+
+
+  const imgData: (Img | null) = await Image.findById(data.image)
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Service',
+        '@id': `${url}#service`,
+        name: decodeURIComponent(heading.replaceAll('-', ' ')),
+        serviceType: decodeURIComponent(heading.replaceAll('-', ' ')),
+        description: data.detail,
+        url,
+        image: base + '/img' + imgData?.newUrl,
+        provider: { '@id': `${base}/#business` },
+        areaServed: { '@type': 'City', name: 'Budapest' },
+        ...({
+          offers: {
+            '@type': 'Offer',
+            url: `${base}/arak`,
+            priceSpecification: {
+              '@type': 'UnitPriceSpecification',
+              priceCurrency: 'HUF',
+              unitCode: 'MTK',
+              unitText: 'm²',
+            },
+          },
+        }),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Főoldal', item: base },
+          { '@type': 'ListItem', position: 2, name: 'Szolgáltatások', item: `${base}/szolgaltatas` },
+          { '@type': 'ListItem', position: 3, name: decodeURIComponent(heading.replaceAll('-', ' ')), item: url },
+        ],
+      },
+    ],
+  };
   return (
-    <section className='mb-10 mt-10'>
-      <h1 className='text-3xl mb-20 text-center'>Szobafestési szolgáltatásaim</h1>
-      <ul className='flex gap-4 flex-wrap justify-between lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2'>
-        {data.map((item, i) => <li key={"blog-" + String(item._id)}>
-          <Link className="hover:text-gray-100 flex flex-col gap-2 bg-gray-500" href={`blog/${item.heading.replaceAll(" ", "-")}`}>
-            {imgData[i] !== null && <ImgBSP url={imgData[i]!.newUrl} detail={imgData[i]!.detail} />}
-            <h2>{item.heading}</h2>
-          </Link>
-        </li>)}
-      </ul>
-    </section>
+    <article className='mb-10 mt-10'>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <h1 className='text-3xl mb-20 text-center'>{decodeURIComponent(heading.replaceAll('-', ' '))}</h1>
+      <div className="lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2">
+        {data.text.split('$').map((s: string) => <ChooseTypeOfTextItem key={data._id} s={s} />)}
+      </div>
+    </article>
   )
 }
 
