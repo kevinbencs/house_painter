@@ -6,7 +6,7 @@ Page:
 
 ## Overview
 
-A content-driven web application built with Next.js, featuring an `admin dashboard`.
+Real production site for a local business, built with Next.js 16 (PPR), fully tested with Vitest and Playwright.
 
 ## Key features
 
@@ -15,14 +15,15 @@ A content-driven web application built with Next.js, featuring an `admin dashboa
 ## Tech Stack
 
 Frontend:
-- Next.js - PPR and routing
+- Next.js - PPR/cache components and routing
 - TypeScript - type-safe frontend and backend logic
-- Rechart - admin analytics visualization
+- Recharts - admin analytics visualization
+
 
 Backend:
-- Node.js (Next.js RestAPI routes)
+- Node.js (Next.js REST API routes)
 - Jsonwebtoken - authentication and authorization
-- Zod -request validation
+- Zod - request validation
 
 
 Data & services:
@@ -32,6 +33,10 @@ Data & services:
 
 Rendering strategies used:
 - PPR for all pages
+
+
+Testing:
+- Unit tests (Vitest) for all helpers, server actions and Mongoose models and 2 end-to-end tests (Playwright) 
 
 
 ## Getting Started
