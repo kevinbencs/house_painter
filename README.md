@@ -1,16 +1,23 @@
 # House painter website - Next.js Full-Stack Application
 
+A production website built for a working painting business, with a content-driven public site, a local-SEO page architecture, and a full admin dashboard. Built with Next.js 16 and covered by unit and end-to-end tests.
+
 ## Live
 
 Page: 
 
 ## Overview
 
-Real production site for a local business, built with Next.js 16 (PPR), fully tested with Vitest and Playwright.
+A content-driven web application built with Next.js 16, serving a real painting business. The public site is optimized for local SEO (service and service-area pages), while a role-protected admin dashboard lets the owner manage all content and view traffic analytics — no code or redeploy needed to update the site.
 
 ## Key features
 
-- Admin dashboard with site management (blog, services, prices, images, places) and traffic data analytics
+- Public, SEO-focused site - dedicated service pages (interior painting, wallpapering, varnishing, refresh painting) and service-area pages, structured for local search
+- Admin dashboard -  manage services, prices, images, blog posts and service areas, with built-in traffic analytics
+- Authentication & authorization - JWT-based login protecting the dashboard
+- Contact & email - transactional email delivery via Resend
+- Blog - content managed from the dashboard.
+
 
 ## Tech Stack
 
@@ -35,8 +42,12 @@ Rendering strategies used:
 - PPR for all pages
 
 
-Testing:
-- Unit tests (Vitest) for all helpers, server actions and Mongoose models and 2 end-to-end tests (Playwright) 
+## Testing:
+- Unit tests (Vitest) - covering all helpers functions, server actions and Mongoose models
+- End-to-end tests (Playwright) - covering key user flows.
+
+## Rendering strategy
+Partial Prerendering (PPR) across all pages - a static shell served instantly, with dynamic parts streamed in.
 
 
 ## Getting Started
