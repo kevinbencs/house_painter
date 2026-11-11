@@ -11,10 +11,10 @@ const SendMessageContainer = () => {
                 <h2 className='text-3xl mb-6 text-center 2xl:text-start'>Maradjunk kapcsolatban</h2>
                 <div className='mb-8'>Küldjön egy üzenetet vagy e-mailt; hamarosan felveszem Önnel a kapcsolatot, és ingyenes, kötelezettségvállalás nélküli árajánlatot küldök Önnek.</div>
 
-                <div className='flex gap-3  items-center mb-4'>
+                <a href="tel:" className='flex gap-3  items-center mb-4'>
                     <PiPhoneOutgoingFill />
                     +00-00/000-00-00
-                </div>
+                </a>
                 <a href='mailto:example@example.com' className='flex gap-3  items-center'>
                     <MdEmail />
                     ben@....

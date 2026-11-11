@@ -17,7 +17,7 @@ const ToFormButton = () => {
     }
 
     return (
-        <Button size="lg" onClick={handleClick} >Űrlap</Button>
+        <Button size="lg" onClick={handleClick} >töltse ki az űrlapot</Button>
     )
 }
 
