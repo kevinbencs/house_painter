@@ -1,9 +1,11 @@
 "use client"
 import { logout } from '@/action/logout';
-import { useContext, createContext, useState, ReactNode, useEffect, useCallback, useRef } from 'react'
+import { useContext, createContext, useState, ReactNode, useEffect, useCallback, useRef, useLayoutEffect } from 'react'
 
 type LoggedContextType = {
-  Timer: number
+  Timer: number,
+  link: string,
+  setLink: (val: string) => void
 }
 
 const TIMEOUT_MS = 10 * 60 * 1000;
@@ -15,6 +17,29 @@ export const IsLoggedProvider = ({ children }: { children: ReactNode }) => {
   const [Timer, setTimer] = useState(TIMEOUT_MS / 1000)
   const logoutTimeRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [link, setLink] = useState<string>('');
+
+
+  useEffect(() => {
+    const fetchAuth = async () => {
+      try {
+        const data = await fetch("/api/auth");
+
+        const jsonData = await data.json();
+
+        if(jsonData.link){
+          setLink(jsonData.link)
+        }
+
+
+      } catch (error) {
+        console.log(error)
+      }
+
+    }
+
+    fetchAuth()
+  }, [])
 
 
   const startCountdown = () => {
@@ -38,30 +63,42 @@ export const IsLoggedProvider = ({ children }: { children: ReactNode }) => {
 
     startCountdown()
 
-    logoutTimeRef.current = setTimeout(() => {
-      logout()
+    logoutTimeRef.current = setTimeout(async () => {
+      await logout()
+      setLink('')
     }, TIMEOUT_MS)
   }, [])
 
 
   useEffect(() => {
 
+    if (link !== '') {
+      const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
 
-    const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
+      events.forEach(e => window.addEventListener(e, resetTimer));
+      resetTimer();
 
-    events.forEach(e => window.addEventListener(e, resetTimer));
-    resetTimer();
+      return () => {
+        events.forEach(e => window.removeEventListener(e, resetTimer));
+        if (logoutTimeRef.current) clearTimeout(logoutTimeRef.current);
+        if (countdownRef.current) clearInterval(countdownRef.current)
+      }
 
-    return () => {
+    }
+    else {
+      const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
+
       events.forEach(e => window.removeEventListener(e, resetTimer));
       if (logoutTimeRef.current) clearTimeout(logoutTimeRef.current);
       if (countdownRef.current) clearInterval(countdownRef.current)
+
     }
 
-  }, [resetTimer])
+
+  }, [resetTimer, link])
 
   return (
-    <LoggedContext.Provider value={{ Timer }}>
+    <LoggedContext.Provider value={{ Timer, link, setLink }}>
       {children}
     </LoggedContext.Provider>
   )

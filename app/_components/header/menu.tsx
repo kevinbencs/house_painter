@@ -3,12 +3,14 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import Image from "next/image"
+import { useLogged } from "../loggedContext/isLoggedContext"
 
 
 
 
 const Menu = () => {
-    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const {link} = useLogged()
 
 
     useEffect(() => {
@@ -36,12 +38,15 @@ const Menu = () => {
                     <div className="h-screen w-full bg-black p-2 z-20 lg:z-0 lg:h-auto lg:bg-gray-900 lg:static lg:w-auto">
                         <label htmlFor="hamburger-menu" className="text-black lg:hidden p-2 rounded bg-gray-50">X</label>
                         <section className=" h-full justify-around  flex flex-col lg:static lg:flex-row lg:justify-between lg:gap-4 items-center">
-                            <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-700 p-px pl-[11px] text-sm font-medium mt-1 mb-1 pr-[11px] hover:underline" href="/">Főoldal</Link>
-                            <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-600 p-px pl-[11px] text-sm font-medium mt-1 mb-1 pr-[11px] hover:underline" href="/kepek">Képek</Link>
-                            <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-500 p-px pl-[11px] text-sm font-medium mt-1 mb-1 pr-[11px] hover:underline" href="/arak">Árak</Link>
-                            <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-400 p-px pl-[11px] text-sm font-medium mt-1 mb-1 pr-[11px] hover:underline" href="/kapcsolat">Kapcsolat</Link>
-                            <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-300 p-px pl-[11px] text-sm font-medium mt-1 mb-1 pr-[11px] hover:underline" href="/blog">Blogok</Link>
-                            <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-200 p-px pl-[11px] text-sm font-medium mt-1 mb-1 pr-[11px] hover:underline" href="/szolgaltatas">Szolgáltatások</Link>
+                            <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-700 p-px pl-2.75 text-sm font-medium mt-1 mb-1 pr-2.75 hover:underline" href="/">Főoldal</Link>
+                            <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-600 p-px pl-2.75 text-sm font-medium mt-1 mb-1 pr-2.75 hover:underline" href="/kepek">Képek</Link>
+                            <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-500 p-px pl-2.75 text-sm font-medium mt-1 mb-1 pr-2.75 hover:underline" href="/arak">Árak</Link>
+                            <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-400 p-px pl-2.75 text-sm font-medium mt-1 mb-1 pr-2.75 hover:underline" href="/kapcsolat">Kapcsolat</Link>
+                            <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-300 p-px pl-2.75 text-sm font-medium mt-1 mb-1 pr-2.75 hover:underline" href="/blog">Blogok</Link>
+                            <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-200 p-px pl-2.75 text-sm font-medium mt-1 mb-1 pr-2.75 hover:underline" href="/szolgaltatas">Szolgáltatások</Link>
+                            {link &&
+                                <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-200 p-px pl-2.75 text-sm font-medium mt-1 mb-1 pr-2.75 hover:underline" href={`/${link}`}>Dashboard</Link>
+                            }
                         </section>
                     </div>
                 </div>

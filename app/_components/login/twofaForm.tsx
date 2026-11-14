@@ -11,14 +11,19 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useActionState,useState,  } from "react"
+import { useRouter } from "next/navigation"
+import { useActionState, useEffect, useState, } from "react"
 
 
 const TwoFAForm = () => {
     const [otp, setOtp] = useState<string>("")
     const [state, action, isPending] = useActionState(loginTwoFAAction, null)
+    const router = useRouter()
 
-   
+    if (state?.link) {
+        router.push(state.link)
+    }
+
 
 
 
@@ -42,7 +47,7 @@ const TwoFAForm = () => {
                             <div className="flex items-center">
                                 <Label htmlFor="code">Kód</Label>
                             </div>
-                            <Input id="code" type="password" required name="otpName" disabled={isPending} value={otp} onChange={(e) => setOtp(e.target.value)}/>
+                            <Input id="code" type="password" required name="otpName" disabled={isPending} value={otp} onChange={(e) => setOtp(e.target.value)} />
                         </div>
                     </div>
 

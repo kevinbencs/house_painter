@@ -142,6 +142,6 @@ export const loginTwoFAAction = async (_prevState: ActionState, formData: FormDa
         return { error: err , fieldData: [otp] }
     }
     if (errR) redirect(errR)
-    redirect('/dashboard')
+    return {link: "/dashboard"}
 
 }
