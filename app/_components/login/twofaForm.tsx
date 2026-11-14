@@ -13,14 +13,17 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useRouter } from "next/navigation"
 import { useActionState, useEffect, useState, } from "react"
+import { useAuth } from "../authContext/authContext"
 
 
 const TwoFAForm = () => {
     const [otp, setOtp] = useState<string>("")
     const [state, action, isPending] = useActionState(loginTwoFAAction, null)
     const router = useRouter()
+    const {setLink} = useAuth()
 
     if (state?.link) {
+        setLink(state.link)
         router.push(state.link)
     }
 

@@ -3,12 +3,12 @@
 import { logout } from "@/action/logout"
 import { useTransition } from "react"
 import { CiLogout } from "react-icons/ci";
-import { useLogged } from "../loggedContext/isLoggedContext";
+import { useAuth } from "../authContext/authContext";
 
 const LogoutButton = () => {
 
   const [isPending, startTransition] = useTransition()
-  const { setLink } = useLogged();
+  const { setLink } = useAuth();
   const onClick = () => {
     startTransition(async () => {
       setLink('');

@@ -12,7 +12,7 @@ import { IoIosImages } from "react-icons/io";
 import { FaMap } from "react-icons/fa";
 import { FaPaintRoller } from "react-icons/fa";
 import { LuPaintBucket } from "react-icons/lu"
-import { useLogged } from "../loggedContext/isLoggedContext";
+import { useLogged } from "../authContext/authContext";
 
 
 const Links = [

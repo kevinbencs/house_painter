@@ -7,7 +7,7 @@ import HeaderContainer from "./_components/header/headerContainer";
 import TopBar from "./_components/header/topbar";
 import { FormProvided } from "./_components/sendMessage/formContext";
 import ErrorBoundary from './custom-error-boundary'
-import { IsLoggedProvider } from "./_components/loggedContext/isLoggedContext";
+import { AuthProvider } from "./_components/authContext/authContext";
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -119,11 +119,11 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <FormProvided>
-          <IsLoggedProvider>
+          <AuthProvider>
             <HeaderContainer>
               {children}
             </HeaderContainer>
-          </IsLoggedProvider>
+          </AuthProvider>
 
           <Footer />
         </FormProvided>

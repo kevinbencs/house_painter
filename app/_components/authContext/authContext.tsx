@@ -1,8 +1,8 @@
 "use client"
 import { logout } from '@/action/logout';
-import { useContext, createContext, useState, ReactNode, useEffect, useCallback, useRef, useLayoutEffect } from 'react'
+import { useContext, createContext, useState, ReactNode, useEffect, useCallback, useRef } from 'react'
 
-type LoggedContextType = {
+type authContextType = {
   Timer: number,
   link: string,
   setLink: (val: string) => void
@@ -10,10 +10,10 @@ type LoggedContextType = {
 
 const TIMEOUT_MS = 10 * 60 * 1000;
 
-const LoggedContext = createContext<undefined | LoggedContextType>(undefined)
+const AuthContext = createContext<undefined | authContextType>(undefined)
 
 
-export const IsLoggedProvider = ({ children }: { children: ReactNode }) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [Timer, setTimer] = useState(TIMEOUT_MS / 1000)
   const logoutTimeRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const countdownRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -98,15 +98,15 @@ export const IsLoggedProvider = ({ children }: { children: ReactNode }) => {
   }, [resetTimer, link])
 
   return (
-    <LoggedContext.Provider value={{ Timer, link, setLink }}>
+    <AuthContext.Provider value={{ Timer, link, setLink }}>
       {children}
-    </LoggedContext.Provider>
+    </AuthContext.Provider>
   )
 }
 
 
-export const useLogged = () => {
-  const context = useContext(LoggedContext)
+export const useAuth = () => {
+  const context = useContext(AuthContext)
 
   if (typeof context === 'undefined') {
     throw new Error('useLogged must be use in isLoggedProvider')

@@ -3,14 +3,14 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import Image from "next/image"
-import { useLogged } from "../loggedContext/isLoggedContext"
+import { useAuth} from "../authContext/authContext"
 
 
 
 
 const Menu = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const {link} = useLogged()
+    const {link} = useAuth()
 
 
     useEffect(() => {
