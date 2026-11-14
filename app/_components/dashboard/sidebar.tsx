@@ -12,7 +12,7 @@ import { IoIosImages } from "react-icons/io";
 import { FaMap } from "react-icons/fa";
 import { FaPaintRoller } from "react-icons/fa";
 import { LuPaintBucket } from "react-icons/lu"
-import { useLogged } from "../authContext/authContext";
+import { useAuth} from "../authContext/authContext";
 
 
 const Links = [
@@ -31,7 +31,7 @@ const Links = [
 
 const Sidebar = () => {
   const pathname = usePathname()
-  const { Timer } = useLogged()
+  const { Timer } = useAuth()
   return (
     <div >
       <section className="flex sticky top-0 h-[800px] flex-col items-start justify-between bg-gray-900 p-10 text-gray-400 rounded pb-4 text-sm min-w-[251px]">
