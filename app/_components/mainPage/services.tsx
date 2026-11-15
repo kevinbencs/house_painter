@@ -24,7 +24,7 @@ const Services = async () => {
         </div>
       </Link>)}
       </section>
-      <Paragraph text1='Szolgáltatásokról az alábbi ' text2=' többet megtudhat.' linkHref='/szolgaltatasok' linkText='linken'/>
+      <Paragraph text1='Szolgáltatásokról az alábbi ' text2=' többet megtudhat.' linkHref='/szolgaltatas' linkText='linken'/>
     </section>
   )
 }

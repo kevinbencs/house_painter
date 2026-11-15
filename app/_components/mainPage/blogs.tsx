@@ -23,7 +23,7 @@ const Blogs = async () => {
           <h3>{item.heading}</h3>
         </div>
       </Link>)}
-      <Paraghrape text1='Amennyiben többet szeretne tudni, az alábbi ' text2=' többet megtudhat.' linkHref='/szolgaltatasok' linkText='linken' />
+      <Paraghrape text1='Amennyiben többet szeretne tudni, az alábbi ' text2=' többet megtudhat.' linkHref='/blog' linkText='linken' />
     </section>
   )
 }

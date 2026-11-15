@@ -3,14 +3,14 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import Image from "next/image"
-import { useAuth} from "../authContext/authContext"
+import { useAuth } from "../authContext/authContext"
 
 
 
 
 const Menu = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const {link} = useAuth()
+    const { link, Timer } = useAuth()
 
 
     useEffect(() => {
@@ -45,7 +45,10 @@ const Menu = () => {
                             <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-300 p-px pl-2.75 text-sm font-medium mt-1 mb-1 pr-2.75 hover:underline" href="/blog">Blogok</Link>
                             <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-200 p-px pl-2.75 text-sm font-medium mt-1 mb-1 pr-2.75 hover:underline" href="/szolgaltatas">Szolgáltatások</Link>
                             {link &&
-                                <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-200 p-px pl-2.75 text-sm font-medium mt-1 mb-1 pr-2.75 hover:underline" href={`/${link}`}>Dashboard</Link>
+                                <>
+                                    <Link onClick={() => setIsOpen(false)} className="text-white ease-in-out -top-full relative duration-300 lg:static delay-200 p-px pl-2.75 text-sm font-medium mt-1 mb-1 pr-2.75 hover:underline" href={`${link}`}>Dashboard</Link>
+                                    <div className=" flex items-center gap-2 w-full p-2 rounded-xs">{Math.floor(Timer / 60)}:{String(Timer % 60).padStart(2, '0')}</div>
+                                </>
                             }
                         </section>
                     </div>
