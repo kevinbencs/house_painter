@@ -27,6 +27,7 @@ const place = [
     'XXI. kerület',
     'XXII. kerület',
     'XXIII. kerület',
+    'Budaörs',
 
 ]
 

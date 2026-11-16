@@ -1,13 +1,8 @@
-import { BSPPublicPagesList, BSPRender } from "@/typeScriptType/blogServPlace"
 import { notFound } from "next/navigation"
 import type { Metadata, ResolvingMetadata } from 'next';
-import { Img } from '@/typeScriptType/img';
 import { connectToMongo } from "@/lib/mongo";
 import Service from "@/models/Service";
 import { getServiceByHeading } from "@/lib/data";
-import Image from "@/models/Image"
-import Link from "next/link";
-import ImgBSP from "@/app/_components/bsp/img";
 import { Suspense } from "react";
 import ChooseTypeOfTextItem from "@/app/_components/bsp/blogRender";
 
@@ -19,11 +14,10 @@ export async function generateMetadata(
   const { heading } = await params
 
 
-  const data: BSPRender | null = await getServiceByHeading(decodeURIComponent(heading))
+  const data = await getServiceByHeading(decodeURIComponent(heading))
 
   if (data === null) return {}
 
-  const imgData: (Img | null) = await Image.findById(data.image)
 
 
 
@@ -39,8 +33,8 @@ export async function generateMetadata(
       url: `${process.env.URL}/blog/${heading}`,
       images: [
         {
-          url: process.env.URL + '/img' + imgData?.newUrl,
-          alt: imgData?.detail
+          url: process.env.URL + '/img' + data.newUrl,
+          alt: data.detail
         }
       ],
     },
@@ -50,8 +44,8 @@ export async function generateMetadata(
       description: data.detail,
       images: [
         {
-          url: process.env.URL + '/img' + imgData?.newUrl,
-          alt: imgData?.detail
+          url: process.env.URL + '/img' + data.newUrl,
+          alt: data.detail
         }
       ],
     },
@@ -69,26 +63,23 @@ export async function generateStaticParams() {
 }
 
 
+
+
 const PageContent = async ({ params }: { params: Promise<{ heading: string }> }) => {
   const { heading } = await params;
 
   if (heading === '__placeholder__') notFound()
 
 
-
-  const data= await getServiceByHeading(decodeURIComponent(heading.replaceAll('-', ' ')))
+  const data = await getServiceByHeading(decodeURIComponent(heading.replaceAll('-', ' ')))
 
   if (data === null) notFound();
-
 
 
   const base = process.env.URL;
 
   const url = `${base}/szolgaltatas/${heading}`;
 
-
-
-  const imgData: (Img | null) = await Image.findById(data.image)
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -100,7 +91,7 @@ const PageContent = async ({ params }: { params: Promise<{ heading: string }> })
         serviceType: decodeURIComponent(heading.replaceAll('-', ' ')),
         description: data.detail,
         url,
-        image: base + '/img' + imgData?.newUrl,
+        image: base + '/img' + data.newUrl,
         provider: { '@id': `${base}/#business` },
         areaServed: { '@type': 'City', name: 'Budapest' },
         ...({
@@ -134,7 +125,7 @@ const PageContent = async ({ params }: { params: Promise<{ heading: string }> })
       />
       <h1 className='text-3xl mb-20 text-center'>{decodeURIComponent(heading.replaceAll('-', ' '))}</h1>
       <div className="lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2">
-        {data.text.split('$').map((s: string) => <ChooseTypeOfTextItem key={data._id} s={s} />)}
+        {data.text.split('\n').filter((item: string) => item !== '' && item !== null && typeof (item) !== undefined).map((item: string) => <ChooseTypeOfTextItem key={'service-' + item.slice(0, 10)} s={item} />)}
       </div>
     </article>
   )
@@ -143,7 +134,10 @@ const PageContent = async ({ params }: { params: Promise<{ heading: string }> })
 
 
 
+
+
 const page = async ({ params }: { params: Promise<{ heading: string }> }) => {
+
 
   return (
     <Suspense fallback={<div className='text-center mt-10'>Töltődik...</div>}>

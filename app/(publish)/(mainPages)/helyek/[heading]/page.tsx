@@ -115,7 +115,7 @@ const PageContent = async ({ params }: { params: Promise<{ heading: string }> })
         <div className="lg:pl-[calc(50%-600px)] lg:pr-[calc(50%-600px)] pl-2 pr-2">
 
 
-          {data.text.split('\n').filter((item: string) => item !== '' && item !== null && typeof (item) !== undefined).map((item: string) => <ChooseTypeOfTextItem key={'place-' + item[10]} s={item} />)}
+          {data.text.split('\n').filter((item: string) => item !== '' && item !== null && typeof (item) !== undefined).map((item: string) => <ChooseTypeOfTextItem key={'place-' + item.slice(0,10)} s={item} />)}
 
         </div>
         <div className="m-2 lg:ml-7.5 lg:mr-7.5">

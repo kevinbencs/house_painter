@@ -5,7 +5,7 @@ import Image from '@/models/Image'
 import { Img, ImgWithoutBlob } from '@/typeScriptType/img'
 import { MongoData } from '@/typeScriptType/price'
 import { Categories } from '@/typeScriptType/price'
-import { BSPClientList, BSPGetUpdateList, BSPHeading, BSPRender, PlaceRender } from '@/typeScriptType/blogServPlace'
+import { BSPClientList, BSPGetUpdateList, BSPHeading, BSPPublicPagesList, BSPRender, PlaceRender, typeBlogMainPage } from '@/typeScriptType/blogServPlace'
 import Blog from '@/models/Blog'
 import Place from '@/models/Place'
 import Service from '@/models/Service'
@@ -122,7 +122,7 @@ export const getBlogByHeading = async (heading: string): Promise<BSPRender | nul
 
     data._id = String(data._id)
     const date = new Date(data.createdAt)
-    data.createdAt = String(date.getFullYear()) +'/'+String(date.getMonth()+1) +'/'+String(date.getDate())
+    data.createdAt = String(date.getFullYear()) + '/' + String(date.getMonth() + 1) + '/' + String(date.getDate())
 
     return data;
 
@@ -157,7 +157,7 @@ export const getPlaceByHeading = async (heading: string): Promise<PlaceRender | 
 
 }
 
-export const getServiceByHeading = async (heading: string): Promise<BSPRender | null> => {
+export const getServiceByHeading = async (heading: string) => {
 
     'use cache'
     cacheTag(`service-${heading}`)
@@ -175,7 +175,13 @@ export const getServiceByHeading = async (heading: string): Promise<BSPRender | 
 
     data._id = String(data._id)
 
-    return data
+    const imgData: (Img | null) = await Image.findById(data.image)
+
+    return ({
+        ...data,
+        detail: imgData?.detail ?? '',
+        newUrl: imgData?.newUrl ?? '',
+    })
 
 
 
@@ -270,12 +276,24 @@ export const getServiceMainPage = async () => {
 
     await connectToMongo()
 
-    const data = await Service.find({ visibility: true }, { _id: 1, heading: 1, visibility: 1, image: 1 }).limit(5).lean()
+    const data: typeBlogMainPage[] = await Service.find({ visibility: true }, { _id: 1, heading: 1, visibility: 1, image: 1 }).limit(5).lean()
 
-    return data.map(item => ({
-        ...item,
-        _id: String(item._id)
-    }))
+
+    const finalData = await Promise.all(data.map(
+        async (item) => {
+            const imgData: (Img | null) = await Image.findById(item.image)
+
+            return ({
+                ...item,
+                _id: String(item._id),
+                newUrl: imgData?.newUrl ?? '',
+                detail: imgData?.detail ?? ''
+            })
+        }
+    ))
+
+
+    return finalData
 
 
 
@@ -359,9 +377,9 @@ export const getDashboardData = async () => {
             },
             { $sort: { _id: 1 } }
         ]),
-        (await Blog.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2)).map(item => ({_id: String(item.id), heading: item.heading, createdAt: item.createdAt})),
-        (await Place.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2)).map(item => ({_id: String(item.id), heading: item.heading, createdAt: item.createdAt})),
-        (await Service.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2)).map(item => ({_id: String(item.id), heading: item.heading, createdAt: item.createdAt}))
+        (await Blog.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2)).map(item => ({ _id: String(item.id), heading: item.heading, createdAt: item.createdAt })),
+        (await Place.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2)).map(item => ({ _id: String(item.id), heading: item.heading, createdAt: item.createdAt })),
+        (await Service.find({}, { _id: 1, heading: 1, createdAt: 1 }).limit(2)).map(item => ({ _id: String(item.id), heading: item.heading, createdAt: item.createdAt }))
     ])
 
     return res
@@ -396,4 +414,30 @@ export const getBServiceDashboardData = async () => {
 
     const list: BSPClientList[] = res.map((item) => ({ id: String(item._id), title: item.heading, visibility: item.visibility, year: new Date(item.createdAt).getFullYear(), month: new Date(item.createdAt).getMonth(), day: new Date(item.createdAt).getDay() }))
     return list
+}
+
+
+
+
+export const getServiceList = async () => {
+    "use cache"
+    cacheTag("service-list");
+    cacheLife("hours")
+
+    const data: BSPPublicPagesList[] = await Service.find({ visibility: true }, { id: 1, heading: 1, image: 1, visibility: 1 }).lean()
+
+    const finalData = await Promise.all(data.map(
+        async (item) => {
+            const imgData: (Img | null) = await Image.findById(item.image)
+
+            return ({
+                ...item,
+                _id: String(item._id),
+                newUrl: imgData?.newUrl ?? '',
+                detail: imgData?.detail ?? ''
+            })
+        }
+    ))
+
+    return finalData;
 }
