@@ -21,11 +21,11 @@ export async function generateMetadata(
   
 
 
-  const data: PlaceRender | null = await getPlaceByHeading(decodeURIComponent(heading))
+  const data = await getPlaceByHeading(decodeURIComponent(heading))
 
   if (data === null) return {}
 
-  const imgData: (Img | null) = await getImgById(data.image)
+  
 
 
 
@@ -39,8 +39,8 @@ export async function generateMetadata(
       url: `${process.env.URL}/blog/${heading}`,
       images: [
         {
-          url: '/img/' + imgData?.newUrl,
-          alt: imgData?.detail
+          url: '/img/' + data.newUrl,
+          alt: data.detail
         }
       ],
     },
@@ -50,8 +50,8 @@ export async function generateMetadata(
       description: data.detail,
       images: [
         {
-          url: '/img/' + imgData?.newUrl,
-          alt: imgData?.detail
+          url: '/img/' + data.newUrl,
+          alt: data.detail
         }
       ],
     },

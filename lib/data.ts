@@ -131,7 +131,7 @@ export const getBlogByHeading = async (heading: string): Promise<BSPRender | nul
 }
 
 
-export const getPlaceByHeading = async (heading: string): Promise<PlaceRender | null> => {
+export const getPlaceByHeading = async (heading: string) => {
 
     'use cache'
     cacheTag(`place-${heading}`)
@@ -148,9 +148,13 @@ export const getPlaceByHeading = async (heading: string): Promise<PlaceRender | 
         return null
     }
 
+    const imgData: (Img | null) = await getImgById(data.image)
+
     return {
         ...data,
         _id: String(data._id),
+        newUrl: imgData?.newUrl ?? '',
+        detail: imgData?.detail ?? ''
     }
 
 
@@ -440,4 +444,31 @@ export const getServiceList = async () => {
     ))
 
     return finalData;
+}
+
+
+export const getPlaceList = async () => {
+    "use cache"
+    cacheTag("place-list");
+    cacheLife('days')
+
+    const data: BSPPublicPagesList[] = await Place.find({ visibility: true }, { id: 1, heading: 1, image: 1, visibility: 1 }).sort('heading')
+
+
+    const finalData = await Promise.all(data.map(
+        async (item) => {
+            const imgData: (Img | null) = await Image.findById(item.image)
+
+            return ({
+                ...item,
+                _id: String(item._id),
+                newUrl: imgData?.newUrl ?? '',
+                detail: imgData?.detail ?? ''
+            })
+        }
+    ))
+
+    return finalData;
+
+
 }
