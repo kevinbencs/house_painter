@@ -469,7 +469,7 @@ export const getPlaceList = async () => {
     cacheTag("place-list");
     cacheLife('days')
 
-    const data: BSPPublicPagesList[] = await Place.find({ visibility: true }, { id: 1, heading: 1, image: 1, visibility: 1 }).sort('heading')
+    const data: BSPPublicPagesList[] = await Place.find({ visibility: true }, { id: 1, heading: 1, image: 1, visibility: 1 }).sort('heading').lean()
 
 
     const finalData = await Promise.all(data.map(
