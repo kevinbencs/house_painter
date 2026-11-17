@@ -74,7 +74,7 @@ const Page = async () => {
             },
             priceSpecification: {
               '@type': 'UnitPriceSpecification',
-              price: item.price,          // number: 1230, not "1230 Ft"
+              price: item.price,          
               priceCurrency: 'HUF',
               unitCode: UNIT_CODES[item.unitOfMea],
               unitText: item.unitOfMea === 'Ft/m2' ? 'Ft/m²' : item.unitOfMea,

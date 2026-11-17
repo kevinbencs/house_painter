@@ -21,7 +21,19 @@ export const getPriceData = async () => {
 
     await connectToMongo()
 
-    const docs: MongoData[] = await Price.find({}, { _id: 1, name: 1, price: 1, category: 1, unitOfMea: 1 }).sort({ category: -1 }).lean()
+    const CATEGORY_ORDER = ['Festés', 'Tapétázás', 'Glettelés', 'Mázolás', 'Egyéb']
+
+    const docs: MongoData[] = await Price.aggregate<MongoData>([
+        {
+            $addFields: {
+                sortIndex: { $indexOfArray: [CATEGORY_ORDER, '$category'] },
+            },
+        },
+        { $sort: { sortIndex: 1, name: 1 } },
+        {
+            $project: { _id: 1, name: 1, price: 1, category: 1, unitOfMea: 1 },
+        },
+    ])
 
     return docs.map(doc => ({
         ...doc,
@@ -40,10 +52,19 @@ export const getCategory = async () => {
 
     await connectToMongo()
 
-    const docs: Categories[] = await Price.aggregate([
-        { $group: { _id: "$category" } }
-    ]).sort({ _id: -1 })
 
+    const CATEGORY_ORDER = ['Festés', 'Tapétázás', 'Glettelés', 'Mázolás', 'Egyéb']
+
+
+
+
+    const docs: Categories[] = await Price.aggregate([
+        { $group: { _id: '$category' } },
+        { $addFields: { sortIndex: { $indexOfArray: [CATEGORY_ORDER, '$_id'] } } },
+        { $sort: { sortIndex: 1 } },
+    ])
+
+    console.log(docs)
     return docs.map(doc => ({ _id: String(doc._id) }))
 
 
