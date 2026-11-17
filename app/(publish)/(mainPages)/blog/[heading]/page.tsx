@@ -2,11 +2,7 @@ import ChooseTypeOfTextItem from '@/app/_components/bsp/blogRender';
 import { getBlogByHeading } from '@/lib/data';
 import { connectToMongo } from '@/lib/mongo';
 import Blog from '@/models/Blog';
-import Image from '@/models/Image';
-import { BSPRender } from '@/typeScriptType/blogServPlace';
-import { Img } from '@/typeScriptType/img';
 import type { Metadata, ResolvingMetadata } from 'next';
-import { cacheLife, cacheTag } from 'next/cache';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
@@ -20,11 +16,9 @@ export async function generateMetadata(
   const { heading } = await params
 
 
-  const data: BSPRender | null = await getBlogByHeading(decodeURIComponent(heading))
+  const data = await getBlogByHeading(decodeURIComponent(heading))
 
   if (data === null) return {}
-
-  const imgData: (Img | null) = await Image.findById(data.image)
 
 
 
@@ -40,8 +34,8 @@ export async function generateMetadata(
       url: `${process.env.URL}/blog/${heading}`,
       images: [
         {
-          url: process.env.URL + '/img' + imgData?.newUrl,
-          alt: imgData?.detail
+          url: process.env.URL + '/img' + data.newUrl,
+          alt: data.detail
         }
       ],
     },
@@ -51,8 +45,8 @@ export async function generateMetadata(
       description: data.detail,
       images: [
         {
-          url: process.env.URL + '/img' + imgData?.newUrl,
-          alt: imgData?.detail
+          url: process.env.URL + '/img' + data.newUrl,
+          alt: data.detail
         }
       ],
     },
@@ -78,12 +72,11 @@ const PageContent = async ({ params }: { params: Promise<{ heading: string }> })
 
 
 
-  const data: BSPRender | null = await getBlogByHeading(decodeURIComponent(heading))
+  const data = await getBlogByHeading(decodeURIComponent(heading))
 
   if (data === null) notFound();
 
-  const imgData: (Img | null) = await Image.findById(data.image)
-
+ 
   const base = process.env.URL;
   const url = `${base}/blog/${heading}`;
 
@@ -96,7 +89,7 @@ const PageContent = async ({ params }: { params: Promise<{ heading: string }> })
         '@id': `${url}#article`,
         headline: decodeURIComponent(heading.replaceAll('-', ' ')),
         description: data.detail,
-        image: [base + '/img' + imgData?.newUrl,],
+        image: [base + '/img' + data.newUrl,],
         datePublished: data.createdAt,
         dateModified: data.createdAt,
         author: {

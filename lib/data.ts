@@ -104,7 +104,7 @@ export const getTwentyImg = async (page: number) => {
 }
 
 
-export const getBlogByHeading = async (heading: string): Promise<BSPRender | null> => {
+export const getBlogByHeading = async (heading: string) => {
 
     'use cache'
     cacheTag(`blog-${heading}`)
@@ -120,11 +120,18 @@ export const getBlogByHeading = async (heading: string): Promise<BSPRender | nul
         return null
     }
 
+    const imgData: (Img | null) = await Image.findById(data.image)
+
+
     data._id = String(data._id)
     const date = new Date(data.createdAt)
     data.createdAt = String(date.getFullYear()) + '/' + String(date.getMonth() + 1) + '/' + String(date.getDate())
 
-    return data;
+    return ({
+        ...data,
+        newUrl: imgData?.newUrl ?? '',
+        detail: imgData?.detail ?? ''
+    });
 
 
 
@@ -261,10 +268,20 @@ export const getBlogMainPage = async () => {
 
     const data = await Blog.find({ visibility: true }, { _id: 1, heading: 1, visibility: 1, image: 1 }).limit(5).lean()
 
-    return data.map(item => ({
-        ...item,
-        _id: String(item._id)
+    const finalData = await Promise.all(data.map(async (item) => {
+        const imgData: (Img | null) = await Image.findById(item.image)
+
+        return ({
+            ...item,
+            _id: String(item._id),
+            newUrl: imgData?.newUrl ?? '',
+            detail: imgData?.detail ?? ''
+        })
+
     }))
+
+
+    return finalData
 
 
 
@@ -471,4 +488,29 @@ export const getPlaceList = async () => {
     return finalData;
 
 
+}
+
+
+export const getBlogList = async () => {
+    "use cache"
+    cacheTag("blog-list");
+    cacheLife("hours")
+
+    const data: BSPPublicPagesList[] = await Blog.find({ visibility: true }, { _id: 1, heading: 1, image: 1, visibility: 1 }).lean()
+
+    const imgData: (Img | null)[] = await Promise.all(data.map((item) => Image.findById(item.image)))
+
+    const finalData = await Promise.all(data.map(async (item) => {
+        const imgData: (Img | null) = await Image.findById(item.image)
+
+        return ({
+            ...item,
+            _id: String(item._id),
+            newUrl: imgData?.newUrl ?? '',
+            detail: imgData?.detail ?? ''
+        })
+    }))
+
+
+    return finalData;
 }
