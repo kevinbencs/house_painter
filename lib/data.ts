@@ -52,10 +52,7 @@ export const getCategory = async () => {
 
     await connectToMongo()
 
-
     const CATEGORY_ORDER = ['Festés', 'Tapétázás', 'Glettelés', 'Mázolás', 'Egyéb']
-
-
 
 
     const docs: Categories[] = await Price.aggregate([
@@ -64,10 +61,7 @@ export const getCategory = async () => {
         { $sort: { sortIndex: 1 } },
     ])
 
-    console.log(docs)
     return docs.map(doc => ({ _id: String(doc._id) }))
-
-
 
 }
 

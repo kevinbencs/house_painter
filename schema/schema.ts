@@ -47,7 +47,7 @@ export const blogServPlaceSchemaId = z.object({
     detail: z.string().min(1, { message: "A leírás megadása kötelező" }),
     image: z.string().min(1, { message: "Egy kép id-jének megadása kötelező" }),
     _id: z.string().min(1, { message: "Az oldal id-jének megadása kötelező" }).refine((val) =>
-        /^[0-9a-fA-F]{24}$/.test(val), { message: 'Érvénytele ID' }),
+        /^[0-9a-fA-F]{24}$/.test(val), { message: 'Érvénytelen ID' }),
 })
 
 
@@ -58,7 +58,7 @@ export const placeSchemaId = z.object({
     detail: z.string().min(1, { message: "A leírás megadása kötelező" }),
     image: z.string().min(1, { message: "Egy kép id-jének megadása kötelező" }),
     _id: z.string().min(1, { message: "Az oldal id-jének megadása kötelező" }).refine((val) =>
-        /^[0-9a-fA-F]{24}$/.test(val), { message: 'Érvénytele ID' }),
+        /^[0-9a-fA-F]{24}$/.test(val), { message: 'Érvénytelen ID' }),
     paragh: z.string().min(1, { message: "A cím alatti leírás megadása kötelező" }),
 })
 
@@ -68,7 +68,7 @@ export const imageIdSchema = z.object({
     show: z.refine(item => item === 'on' || item === null, { message: "Láthatóság megadása kötelező" }),
     detail: z.string().min(1, { message: "A leírás megadása kötelező" }),
     _id: z.string().min(1, { message: "Az oldal id-jének megadása kötelező" }).refine((val) =>
-        /^[0-9a-fA-F]{24}$/.test(val), { message: 'Érvénytele ID' }),
+        /^[0-9a-fA-F]{24}$/.test(val), { message: 'Érvénytelen ID' }),
 })
 
 export const imageSchema = z.object({

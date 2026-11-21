@@ -71,10 +71,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 
   useEffect(() => {
-    console.log(link)
+
     if (link !== '') {
       const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
-      console.log(3)
+
 
       events.forEach(e => window.addEventListener(e, resetTimer));
       resetTimer();

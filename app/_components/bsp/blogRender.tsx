@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import Img from "@/app/_components/dashboard/renderComponents/img"
 import type { ReactNode } from "react";
-import {v4 as uuidv4} from "uuid"
+import { v4 as uuidv4 } from "uuid"
 
 
 
@@ -21,7 +21,7 @@ export default function ChooseTypeOfTextItem(props: { s: string }) {
 
 const createParagh = (s: string) => {
     return (
-        <p  className="mb-10">
+        <p className="mb-10">
             {jsxInText(s)}
         </p>
     )
@@ -93,7 +93,7 @@ const jsxInText = (s: string) => {
     return textArray;
 }
 
-const createLink = (s: string, ) => {
+const createLink = (s: string,) => {
     const indexHref: number = s.indexOf('(');
     const indexHrefEnd: number = s.indexOf(')');
     const indexTextEnd: number = s.indexOf('</Link', 1);
@@ -141,7 +141,7 @@ const createLink = (s: string, ) => {
     }
     textArray.push(text.slice(index1, text.length))
     return (
-        <Link key={'link-'+text.slice(0,20)} className={`font-bold dark:text-gray-200`} href={s.slice(indexHref + 1, indexHrefEnd)} >{textArray}</Link>
+        <Link key={'link-' + text.slice(0, 20)} className={`font-bold dark:text-gray-200`} href={s.slice(indexHref + 1, indexHrefEnd)} >{textArray}</Link>
     )
 }
 
@@ -195,7 +195,7 @@ const createAnchor = (s: string) => {
     textArray.push(text.slice(index1, text.length))
 
     return (
-        <a key={'an-'+text.slice(0,20)} target='_blank' className={`font-bold dark:text-gray-200`} href={s.slice(indexHref + 1, indexHrefEnd)} >{textArray}</a>
+        <a key={'an-' + text.slice(0, 20)} target='_blank' className={`font-bold dark:text-gray-200`} href={s.slice(indexHref + 1, indexHrefEnd)} >{textArray}</a>
     )
 }
 
@@ -236,7 +236,7 @@ const createStrong = (s: string, isLink: boolean) => {
     textArray.push(text.slice(index1, text.length))
 
     return (
-        <strong  key={'strong-'+text.slice(0,20)} className={isLink === true ? '' : 'dark:text-gray-200'} >{textArray}</strong>
+        <strong key={'strong-' + text.slice(0, 20)} className={isLink === true ? '' : 'dark:text-gray-200'} >{textArray}</strong>
     )
 }
 
@@ -251,7 +251,7 @@ const createStrongText = (s: string, isLink: boolean) => {
     const text = s.slice(indexHrefEnd + 1, indexTextEnd);
 
     return (
-        <strong key={'strong-'+text.slice(0,20)} className={isLink === true ? '' : 'dark:text-gray-200'} >{text}</strong>
+        <strong key={'strong-' + text.slice(0, 20)} className={isLink === true ? '' : 'dark:text-gray-200'} >{text}</strong>
     )
 }
 
@@ -293,7 +293,7 @@ const createEm = (s: string, isLink: boolean) => {
     }
     textArray.push(text.slice(index1, text.length))
     return (
-        <em key={'em-'+text.slice(0,20)}>{textArray}</em>
+        <em key={'em-' + text.slice(0, 20)}>{textArray}</em>
     )
 }
 
@@ -308,7 +308,7 @@ const createEmText = (s: string) => {
     }
     const text = s.slice(indexHrefEnd + 1, indexTextEnd);
     return (
-        <em key={'em-'+text.slice(0,20)}>{text}</em>
+        <em key={'em-' + text.slice(0, 20)}>{text}</em>
     )
 }
 
@@ -327,9 +327,12 @@ const createImg = (s: string) => {
     const id = s.slice(index1 + 1, index2);
 
     return (
-        <div className='w-[550px] block mb-10 max-w-full' >
-            <Img id={id} />
+        <div className='flex justify-center'>
+            <div className='w-[550px] block mb-10 max-w-full' >
+                <Img id={id} />
+            </div>
         </div>
+
     )
 }
 
@@ -347,8 +350,8 @@ const createList = (s: string) => {
 
     const List = s.slice(index1 + 4, index2);
     return (
-        <ul  className="mb-10 ml-3">
-            {List.split('<list>').map((listItem: string) => <li key={'list-'+listItem.slice(0,20)}
+        <ul className="mb-10 ml-3">
+            {List.split('<list>').map((listItem: string) => <li key={'list-' + listItem.slice(0, 20)}
                 className="before:w-[8px] before:inline-block before:h-[8px] before:bg-green-700 before:dark:bg-green-500 before:rounded-[50%] before:relative before:-left-3 mb-3"> {jsxInText(listItem)}</li>)}
         </ul>
     )

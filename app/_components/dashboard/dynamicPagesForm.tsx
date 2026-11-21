@@ -148,6 +148,7 @@ const DynamicPagesForm = (props: {
             form.append("detail", detail)
             form.append("keywords", themes.join(';'))
             form.append("image", coverImageId)
+            form.append("_id",props.res.data?.id ?? "")
             const res = await props.serverAction(form)
 
             if (res.error) setError(res.error);

@@ -1,9 +1,8 @@
 import DynamicPagesForm from "@/app/_components/dashboard/dynamicPagesForm"
-import { addService } from "@/action/addService"
 import { checkAuth } from "@/lib/checkAuth";
 import { redirect } from "next/navigation";
-import { connection } from "next/server";
 import Service from "@/models/Service";
+import { updateService } from "@/action/updateService";
 
 const page = async ({ params }: { params: Promise<{ year: string, month: string, day: string, title: string }> }) => {
 
@@ -35,7 +34,7 @@ const page = async ({ params }: { params: Promise<{ year: string, month: string,
   return (
     <div className="w-full">
       <h1 className="text-3xl mb-2">Szolgáltatás szerkesztése</h1>
-      <DynamicPagesForm  res={res} serverAction={addService} />
+      <DynamicPagesForm  res={res} serverAction={updateService} />
     </div>
   )
 }

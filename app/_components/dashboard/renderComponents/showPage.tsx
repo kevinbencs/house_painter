@@ -341,9 +341,14 @@ const createImg = (s: string, setTextError: Dispatch<SetStateAction<string>>) =>
         return <div key={uuid()}></div>;
     }
 
-    return <div key={uuid()} className='w-[550px] block mb-10 max-w-full'>
-        <Img id={id} />
-    </div>
+    return (
+        <div className="flex justify-between">
+            <div key={uuid()} className='w-[550px] block mb-10 max-w-full'>
+                <Img id={id} />
+            </div>
+        </div>
+    )
+
 }
 
 
