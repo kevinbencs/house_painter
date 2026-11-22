@@ -123,7 +123,7 @@ const PageContent = async ({ params }: { params: Promise<{ heading: string }> })
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <h1 className='text-3xl mb-20 text-center'>{decodeURIComponent(heading.replaceAll('-', ' '))}</h1>
+      <h1 className='text-5xl mb-20 text-center'>{decodeURIComponent(heading.replaceAll('-', ' '))}</h1>
       <div className="lg:pl-[calc(50%-450px)] lg:pr-[calc(50%-450px)] pl-2 pr-2">
         {data.text.split('\n').filter((item: string) => item !== '' && item !== null && typeof (item) !== undefined).map((item: string) => <ChooseTypeOfTextItem key={'service-' + item.slice(0, 10)} s={item} />)}
       </div>

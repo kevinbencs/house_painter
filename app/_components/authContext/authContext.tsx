@@ -64,8 +64,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     startCountdown()
 
     logoutTimeRef.current = setTimeout(async () => {
-      await logout()
       setLink('')
+      await logout()
+      
     }, TIMEOUT_MS)
   }, [])
 
