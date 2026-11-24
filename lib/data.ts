@@ -244,10 +244,12 @@ export const getServiceFooter = async () => {
 
     const data = await Service.find({ visibility: true }, { _id: 1, heading: 1, visibility: 1 }).limit(10).lean()
 
+
+
     return data.map(item => ({
         ...item,
         _id: String(item._id)
-    }))
+    })).sort((b,a) => (b.heading?.length ?? 0) - (a.heading?.length ?? 0))
 
 
 

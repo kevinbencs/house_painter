@@ -5,8 +5,8 @@ const SocialMeadia = () => {
                 <a href="https://www.facebook.com" target='_blank' aria-label="Facebook account link">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
+                        width="25"
+                        height="25"
                         viewBox="0 0 28 28"
                         className="fill-current hover:fill-slate-500">
                         <path
@@ -18,8 +18,8 @@ const SocialMeadia = () => {
                 <a href="https://www.instagram.com" target='_blank' aria-label="Instagram account link">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
+                        width="25"
+                        height="25"
                         viewBox="0 0 24 24"
                         className="fill-current hover:fill-slate-500">
                         <path

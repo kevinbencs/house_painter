@@ -71,7 +71,7 @@ const PageContent = async ({ params }: { params: Promise<{ heading: string }> })
   if (heading === '__placeholder__') notFound()
 
 
-  const data = await getServiceByHeading(decodeURIComponent(heading.replaceAll('-', ' ')))
+  const data = await getServiceByHeading(decodeURIComponent(heading))
 
   if (data === null) notFound();
 

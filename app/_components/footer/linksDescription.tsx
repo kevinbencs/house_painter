@@ -2,12 +2,13 @@ import Link from "next/link"
 import Services from "./services"
 import Places from "./places"
 import ErrorBoundary from "../../custom-error-boundary"
+import SocialMeadia from "./socialMedia"
 
 
 const LinksDescription = () => {
   return (
 
-    <div className="max-w-300 w-full text-sm pb-10   flex  flex-col flex-wrap gap-10 md:gap-x-40  content-center md:flex-row  md:justify-between">
+    <div className="max-w-300 w-full text-sm pb-10   flex  flex-col flex-wrap gap-10    content-center md:flex-row  md:justify-between">
       <section className="flex flex-col items-center md:items-start">
         <Link href="/adatvedelem" className="hover:underline">Adatvédelmi tájékoztató</Link>
         <Link href="/impresszium" className="hover:underline">Impresszium</Link>
@@ -16,7 +17,7 @@ const LinksDescription = () => {
 
       </section>
 
-      <div className="flex flex-col flex-wrap gap-10 md:gap-x-14 lg:gap-x-20  content-center md:flex-row w-full md:w-auto">
+      {/*<div className="flex flex-col flex-wrap gap-10 md:gap-x-14 lg:gap-x-20  content-center md:flex-row w-full md:w-auto">*/}
         <section className="flex flex-col items-center pt-5 pb-5  border-t-2 border-b-2 border-mist-500 w-full md:w-auto md:pt-0 md:pb-0 md:border-0">
           <h3 className="mb-3"><Link href="/szolgaltatas" className="hover:underline">Szolgáltatásaim</Link></h3>
           <ErrorBoundary title="Hiba a szolgáltatásoknál">
@@ -24,15 +25,17 @@ const LinksDescription = () => {
           </ErrorBoundary>
 
         </section>
-        <section className="flex flex-col items-center">
+        <section className="flex flex-col items-center ">
           <h3 className="mb-3"><Link href='/helyek' className="hover:underline">Ahol jelen vagyok</Link></h3>
           <ErrorBoundary title="Hiba a helyeknél">
             <Places />
           </ErrorBoundary>
 
         </section>
+
+
         
-      </div>
+      {/*</div>*/}
 
     </div>
 
